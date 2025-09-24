@@ -55,7 +55,7 @@ namespace Log {
 		currentTime = time(NULL);
 		localtime_s(&local, &currentTime);
 		strftime(date, 100, "%d.%m.%Y %H:%M:%S", &local);
-		*log.stream << "--- Протокол --- Дата: " << date << std::endl;
+		*log.stream << "---- Протокол ------ " << date << " ----------------------" << std::endl;
 	}
 
 	void WriteParm(LOG log, Parm::PARM parm) {
@@ -76,9 +76,9 @@ namespace Log {
 
 		*log.stream << "---- Исходные данные ------" << std::endl;
 		*log.stream << "Количество символов: " << in.size << std::endl;
-		*log.stream << "Проигнорировано: " << in.ignor << std::endl;
-		*log.stream << "Количество строк: " << in.lines << std::endl;
-		*log.stream << "Коды всех символов: " << in.lines << std::endl;
+		*log.stream << "Проигнорировано:     " << in.ignor << std::endl;
+		*log.stream << "Количество строк:    " << in.lines << std::endl;
+		*log.stream << "Коды всех символов:  " << in.lines << std::endl;
 		for (int i = 0; i < 256; i++) {
 			*log.stream << in.code[i] << ' ';
 			if (i % 16 == 0 && i != 0) *log.stream << std::endl;
@@ -87,12 +87,14 @@ namespace Log {
 
 	void WriteError(LOG log, Error::ERROR error) {
 
-		*log.stream << "--- Ошибки --- " << std::endl;
-		*log.stream << "Ошибка " << error.id << ": " << error.message << std::endl;
+		*log.stream << "Ошибка " << error.id << ": " << error.message << ", ";
 
 		if (error.inext.line != -1)
 		{
-			*log.stream << "Строка " << error.inext.line << " Символ: " << error.inext.col << error.inext.col << " Символ: " << error.inext.ch << std::endl << std::endl;			
+			*log.stream << "cтрока " << error.inext.line 
+				<< ", позиция " << error.inext.col 
+				<< ", символ " << "|" << error.inext.ch << "|" 
+				<< std::endl << std::endl;
 		}
 	}
 

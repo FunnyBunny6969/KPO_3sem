@@ -28,7 +28,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//geterrorTEST();
 	//getparmTEST(argc, argv);
 	getinTEST(argc, argv);
-	//getlogTEST(argc, argv);
+	getlogTEST(argc, argv);
 	//outTEST(argc, argv);
 	return 0;
 }
@@ -53,7 +53,6 @@ void geterrorTEST() {
 		std::cout << "Ошибка " << e.id << ": " << e.message
 			<< ", строка " << e.inext.line
 			<< ", позиция " << e.inext.col << std::endl << std::endl;
-		system("pause");
 	}
 }
 
@@ -75,7 +74,6 @@ void getparmTEST(int argc, _TCHAR* argv[]) {
 			std::endl << std::endl;
 	}
 
-	system("pause");
 }
 
 void getinTEST(int argc, _TCHAR* argv[]) {
@@ -94,7 +92,6 @@ void getinTEST(int argc, _TCHAR* argv[]) {
 	{
 		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 	};
-	system("pause");
 }
 
 
