@@ -13,7 +13,7 @@ namespace In {
     IN getin(wchar_t infile[]) {
         IN result{};
         result.size = 0;
-        result.lines = 0;
+        result.lines = 1;  // Начинаем с 1 строки
         result.ignor = 0;
 
         // Выделяем память для текста
@@ -34,44 +34,51 @@ namespace In {
         }
 
         unsigned char ch;
-        int pos_in_line = 0;
+        int pos_in_line = 1;  // Начинаем с позиции 1
 
         while (file.read(reinterpret_cast<char*>(&ch), 1)) {
+            // Проверка на переполнение буфера
+            if (result.size >= IN_MAX_LEN_TEXT - 1) {
+                break;
+            }
+
             // Конец строки
-            cout << ch << endl;
             if (ch == IN_CODE_ENDL) {
                 result.text[result.size++] = ch;
                 result.lines++;
-                pos_in_line = 0;
+                pos_in_line = 1;  // Сбрасываем позицию для новой строки
                 continue;
             }
 
-            // Проверка символа
-            if (result.code[ch] == IN::F) {
+            std::cout << ch<<"   "<<result.code<< std::endl;
+            // Проверка символа по таблице
+            int symbol_code = result.code[static_cast<unsigned char>(ch)];
+
+
+
+            if (symbol_code == IN::F) {
+                // Запрещенный символ
                 delete[] result.text;
                 throw ERROR_THROW_IN(111, result.lines, pos_in_line);
             }
-            else if (result.code[ch] == IN::T) {
-                // Символ разрешен, записываем
+            else if (symbol_code == IN::T) {
+                // Символ разрешен, записываем как есть
                 result.text[result.size++] = ch;
             }
-            else if (result.code[ch] == IN::I) {
+            else if (symbol_code == IN::I) {
                 // Игнорируем символ
                 result.ignor++;
             }
             else {
-                // Если в таблице другой код (0–255), заменяем на него
-                result.text[result.size++] = static_cast<unsigned char>(result.code[ch]);
+                // Замена символа (значение от 0 до 255)
+                result.text[result.size++] = static_cast<unsigned char>(symbol_code);
             }
 
             pos_in_line++;
-            if (result.size >= IN_MAX_LEN_TEXT) break; // защита от переполнения
         }
 
-        // Если файл не пустой, но не заканчивается \n
-        if (result.size > 0 && result.text[result.size - 1] != IN_CODE_ENDL) {
-            result.lines++;
-        }
+        // Завершаем строку нулевым символом
+        result.text[result.size] = '\0';
 
         file.close();
         return result;

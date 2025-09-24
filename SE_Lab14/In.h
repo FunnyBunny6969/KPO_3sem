@@ -3,60 +3,17 @@
 #define IN_CODE_ENDL '\n'
 
 
-/*
-#define IN_CODE_TABLE {\
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::T,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::T,  IN::F,  IN::T,  IN::T,  IN::F,  IN::T,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::T,  IN::T,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-																																	\
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  \
-	IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::F,  IN::F,  IN::F,  \
-	IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::T,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  \
-	IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F,  IN::F   \
-}
-*/
-
-/*
-#define IN_CODE_TABLE {\
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::I, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::T, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::I, IN::!, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::T, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, \
-	IN::F, IN::F, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-\
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, \
-	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
-	IN::T, IN::F, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F  \
-}
-*/
 
 
 #define IN_CODE_TABLE {\
 /*	NUL		SOH		STX		ETX		EOT		ENQ		ACK		BEL		BS		TAB		LF		VT		FF		CR		SO		SI	*/   \
-	IN::F,	 IN::F,	 IN::F,  IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
+	IN::F,	 IN::F,	 IN::F,  IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 \
 /*	DLE		DC1		DC2		DC3		DC4		NAK		SYN		ETB		CAN		EM		SUB		ESC		FS		GS		RS		US	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	SP		!		"		#		$		%		&		'		(		)		*		+		,		-		.		/	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	0		1		2		3		4		5		6		7		8		9		:		;		<		=		>		?	*/   \
-	IN::T,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
+	IN::T,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	@		A		B		C		D		E		F		G		H		I		J		K		L		M		N		O	*/   \
 	IN::F,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	P		Q		R		S		T		U		V		W		X		Y		Z		[		\		]		^		_	*/   \
@@ -75,14 +32,37 @@
 /*	°		±		І		і		ґ		µ		¶		·		ё		№		є		»		ј		ґ		ђ		ї	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	А		Б		В		Г		Д		Е		Ж		З		И		Й		К		Л		М		Н		О		П	*/   \
-	IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 \
+	'-',	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 \
 /*	Р		С		Т		У		Ф		Х		Ц		Ч		Ш		Щ		Ъ		Ы		Ь		Э		Ю		Я	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	а		б		в		г		д		е		ж		з		и		й		к		л		м		н		о		п	*/   \
-	IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 \
+	IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 \
 /*	р		с		т		у		ф		х		ц		ч		ш		щ		ъ		ы		ь		э		ю		я	*/   \
-	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F   \
+	IN::T,	 IN::T,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F   \
 }
+
+
+/*
+#define IN_CODE_TABLE {\
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::I, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::T, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::I, '!', IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::T, IN::T, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, \
+	IN::F, IN::F, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+\
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, \
+	IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, IN::F, IN::F, IN::T, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, \
+	IN::T, IN::F, IN::T, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F, IN::F  \
+}
+*/
 
 
 namespace In
