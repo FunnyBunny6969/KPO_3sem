@@ -33,25 +33,15 @@ namespace Error
 
     ERROR geterror(int id) {
         ERROR err;
+		err = errors[0]; // êîä îøèáêè 0 – íåäîïóñòèìûé id
         if (id > 0 && id < ERROR_MAX_ENTRY) {
             err = errors[id];
         }
-        else {
-            err = errors[0]; // êîä îøèáêè 0 – íåäîïóñòèìûé id
-        }
-        err.inext.line = -1;
-        err.inext.col = -1;
         return err;
     }
 
-    ERROR geterrorin(int id, int line, int col) {
-        ERROR err;
-        if (id > 0 && id < ERROR_MAX_ENTRY) {
-            err = errors[id];
-        }
-        else {
-            err = errors[0]; // êîä îøèáêè 0 – íåäîïóñòèìûé id
-        }
+    ERROR geterrorin(int id, int line = -1, int col = -1) {
+        ERROR err = geterror(id);
         err.inext.line = line;
         err.inext.col = col;
         return err;

@@ -25,11 +25,11 @@ void outTEST(int, _TCHAR*[]);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	//geterrorTEST();
-	//getparmTEST(argc, argv);
+	geterrorTEST();
+	getparmTEST(argc, argv);
 	getinTEST(argc, argv);
 	getlogTEST(argc, argv);
-	//outTEST(argc, argv);
+	outTEST(argc, argv);
 	return 0;
 }
 

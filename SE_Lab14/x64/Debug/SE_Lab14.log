@@ -1,0 +1,15 @@
+﻿Build started 24.09.2025 18:28:10.
+     1>Project "E:\SE_Lab14\SE_Lab14\SE_Lab14.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v143 (Platform Toolset = 'v143') cannot be found. To build using the v143 build tools, please install v143 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+     1>Done Building Project "E:\SE_Lab14\SE_Lab14\SE_Lab14.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+       "E:\SE_Lab14\SE_Lab14\SE_Lab14.vcxproj" (Build target) (1) ->
+       (PlatformPrepareForBuild target) -> 
+         C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v143 (Platform Toolset = 'v143') cannot be found. To build using the v143 build tools, please install v143 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.08

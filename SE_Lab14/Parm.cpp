@@ -34,12 +34,12 @@ namespace Parm {
                     wcscpy_s(parm.log, PARM_MAX_SIZE, argv[i] + wcslen(PARM_LOG));
             }
 
-			if (wcslen(parm.in) == 0) throw ERROR_THROW(ERR_IN_MISSING);
-            if (wcslen(parm.out) == 0) {
+			if (parm.in == L"\0") throw ERROR_THROW(ERR_IN_MISSING);
+            if (parm.out == L"\0") {
                 wcscpy_s(parm.out, PARM_MAX_SIZE, parm.in);
                 wcsncat_s(parm.out, PARM_MAX_SIZE, PARM_OUT_DEFAULT_EXT, wcslen(PARM_OUT_DEFAULT_EXT));
             }
-            if (wcslen(parm.log) == 0) {
+            if (parm.log == L"0") {
                 wcscpy_s(parm.log, PARM_MAX_SIZE, parm.in);
                 wcsncat_s(parm.log, PARM_MAX_SIZE, PARM_LOG_DEFAULT_EXT, wcslen(PARM_LOG_DEFAULT_EXT));
             }

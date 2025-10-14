@@ -10,9 +10,9 @@
 
 namespace Parm { 
     struct PARM { 
-        wchar_t in[PARM_MAX_SIZE];  
-        wchar_t out[PARM_MAX_SIZE];
-        wchar_t log[PARM_MAX_SIZE];
+        wchar_t in[PARM_MAX_SIZE] = L"\0";
+        wchar_t out[PARM_MAX_SIZE] = L"\0";
+        wchar_t log[PARM_MAX_SIZE] = L"\0";
     };
 
     PARM getparm(int argc, _TCHAR* argv[]); 
