@@ -1,9 +1,11 @@
 #include "In.h"
 #include "Error.h"
 #include <fstream>
-#include <iostream>
 #include <cstring>
+
+#include <iostream>
 using namespace std;
+
 
 namespace In {
 
@@ -42,36 +44,41 @@ namespace In {
                 break;
             }
 
+            cout << '$' << ch << '$';
             // Конец строки
             if (ch == IN_CODE_ENDL) {
-                result.text[result.size++] = ch;
+                result.text[result.size++] = '|';
                 result.lines++;
-                pos_in_line = 1;  // Сбрасываем позицию для новой строки
+                pos_in_line = 1; 
                 continue;
             }
 
-            std::cout << ch<<"   "<<result.code<< std::endl;
             // Проверка символа по таблице
             int symbol_code = result.code[static_cast<unsigned char>(ch)];
 
 
-
-            if (symbol_code == IN::F) {
+            switch (symbol_code)
+            {
+            case IN::F:
                 // Запрещенный символ
                 delete[] result.text;
                 throw ERROR_THROW_IN(111, result.lines, pos_in_line);
-            }
-            else if (symbol_code == IN::T) {
+                break;
+
+            case IN::T:
                 // Символ разрешен, записываем как есть
                 result.text[result.size++] = ch;
-            }
-            else if (symbol_code == IN::I) {
+                break;
+
+            case IN::I:
                 // Игнорируем символ
                 result.ignor++;
-            }
-            else {
+                break;
+
+            default:
                 // Замена символа (значение от 0 до 255)
                 result.text[result.size++] = static_cast<unsigned char>(symbol_code);
+                break;
             }
 
             pos_in_line++;
@@ -79,6 +86,10 @@ namespace In {
 
         // Завершаем строку нулевым символом
         result.text[result.size] = '\0';
+        for (int i = 0; i < result.size; i++)
+        {
+            cout << '$' << result.text[i] << '$';
+        }
 
         file.close();
         return result;

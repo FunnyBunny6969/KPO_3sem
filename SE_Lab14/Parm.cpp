@@ -1,10 +1,6 @@
 #include "Parm.h"
-#include <iostream>
 #include <cwchar>
 #include "Error.h"
-
-using namespace std;
-
 
 
 namespace Parm {
@@ -15,7 +11,10 @@ namespace Parm {
     };
 
     PARM getparm(int argc, _TCHAR* argv[]) {
-        PARM parm = {}; 
+        PARM parm;
+        parm.in[0] = L'\0';
+        parm.out[0] = L'\0';
+        parm.log[0] = L'\0';
 
         for (int i = 1; i < argc; i++) 
             if (wcslen(argv[i]) >= PARM_MAX_SIZE) 
@@ -34,12 +33,12 @@ namespace Parm {
                     wcscpy_s(parm.log, PARM_MAX_SIZE, argv[i] + wcslen(PARM_LOG));
             }
 
-			if (parm.in == L"\0") throw ERROR_THROW(ERR_IN_MISSING);
-            if (parm.out == L"\0") {
+			if (parm.in[0] == L'\0') throw ERROR_THROW(ERR_IN_MISSING);
+            if (parm.out[0] == L'\0') {
                 wcscpy_s(parm.out, PARM_MAX_SIZE, parm.in);
                 wcsncat_s(parm.out, PARM_MAX_SIZE, PARM_OUT_DEFAULT_EXT, wcslen(PARM_OUT_DEFAULT_EXT));
             }
-            if (parm.log == L"0") {
+            if (parm.log[0] == L'\0') {
                 wcscpy_s(parm.log, PARM_MAX_SIZE, parm.in);
                 wcsncat_s(parm.log, PARM_MAX_SIZE, PARM_LOG_DEFAULT_EXT, wcslen(PARM_LOG_DEFAULT_EXT));
             }

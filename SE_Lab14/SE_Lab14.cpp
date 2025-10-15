@@ -21,19 +21,13 @@ void getlogTEST(int, _TCHAR*[]);
 void outTEST(int, _TCHAR*[]);
 
 
-
-
 int _tmain(int argc, _TCHAR* argv[])
 {
-	geterrorTEST();
-	getparmTEST(argc, argv);
-	getinTEST(argc, argv);
+	setlocale(LC_CTYPE, "Russian");
 	getlogTEST(argc, argv);
 	outTEST(argc, argv);
 	return 0;
 }
-
-
 
 
 void geterrorTEST() {
@@ -76,6 +70,7 @@ void getparmTEST(int argc, _TCHAR* argv[]) {
 
 }
 
+
 void getinTEST(int argc, _TCHAR* argv[]) {
 	setlocale(LC_ALL, "rus");
 	std::cout << "---- тест In::getin  --- " << std::endl << std::endl;
@@ -93,7 +88,6 @@ void getinTEST(int argc, _TCHAR* argv[]) {
 		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 	};
 }
-
 
 
 void getlogTEST(int argc, _TCHAR* argv[]) {
@@ -114,9 +108,11 @@ void getlogTEST(int argc, _TCHAR* argv[]) {
 		Log::Close(log);
 	}
 	catch (const Error::ERROR& e) {
+		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Log::WriteError(log, e);
 	}
 }
+
 
 void outTEST(int argc, _TCHAR* argv[]) {
 	Out::OUT out = Out::INITOUT;
@@ -126,9 +122,11 @@ void outTEST(int argc, _TCHAR* argv[]) {
 		out = Out::getout(parm.out);
 		In::IN in = In::getin(parm.in);
 		Out::WriteInOut(out, in);
+		Out::Close(out);
 	}
 	catch (Error::ERROR e)
 	{
+		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
 }

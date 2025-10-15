@@ -9,6 +9,7 @@
 #include <codecvt>
 #include <ctime>
 
+
 namespace Log {
 	LOG getlog(wchar_t logfile[]) {
 
@@ -17,10 +18,10 @@ namespace Log {
 		log.stream->open(logfile);
 		if (!log.stream->is_open())
 		{
+			delete log.stream;
 			throw ERROR_THROW(112);
 		}
 		wcscpy_s(log.logfile, logfile);
-
 		return log;
 	}
 
@@ -78,11 +79,6 @@ namespace Log {
 		*log.stream << "Количество символов: " << in.size << std::endl;
 		*log.stream << "Проигнорировано:     " << in.ignor << std::endl;
 		*log.stream << "Количество строк:    " << in.lines << std::endl;
-		*log.stream << "Коды всех символов:  " << in.lines << std::endl;
-		for (int i = 0; i < 256; i++) {
-			*log.stream << in.code[i] << ' ';
-			if (i % 16 == 0 && i != 0) *log.stream << std::endl;
-		}
 	}
 
 	void WriteError(LOG log, Error::ERROR error) {
