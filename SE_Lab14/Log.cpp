@@ -89,7 +89,6 @@ namespace Log {
 		{
 			*log.stream << "cтрока " << error.inext.line 
 				<< ", позиция " << error.inext.col 
-				<< ", символ " << "|" << error.inext.ch << "|" 
 				<< std::endl << std::endl;
 		}
 	}

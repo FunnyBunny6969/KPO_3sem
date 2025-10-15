@@ -25,7 +25,6 @@ namespace Error {
 		{
 			short line;
 			short col;
-			char ch;
 		} inext;
 	};
 

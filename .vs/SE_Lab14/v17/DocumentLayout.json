@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Error.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Error.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Log.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Log.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\In.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\In.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\In.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\In.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Out.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Out.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -15,32 +35,12 @@
       "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\SE_Lab14.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Error.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\In.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\In.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\In.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\In.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Log.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Log.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Parm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Parm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Parm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Parm.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|solutionrelative:SE_Lab14\\Error.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9F0D1A3D-A016-42B9-B68A-4557A2997AB2}|SE_Lab14\\SE_Lab14.vcxproj|D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Log.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -58,37 +58,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "Out.h",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Out.h",
               "RelativeDocumentMoniker": "SE_Lab14\\Out.h",
               "ToolTip": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Out.h",
               "RelativeToolTip": "SE_Lab14\\Out.h",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-10-15T14:03:04.41Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "Out.cpp",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Out.cpp",
               "RelativeDocumentMoniker": "SE_Lab14\\Out.cpp",
               "ToolTip": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Out.cpp",
               "RelativeToolTip": "SE_Lab14\\Out.cpp",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABAAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABUAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-15T14:02:34.944Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "In.h",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\In.h",
               "RelativeDocumentMoniker": "SE_Lab14\\In.h",
@@ -101,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "In.cpp",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\In.cpp",
               "RelativeDocumentMoniker": "SE_Lab14\\In.cpp",
@@ -114,7 +114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Parm.h",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Parm.h",
               "RelativeDocumentMoniker": "SE_Lab14\\Parm.h",
@@ -126,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Parm.cpp",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Parm.cpp",
               "RelativeDocumentMoniker": "SE_Lab14\\Parm.cpp",
@@ -138,25 +138,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "Error.h",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.h",
               "RelativeDocumentMoniker": "SE_Lab14\\Error.h",
               "ToolTip": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.h",
               "RelativeToolTip": "SE_Lab14\\Error.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-08-31T20:59:12.665Z"
+              "WhenOpened": "2025-08-31T20:59:12.665Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Error.cpp",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.cpp",
               "RelativeDocumentMoniker": "SE_Lab14\\Error.cpp",
               "ToolTip": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Error.cpp",
               "RelativeToolTip": "SE_Lab14\\Error.cpp",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAADEAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-08-31T21:41:10.958Z",
               "EditorCaption": ""
@@ -175,13 +176,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "Log.cpp",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Log.cpp",
               "RelativeDocumentMoniker": "SE_Lab14\\Log.cpp",
               "ToolTip": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\Log.cpp",
               "RelativeToolTip": "SE_Lab14\\Log.cpp",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAD0AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAFsAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-15T13:07:42.381Z",
               "EditorCaption": ""
@@ -200,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "SE_Lab14.cpp",
               "DocumentMoniker": "D:\\$MAIN$\\02\\\u041A\u041F\u041E\\kpo_3sem\\SE_Lab14\\SE_Lab14.cpp",
               "RelativeDocumentMoniker": "SE_Lab14\\SE_Lab14.cpp",

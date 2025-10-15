@@ -1,12 +1,17 @@
-﻿Сборка начата 15.10.2025 18:29:34.
+﻿Сборка начата 15.10.2025 18:34:21.
 Уровень детализации журнала: Normal.     1>Проект "D:\$MAIN$\02\КПО\kpo_3sem\SE_Lab14\SE_Lab14.vcxproj" в узле 2 (целевые объекты Build).
      1>PrepareForBuild:
          Структурированный вывод включен. Форматирование диагностики компилятора будет отражать иерархию ошибок. Подробнее см. https://aka.ms/cpp/structured-output.
        InitializeBuildStatus:
+         Создание "Debug\SE_Lab14.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
          Обращение к "Debug\SE_Lab14.tlog\unsuccessfulbuild".
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\bin\HostX86\x86\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /permissive- /Fo"Debug\\" /Fd"Debug\vc143.pdb" /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt Out.cpp SE_Lab14.cpp
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433\bin\HostX86\x86\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /permissive- /Fo"Debug\\" /Fd"Debug\vc143.pdb" /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt Error.cpp In.cpp Log.cpp Out.cpp Parm.cpp SE_Lab14.cpp
+         Error.cpp
+         In.cpp
+         Log.cpp
          Out.cpp
+         Parm.cpp
          SE_Lab14.cpp
          Создание кода...
        Link:
@@ -26,4 +31,4 @@
     Предупреждений: 0
     Ошибок: 0
 
-Прошло времени 00:00:01.19
+Прошло времени 00:00:02.10
