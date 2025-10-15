@@ -7,7 +7,7 @@
 
 #define IN_CODE_TABLE {\
 /*	NUL		SOH		STX		ETX		EOT		ENQ		ACK		BEL		BS		TAB		LF		VT		FF		CR		SO		SI	*/   \
-	IN::F,	 IN::F,	 IN::F,  IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 '|',	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 \
+	IN::F,	 IN::F,	 IN::F,  IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 '|',	 IN::F,	 IN::F,	 IN::I,	 IN::F,	 IN::F,	 \
 /*	DLE		DC1		DC2		DC3		DC4		NAK		SYN		ETB		CAN		EM		SUB		ESC		FS		GS		RS		US	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	SP		!		"		#		$		%		&		'		(		)		*		+		,		-		.		/	*/   \

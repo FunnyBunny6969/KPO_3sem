@@ -122,6 +122,11 @@ void outTEST(int argc, _TCHAR* argv[]) {
 		out = Out::getout(parm.out);
 		In::IN in = In::getin(parm.in);
 		Out::WriteInOut(out, in);
+
+
+		Error::ERROR e = Error::geterrorin(112, 2, 3);
+		Out::WriteErrorOut(out, e);
+
 		Out::Close(out);
 	}
 	catch (Error::ERROR e)

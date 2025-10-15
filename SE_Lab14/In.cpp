@@ -44,7 +44,6 @@ namespace In {
                 break;
             }
 
-            cout << '$' << ch << '$';
             // Конец строки
             if (ch == IN_CODE_ENDL) {
                 result.text[result.size++] = '|';
@@ -86,10 +85,6 @@ namespace In {
 
         // Завершаем строку нулевым символом
         result.text[result.size] = '\0';
-        for (int i = 0; i < result.size; i++)
-        {
-            cout << '$' << result.text[i] << '$';
-        }
 
         file.close();
         return result;

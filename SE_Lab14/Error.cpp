@@ -47,7 +47,7 @@ namespace Error
         return err;
     }
 
-    ERROR geterrorinchar(int id, int line, char ch, int col) {
+    ERROR geterrorinchar(int id, int line, int col, char ch = '#') {
         ERROR error = geterror(id);
         error.inext.line = line;
         error.inext.col = col;

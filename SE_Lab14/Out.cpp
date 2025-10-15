@@ -19,14 +19,15 @@ namespace Out {
 
 
 	void WriteErrorOut(OUT out, Error::ERROR error) {
-		*out.streamOut << "Ошибка " << error.id << ":" << error.message << endl;
+		*out.streamOut << "[ОШИБКА " << error.id 
+			<< " : " << error.message << "; ";
 		if (error.inext.line != -1)
 		{
-			*out.streamOut 
-				<< "Строка " << error.inext.line 
-				<< " Позиция " << error.inext.col 
-				<< " Символ: " << error.inext.ch << endl << endl;
+			*out.streamOut
+				<< "строка " << error.inext.line
+				<< " позиция " << error.inext.col;
 		}
+		*out.streamOut << "]" << endl;
 	}
 
 
