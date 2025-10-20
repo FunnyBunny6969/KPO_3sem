@@ -1,0 +1,50 @@
+﻿  FST.cpp
+  SELab16.cpp
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(23,10): error C2511: FST::FST::FST(char *,short,FST::NODE,...): перегруженная функция-член не найдена в "FST::FST"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(26,12):
+       см. объявление "FST::FST"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(24,5): error C2550: FST::FST::{ctor}: список инициализации конструктора должен использоваться только в месте определения конструктора
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(25,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::nodes"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(31,15):
+       см. объявление "FST::FST::nodes"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::nodes"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9):
+       см. объявление "FST::FST::nodes"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9): error C3867: "FST::FST::nodes": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9): error C2568: [: не удается разрешить перегрузку функции
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13): error C2597: недопустимая ссылка на нестатический член "FST::FST::nodes"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13):
+       см. объявление "FST::FST::nodes"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13): error C3867: "FST::FST::nodes": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13): error C2568: [: не удается разрешить перегрузку функции
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(34,29): error C2597: недопустимая ссылка на нестатический член "FST::FST::nstates"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(30,15):
+       см. объявление "FST::FST::nstates"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(34,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::rstates"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,16):
+       см. объявление "FST::FST::rstates"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31): error C2597: недопустимая ссылка на нестатический член "FST::FST::nstates"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31):
+       см. объявление "FST::FST::nstates"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31): error C3867: "FST::FST::nstates": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31): error C2568: <: не удается разрешить перегрузку функции
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13): error C2597: недопустимая ссылка на нестатический член "FST::FST::rstates"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13):
+       см. объявление "FST::FST::rstates"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13): error C3867: "FST::FST::rstates": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13): error C2568: [: не удается разрешить перегрузку функции
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::rstates"
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9):
+       см. объявление "FST::FST::rstates"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9): error C3867: "FST::FST::rstates": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9): error C2568: [: не удается разрешить перегрузку функции
+  Создание кода...
