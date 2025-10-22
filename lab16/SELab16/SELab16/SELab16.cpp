@@ -1,96 +1,78 @@
-﻿#include <iostream>
-#include "FST.h"  
+﻿#include "FST.h"  
 #include <tchar.h> 
+#include <cstdlib> 
+#include <cstring>
 
+#include <iostream>
 using namespace std;
 
 
-void testChain(const char*);
+void testChain(char[]);
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
     setlocale(LC_ALL, "rus");
+    char str1[] = "aaabbbaba";
+    char str2[] = "aaabbbabba";
 
-    FST::FST fst1(    // недетерминированный конечный автомат (a+b)*aba
-        "aaabbbaba",    // цепочка для распознавания
+
+    FST::FST fst1(    // недегерминированный конечный автомат (a+b)*aba
+        str1,    // цепочка для распознавания
         4,    // количество состояний
-        FST::NODE(3, FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('a', 1)), // состояние 0 (начальное)
+        FST::NODE(3, FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('a', 1)), // состояние 0 (начальное )
         FST::NODE(1, FST::RELATION('b', 2)),    // состояние 1
         FST::NODE(1, FST::RELATION('a', 3)),    // состояние 2
         FST::NODE()    // состояние 3 (конечное)
-    );
-
-    if (FST::execute(fst1))   // выполнить разбор
-        std::cout << "цепочка " << fst1.string << " распознана" << std::endl;
-    else
-        std::cout << "цепочка " << fst1.string << " не распознана" << std::endl;
+        );
+	if (FST::execute(fst1))  // выполнить разбор
+		std::cout << "Цепочка " << fst1.string << " распознана" << std::endl;
+	else std::cout << "Цепочка " << fst1.string << " не распознана" << std::endl;
 
 
-    FST::FST fst2(    // недетерминированный конечный автомат (a+b)*aba
-        "aaabbbab",    // цепочка для распознавания
-        4,    // количество состояний
-        FST::NODE(3, FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('a', 1)), // состояние 0 (начальное)
-        FST::NODE(1, FST::RELATION('b', 2)),    // состояние 1
-        FST::NODE(1, FST::RELATION('a', 3)),    // состояние 2
-        FST::NODE()    // состояние 3 (конечное)
-    );
-
-    if (FST::execute(fst2))   // выполнить разбор
-        std::cout << "цепочка " << fst2.string << " распознана" << std::endl;
-    else
-        std::cout << "цепочка " << fst2.string << " не распознана" << std::endl;
+	FST::FST fst2(    // недегерминированный конечный автомат (a+b)*aba
+		str2,    // цепочка для распознавания
+		4,    // количество состояний
+		FST::NODE(3, FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('a', 1)), // состояние 0 (начальное )
+		FST::NODE(1, FST::RELATION('b', 2)),    // состояние 1
+		FST::NODE(1, FST::RELATION('a', 3)),    // состояние 2
+		FST::NODE()    // состояние 3 (конечное)
+		);
+	if (FST::execute(fst2))  // выполнить разбор
+		std::cout << "Цепочка " << fst2.string << " распознана" << std::endl;
+	else std::cout << "Цепочка " << fst2.string << " не распознана" << std::endl;
 
 
-    FST::FST fst3(
-        "aaacbbaba",  // содержит недопустимый символ 'c'
-        4,
-        FST::NODE(3, FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('a', 1)),
-        FST::NODE(1, FST::RELATION('b', 2)),
-        FST::NODE(1, FST::RELATION('a', 3)),
-        FST::NODE()
-    );
+    char test[] = "open    write;read;seek;         close";
+    testChain(test);
 
-    if (FST::execute(fst3))
-        cout << "3. цепочка \"" << fst3.string << "\" распознана" << endl;
-    else
-        cout << "3. цепочка \"" << fst3.string << "\" не распознана" << endl;
+    strncpy_s(test, "open     write; close", sizeof(test) - 1);
+    testChain(test);
 
+    strncpy_s(test, "open write; close", sizeof(test) - 1);
+    testChain(test);
 
-    // Дополнительная нераспознаваемая цепочка
-    FST::FST fst4(
-        "ababab",  // не заканчивается на "aba"
-        4,
-        FST::NODE(3, FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('a', 1)),
-        FST::NODE(1, FST::RELATION('b', 2)),
-        FST::NODE(1, FST::RELATION('a', 3)),
-        FST::NODE()
-    );
-
-    if (FST::execute(fst4))
-        cout << "4. цепочка \"" << fst4.string << "\" распознана" << endl;
-    else
-        cout << "4. цепочка \"" << fst4.string << "\" не распознана" << endl;
-
-
+    strncpy_s(test, "open   read;seek;seek;write; close", sizeof(test) - 1);
+    testChain(test);
     
-    testChain("open      write;read;seek;seek;write;read;seek;seek;write;      close");
-    testChain("open write;read;seek; close");
-    testChain("open write; close");
-    testChain("open seek;seek;  close");
+    strncpy_s(test, "open  seek;seek;read;    close", sizeof(test) - 1);
+    testChain(test);
 
-    testChain("open write close");
-    testChain("open write; seek; close");
-    testChain("open write; clos");
-    testChain("opOn write; close");
+    strncpy_s(test, "open write; clos", sizeof(test) - 1);
+    testChain(test);
+    strncpy_s(test, "open  write; seek; close", sizeof(test) - 1);
+    testChain(test);
+    strncpy_s(test, "Open     write; close", sizeof(test) - 1);
+    testChain(test);
 
 
-    system("pause");
-    return 0;
+
+	system("pause");
+	return 0;
 }
 
 
-
-void testChain(const char* testString) {
+void testChain(char testString[]) {
     FST::FST fst(
         testString,
         24,
