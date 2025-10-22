@@ -2,10 +2,11 @@
 #include <stdarg.h>
 #include <iostream>
 
+
 namespace FST
 {
     // Конструктор RELATION - создает переход между состояниями
-    RELATION::RELATION(char c, short ns) : symbol(c), mode(ns)
+    RELATION::RELATION(char c, short ns) : symbol(c), nnode(ns)
     {
         // symbol - символ, при котором происходит переход
         // mode - номер состояния, в которое переходим
@@ -77,6 +78,11 @@ namespace FST
         rstates[0] = 0;
     }
 
+
+
+
+    
+
     // Функция execute - выполняет распознавание строки автоматом
     bool execute(FST& fst)
     {
@@ -115,9 +121,9 @@ namespace FST
                         if (rel.symbol == fst.string[fst.position])
                         {
                             // Переход возможен! Активируем новое состояние:
-                            // rel.mode - номер состояния, в которое переходим
+                            // rel.nnode - номер состояния, в которое переходим
                             // fst.position + 1 - позиция, на которой будет активно новое состояние
-                            new_rstates[rel.mode] = fst.position + 1;
+                            new_rstates[rel.nnode] = fst.position + 1;
                         }
                     }
                 }
@@ -160,3 +166,4 @@ namespace FST
         return (fst.rstates[fst.nstates - 1] == fst.position);
     }
 }
+

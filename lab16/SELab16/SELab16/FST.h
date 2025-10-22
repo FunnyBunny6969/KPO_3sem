@@ -5,7 +5,7 @@ namespace FST
     struct RELATION
     {
         char symbol;
-        short mode;
+        short nnode;
         RELATION(
             char c = 0x00, 
             short ns = -1
