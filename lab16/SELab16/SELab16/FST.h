@@ -1,43 +1,41 @@
-#pragma once
+﻿#pragma once
+#include <cstddef>
 
 namespace FST
 {
-    struct RELATION
+    struct RELATION      // �����:������ - > ������� ����� �������� ��������� ��������
     {
-        char symbol;
-        short nnode;
+        char symbol;  // ������ ��������
+        short nnode;  // ����� ������� �������
         RELATION(
-            char c = 0x00, 
-            short ns = -1
+            char c = 0x00,    // ������ ��������
+            short ns = NULL    //����� ���������
         );
     };
-
-    struct NODE
+    struct NODE  // ������� ����� ��������
     {
-        short n_relation;
-        RELATION* relations;
+        short n_relation;  // ���������� ������������ �����
+        RELATION* relations;  // ������������ �����
         NODE();
         NODE(
-            short n, 
-            RELATION rel, ...
+            short n,    // ���������� ������������ ����
+            RELATION rel, ...  //������ �����
         );
     };
-
-    struct FST
+    struct FST  //������������������� �������� �������
     {
-        const char* string; 
-        short position;
-        short nstates;
-        NODE* nodes;
-        short* rstates;
+        char* string;    // ������� (������, ����������� 0x00)
+        short position;    // ������� ������� � ������
+        short nstates;    // ���������� ��������� ��������
+        NODE* nodes;    // ���� ���������: [0] - ��������� ���������, [nstate - 1] - ��������
+        short* rstates;    // ��������� ��������� �������� �� ������ �������
         FST(
-            const char* s, 
-            short ns, 
-            NODE n, ...
-        ); 
+            char* s,    // ������� (������, ����������� 0x00)
+            short ns,    // ���������� ��������� ��������
+            NODE n, ...    // ������ ��������� (���� ���������)
+        );
     };
-
-    bool execute(
-        FST& fst
+    bool execute(      // ��������� ������������� �������
+        FST& fst      // ����������������� �������� �������
     );
-};
+}

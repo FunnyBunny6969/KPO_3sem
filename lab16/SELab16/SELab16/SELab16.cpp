@@ -80,7 +80,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
     testChain("open write close");
     testChain("open write; seek; close");
-    testChain("open week close");
+    testChain("open write; clos");
+    testChain("opOn write; close");
 
 
     system("pause");

@@ -1,169 +1,103 @@
-#include "FST.h"
+п»ї#include "FST.h"
+#include <string.h>
 #include <stdarg.h>
-#include <iostream>
-
 
 namespace FST
 {
-    // Конструктор RELATION - создает переход между состояниями
-    RELATION::RELATION(char c, short ns) : symbol(c), nnode(ns)
+    RELATION::RELATION(char c, short ns)
     {
-        // symbol - символ, при котором происходит переход
-        // mode - номер состояния, в которое переходим
+        this->symbol = c;
+        this->nnode = ns;
     }
 
-    // Конструктор по умолчанию для NODE - создает пустую вершину
-    NODE::NODE() : n_relation(0), relations(nullptr)
+    NODE::NODE()
     {
-        // n_relation = 0 - нет переходов из этой вершины
-        // relations = nullptr - массив переходов не выделен
-    }
+        this->n_relation = 0;
+        this->relations = NULL;
+    };
 
-    // Основной конструктор NODE - создает вершину с заданными переходами
-    NODE::NODE(short n, RELATION rel, ...) : n_relation(n)
+    NODE::NODE(short n, RELATION rel, ...)
     {
-        // n - количество переходов из этой вершины
-        // rel, ... - список переходов (переменное число аргументов)
+        this->n_relation = n;
+        this->relations = new RELATION[n_relation];
 
-        // Выделяем память для массива переходов
-        relations = new RELATION[n];
-
-        // Первый переход уже передан в rel
-        relations[0] = rel;
-
-        // Обрабатываем остальные переходы через va_list
         va_list args;
-        va_start(args, rel);  // Инициализируем работу с переменными аргументами
 
-        for (short i = 1; i < n; i++)
-            relations[i] = va_arg(args, RELATION);  // Получаем следующий аргумент
+        va_start(args, rel);
+        this->relations[0] = rel;
 
-        va_end(args);  // Завершаем работу с переменными аргументами
-    }
-
-    // Конструктор FST - создает конечный автомат
-    FST::FST(const char* s, short ns, NODE n, ...) :
-        string(s),      // Входная строка для распознавания
-        position(0),    // Начинаем с позиции 0 в строке
-        nstates(ns)     // Количество состояний в автомате
-    {
-        // s - строка для распознавания
-        // ns - количество состояний автомата  
-        // n, ... - список состояний (переменное число аргументов)
-
-        // Выделяем память для массива состояний автомата
-        nodes = new NODE[ns];
-
-        // Первое состояние уже передано в n
-        nodes[0] = n;
-
-        // Обрабатываем остальные состояния через va_list
-        va_list args;
-        va_start(args, n);
-
-        for (short i = 1; i < ns; i++)
-            nodes[i] = va_arg(args, NODE);  // Получаем следующее состояние
-
-        va_end(args);
-
-        // Выделяем память для массива активных состояний
-        rstates = new short[nstates];
-
-        // Инициализируем массив активных состояний:
-        // -1 означает, что состояние неактивно
-        for (short i = 0; i < nstates; i++)
-            rstates[i] = -1;
-
-        // Начальное состояние (0) всегда активно на позиции 0
-        rstates[0] = 0;
-    }
-
-
-
-
-    
-
-    // Функция execute - выполняет распознавание строки автоматом
-    bool execute(FST& fst)
-    {
-        /*
-        Алгоритм работы недетерминированного конечного автомата:
-        1. Идем по каждому символу входной строки
-        2. Для каждого активного состояния проверяем возможные переходы
-        3. Если переход возможен по текущему символу - активируем новое состояние
-        4. Повторяем до конца строки или пока есть активные состояния
-        */
-
-        // Создаем временный массив для новых состояний на следующем шаге
-        short* new_rstates = new short[fst.nstates];
-
-        // Основной цикл - обрабатываем каждый символ строки
-        for (; fst.string[fst.position]; fst.position++)
+        for (int i = 1; i < n; i++)
         {
-            // Шаг 1: Подготавливаем новый массив состояний
-            // Все состояния изначально неактивны (-1)
-            for (short i = 0; i < fst.nstates; i++)
-                new_rstates[i] = -1;
-
-            // Шаг 2: Обрабатываем все текущие активные состояния
-            for (short i = 0; i < fst.nstates; i++)
-            {
-                // Проверяем, активно ли состояние i на текущей позиции
-                if (fst.rstates[i] == fst.position)
-                {
-                    // Состояние активно - проверяем все переходы из него
-                    for (short j = 0; j < fst.nodes[i].n_relation; j++)
-                    {
-                        // Получаем j-й переход из состояния i
-                        RELATION& rel = fst.nodes[i].relations[j];
-
-                        // Проверяем, совпадает ли символ перехода с текущим символом строки
-                        if (rel.symbol == fst.string[fst.position])
-                        {
-                            // Переход возможен! Активируем новое состояние:
-                            // rel.nnode - номер состояния, в которое переходим
-                            // fst.position + 1 - позиция, на которой будет активно новое состояние
-                            new_rstates[rel.nnode] = fst.position + 1;
-                        }
-                    }
-                }
-            }
-
-            // Шаг 3: Обновляем массив активных состояний
-            bool hasActive = false;  // Флаг - есть ли хотя бы одно активное состояние
-
-            for (short i = 0; i < fst.nstates; i++)
-            {
-                // Копируем новые состояния в основной массив
-                fst.rstates[i] = new_rstates[i];
-
-                // Проверяем, есть ли активные состояния
-                if (new_rstates[i] != -1)
-                    hasActive = true;
-            }
-
-            // Шаг 4: Проверяем, есть ли еще активные состояния
-            // Если нет - разбор невозможен, завершаем с ошибкой
-            if (!hasActive)
-            {
-                delete[] new_rstates;  // Освобождаем память
-                return false;          // Цепочка не распознана
-            }
+            this->relations[i] = va_arg(args, RELATION);
         }
 
-        // Освобождаем память временного массива
-        delete[] new_rstates;
+        va_end(args);
+    };
 
-        /*
-        Проверяем результат:
-        - fst.nstates - 1 - индекс конечного состояния
-        - fst.rstates[fst.nstates - 1] - позиция, на которой активировано конечное состояние
-        - fst.position - длина строки (позиция после последнего символа)
+    FST::FST(char* s, short ns, NODE n, ...)
+    {
+        this->position = -1;
+        this->string = s;
+        this->nstates = ns;
+        this->nodes = new NODE[nstates];
+        this->rstates = new short[nstates];
 
-        Условие успеха: конечное состояние активировано на позиции конца строки
-        Это означает, что автомат полностью обработал всю строку и достиг конечного состояния
-        */
-        return (fst.rstates[fst.nstates - 1] == fst.position);
+        memset(this->rstates, 0xff, sizeof(short) * nstates);
+        this->rstates[0] = 0;
+
+        va_list args;
+        va_start(args, n);
+        this->nodes[0] = n;
+
+        for (int i = 1; i < ns; i++)
+        {
+            this->nodes[i] = va_arg(args, NODE);
+        }
+
+        va_end(args);
     }
-}
 
+    bool step(FST& fst, short*& rstates) {
+        bool rc = false; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        auto temp = rstates;
+        rstates = fst.rstates;
+        fst.rstates = temp;
+
+        memset(fst.rstates, 0xff, sizeof(short) * fst.nstates); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        for (short i = 0; i < fst.nstates; i++)
+        {
+            if (rstates[i] != -1) // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ i пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                for (short j = 0; j < fst.nodes[i].n_relation; j++)
+                    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+                    if (fst.nodes[i].relations[j].symbol == fst.string[fst.position])
+                    {
+                        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                        fst.rstates[fst.nodes[i].relations[j].nnode] = fst.position + 1;
+                        rc = true; // пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                    }
+        };
+        return rc;
+    };
+
+    bool execute(FST& fst)
+    {
+        short* rstates = new short[fst.nstates];
+        memset(rstates, 0xff, sizeof(short) * fst.nstates);
+        short lstring = strlen(fst.string);
+        bool rc = true;
+
+        for (short i = 0; i < lstring && rc; i++)
+        {
+            fst.position++;
+            rc = step(fst, rstates);
+        };
+
+        delete[] rstates;
+
+        return (rc ? (fst.rstates[fst.nstates - 1] == lstring) : rc);
+    };
+}

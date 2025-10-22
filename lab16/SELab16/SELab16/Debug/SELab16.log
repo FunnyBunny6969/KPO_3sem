@@ -1,2 +1,54 @@
-﻿  SELab16.cpp
-  SELab16.vcxproj -> D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\Debug\SELab16.exe
+﻿  FST.cpp
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(90,23): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
+  SELab16.cpp
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(14,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(14,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [10]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(15,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(14,18):
+      при попытке сопоставить список аргументов "(const char [10], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(29,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(29,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [9]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(30,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(29,18):
+      при попытке сопоставить список аргументов "(const char [9], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(44,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(44,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [10]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(45,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(44,18):
+      при попытке сопоставить список аргументов "(const char [10], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(60,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(60,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [7]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(61,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(60,18):
+      при попытке сопоставить список аргументов "(const char [7], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
+  
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(94,17): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(94,17):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char *" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(95,9):
+              В результате преобразования теряются квалификаторы
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(94,17):
+      при попытке сопоставить список аргументов "(const char *, int, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
+  
+  Создание кода...

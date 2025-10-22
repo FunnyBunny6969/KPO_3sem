@@ -1,50 +1,54 @@
 ﻿  FST.cpp
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(90,23): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
   SELab16.cpp
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(23,10): error C2511: FST::FST::FST(char *,short,FST::NODE,...): перегруженная функция-член не найдена в "FST::FST"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(26,12):
-       см. объявление "FST::FST"
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(14,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(14,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [10]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(15,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(14,18):
+      при попытке сопоставить список аргументов "(const char [10], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
   
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(24,5): error C2550: FST::FST::{ctor}: список инициализации конструктора должен использоваться только в месте определения конструктора
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(25,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::nodes"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(31,15):
-       см. объявление "FST::FST::nodes"
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(29,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(29,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [9]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(30,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(29,18):
+      при попытке сопоставить список аргументов "(const char [9], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
   
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::nodes"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9):
-       см. объявление "FST::FST::nodes"
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(44,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(44,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [10]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(45,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(44,18):
+      при попытке сопоставить список аргументов "(const char [10], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
   
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9): error C3867: "FST::FST::nodes": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(26,9): error C2568: [: не удается разрешить перегрузку функции
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13): error C2597: недопустимая ссылка на нестатический член "FST::FST::nodes"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13):
-       см. объявление "FST::FST::nodes"
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(60,18): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(60,18):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char [7]" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(61,9):
+              При преобразовании из строкового литерала теряется квалификатор (см. /Zc:strictStrings)
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(60,18):
+      при попытке сопоставить список аргументов "(const char [7], int, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
   
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13): error C3867: "FST::FST::nodes": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(31,13): error C2568: [: не удается разрешить перегрузку функции
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(34,29): error C2597: недопустимая ссылка на нестатический член "FST::FST::nstates"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(30,15):
-       см. объявление "FST::FST::nstates"
+D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(94,17): error C2665: "FST::FST::FST": ни одна перегруженная функция не может преобразовать все типы аргументов
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,9):
+      может быть "FST::FST::FST(char *,short,FST::NODE,...)"
+          D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(94,17):
+          "FST::FST::FST(char *,short,FST::NODE,...)": невозможно преобразовать аргумент 1 из "const char *" в "char *"
+              D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(95,9):
+              В результате преобразования теряются квалификаторы
+      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\SELab16.cpp(94,17):
+      при попытке сопоставить список аргументов "(const char *, int, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE, FST::NODE)"
   
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(34,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::rstates"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.h(32,16):
-       см. объявление "FST::FST::rstates"
-  
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31): error C2597: недопустимая ссылка на нестатический член "FST::FST::nstates"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31):
-       см. объявление "FST::FST::nstates"
-  
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31): error C3867: "FST::FST::nstates": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(35,31): error C2568: <: не удается разрешить перегрузку функции
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13): error C2597: недопустимая ссылка на нестатический член "FST::FST::rstates"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13):
-       см. объявление "FST::FST::rstates"
-  
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13): error C3867: "FST::FST::rstates": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(36,13): error C2568: [: не удается разрешить перегрузку функции
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9): error C2597: недопустимая ссылка на нестатический член "FST::FST::rstates"
-      D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9):
-       см. объявление "FST::FST::rstates"
-  
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9): error C3867: "FST::FST::rstates": нестандартный синтаксис; используйте "&", чтобы создать указатель на член
-D:\UNIK\02\kpo\kpo_3sem\lab16\SELab16\SELab16\FST.cpp(37,9): error C2568: [: не удается разрешить перегрузку функции
   Создание кода...
