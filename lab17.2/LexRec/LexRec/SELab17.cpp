@@ -1,23 +1,17 @@
 ﻿#include "stdafx.h"
-#include <iostream>
-#include <locale>
-
-#include <cwchar>
-#include <tchar.h>
-
-#include "Error.h"
-#include "Parm.h"
-#include "Log.h"
-#include "In.h"
-#include "Out.h"
-
-using namespace std;
+#include "Tests.h"
 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_CTYPE, "Russian");
+	TestLT::TestLT();
+	TestIT::TestIT();
 
+	
+
+
+/*
 	Log::LOG log = Log::INITLOG;
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
@@ -48,6 +42,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
+
+	*/
 
 	return 0;
 }

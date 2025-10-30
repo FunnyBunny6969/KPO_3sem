@@ -205,32 +205,24 @@ namespace TestIT {
         }
 
         std::cout << "----- ТАБЛИЦА ИДЕНТИФИКАТОРОВ -----" << std::endl;
-        std::cout << "Индекс | Идентификатор | Тип данных | Тип | Первое вхождение" << std::endl;
-        std::cout << "-----------------------------------------------------------" << std::endl;
+        printf("%-7s | %-13s | %-11s | %-11s | %-15s\n",
+            "Индекс", "Идентификатор", "Тип данных", "Тип", "Первое вхождение");
+        std::cout << "--------------------------------------------------------------------" << std::endl;
 
         for (int i = 0; i < idtable.size; i++) {
             IT::Entry entry = idtable.table[i];
 
-            std::cout << i << "      | " << entry.id << "           | ";
-
-            // Тип данных
-            if (entry.iddatatype == IT::INT) {
-                std::cout << "integer   | ";
-            }
-            else {
-                std::cout << "string    | ";
-            }
-
-            // Тип идентификатора
+            const char* dataTypeStr = (entry.iddatatype == IT::INT) ? "integer" : "string";
+            const char* typeStr = "";
             switch (entry.idtype) {
-            case IT::V: std::cout << "переменная | "; break;
-            case IT::F: std::cout << "функция    | "; break;
-            case IT::P: std::cout << "параметр   | "; break;
-            case IT::L: std::cout << "литерал    | "; break;
+            case IT::V: typeStr = "переменная"; break;
+            case IT::F: typeStr = "функция"; break;
+            case IT::P: typeStr = "параметр"; break;
+            case IT::L: typeStr = "литерал"; break;
             }
 
-            // Первое вхождение
-            std::cout << entry.idxfirstLE << std::endl;
+            printf("%-7d | %-13s | %-11s | %-11s | %-15d\n",
+                i, entry.id, dataTypeStr, typeStr, entry.idxfirstLE);
         }
     }
 
