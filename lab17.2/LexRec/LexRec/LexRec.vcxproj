@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -123,7 +123,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="FST.cpp" />
+    <ClCompile Include="In.cpp" />
+    <ClCompile Include="IT.cpp" />
     <ClCompile Include="LexRec.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="LT.cpp" />
+    <ClCompile Include="Out.cpp" />
+    <ClCompile Include="Parm.cpp" />
+    <ClCompile Include="SELab17.cpp" />
+    <ClCompile Include="Tests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="FST.h" />
+    <ClInclude Include="In.h" />
+    <ClInclude Include="IT.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="LT.h" />
+    <ClInclude Include="Out.h" />
+    <ClInclude Include="Parm.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
