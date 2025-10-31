@@ -105,7 +105,6 @@ void outTEST(int argc, _TCHAR* argv[]) {
 	};
 }
 
-
 // Вспомогательные функции для тестирования LT
 namespace TestLT {
     // Создать лексему для добавления в таблицу
@@ -183,7 +182,6 @@ namespace TestLT {
 	}
 }
 
-
 // Вспомогательные функции для тестирования IT
 namespace TestIT {
     // Создать запись идентификатора
@@ -248,5 +246,195 @@ namespace TestIT {
         PrintTable(it);
 
         IT::Delete(it);
+    }
+}
+
+
+namespace TestAutomata {
+
+    // Вспомогательная функция для тестирования одного автомата
+    void TestSingleAutomata(
+        const FST::FST& automata, 
+        const char* testString, 
+        bool expected, 
+        const char* automataName) {
+
+        bool result = Automata::executeAutomata(automata, testString);
+
+        cout << "Тест " << automataName << "(\"" << testString << "\"): ";
+        if (result == expected) {
+            cout << "ПРОЙДЕН";
+        }
+        else {
+            cout << "НЕ ПРОЙДЕН (ожидалось: " << (expected ? "true" : "false")
+                << ", получено: " << (result ? "true" : "false") << ")";
+        }
+        cout << endl;
+    }
+
+    // Тестирование автоматов ключевых слов
+    void TestKeywordAutomata() {
+        cout << "\n=== ТЕСТИРОВАНИЕ АВТОМАТОВ КЛЮЧЕВЫХ СЛОВ ===" << endl;
+
+        // INTEGER
+        TestSingleAutomata(Automata::INTEGER, "integer", true, "INTEGER");
+        TestSingleAutomata(Automata::INTEGER, "intege", false, "INTEGER");
+        TestSingleAutomata(Automata::INTEGER, "int", false, "INTEGER");
+        TestSingleAutomata(Automata::INTEGER, "INTEGER", false, "INTEGER");
+
+        // STRING
+        TestSingleAutomata(Automata::STRING, "string", true, "STRING");
+        TestSingleAutomata(Automata::STRING, "str", false, "STRING");
+        TestSingleAutomata(Automata::STRING, "STRING", false, "STRING");
+
+        // FUNCTION
+        TestSingleAutomata(Automata::FUNCTION, "function", true, "FUNCTION");
+        TestSingleAutomata(Automata::FUNCTION, "func", false, "FUNCTION");
+
+        // DECLARE
+        TestSingleAutomata(Automata::DECLARE, "declare", true, "DECLARE");
+        TestSingleAutomata(Automata::DECLARE, "decl", false, "DECLARE");
+
+        // RETURN
+        TestSingleAutomata(Automata::RETURN, "return", true, "RETURN");
+        TestSingleAutomata(Automata::RETURN, "ret", false, "RETURN");
+
+        // PRINT
+        TestSingleAutomata(Automata::PRINT, "print", true, "PRINT");
+        TestSingleAutomata(Automata::PRINT, "prin", false, "PRINT");
+
+        // MAIN
+        TestSingleAutomata(Automata::MAIN, "main", true, "MAIN");
+        TestSingleAutomata(Automata::MAIN, "mai", false, "MAIN");
+    }
+
+    // Тестирование автомата идентификаторов
+    void TestIdentifierAutomata() {
+        cout << "\n=== ТЕСТИРОВАНИЕ АВТОМАТА ИДЕНТИФИКАТОРОВ ===" << endl;
+
+        // Правильные идентификаторы
+        TestSingleAutomata(Automata::IDENTIFIER, "x", true, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "variable", true, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "x1", true, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "my_var", true, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "temp123", true, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "a_b_c", true, "IDENTIFIER");
+
+        // Неправильные идентификаторы
+        TestSingleAutomata(Automata::IDENTIFIER, "1var", false, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "_var", false, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "my-var", false, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "Var", false, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "test.var", false, "IDENTIFIER");
+        TestSingleAutomata(Automata::IDENTIFIER, "", false, "IDENTIFIER");
+    }
+
+    // Тестирование автоматов литералов
+    void TestLiteralAutomata() {
+        cout << "\n=== ТЕСТИРОВАНИЕ АВТОМАТОВ ЛИТЕРАЛОВ ===" << endl;
+
+        // Числовые литералы
+        TestSingleAutomata(Automata::NUMBER_LITERAL, "0", true, "NUMBER_LITERAL");
+        TestSingleAutomata(Automata::NUMBER_LITERAL, "123", true, "NUMBER_LITERAL");
+        TestSingleAutomata(Automata::NUMBER_LITERAL, "999", true, "NUMBER_LITERAL");
+        TestSingleAutomata(Automata::NUMBER_LITERAL, "12a", false, "NUMBER_LITERAL");
+        TestSingleAutomata(Automata::NUMBER_LITERAL, "", false, "NUMBER_LITERAL");
+
+        // Строковые литералы
+        TestSingleAutomata(Automata::STRING_LITERAL, "''", true, "STRING_LITERAL");
+        TestSingleAutomata(Automata::STRING_LITERAL, "'hello'", true, "STRING_LITERAL");
+        TestSingleAutomata(Automata::STRING_LITERAL, "'test string'", true, "STRING_LITERAL");
+        TestSingleAutomata(Automata::STRING_LITERAL, "'", false, "STRING_LITERAL");
+        TestSingleAutomata(Automata::STRING_LITERAL, "hello", false, "STRING_LITERAL");
+    }
+
+    // Тестирование автоматов операторов и разделителей
+    void TestOperatorAutomata() {
+        cout << "\n=== ТЕСТИРОВАНИЕ АВТОМАТОВ ОПЕРАТОРОВ И РАЗДЕЛИТЕЛЕЙ ===" << endl;
+
+        // Операторы
+        TestSingleAutomata(Automata::PLUS, "+", true, "PLUS");
+        TestSingleAutomata(Automata::MINUS, "-", true, "MINUS");
+        TestSingleAutomata(Automata::STAR, "*", true, "STAR");
+        TestSingleAutomata(Automata::SLASH, "/", true, "SLASH");
+        TestSingleAutomata(Automata::ASSIGN, "=", true, "ASSIGN");
+
+        // Разделители
+        TestSingleAutomata(Automata::SEMICOLON, ";", true, "SEMICOLON");
+        TestSingleAutomata(Automata::COMMA, ",", true, "COMMA");
+        TestSingleAutomata(Automata::LEFTPAREN, "(", true, "LEFTPAREN");
+        TestSingleAutomata(Automata::RIGHTPAREN, ")", true, "RIGHTPAREN");
+        TestSingleAutomata(Automata::LEFTBRACE, "{", true, "LEFTBRACE");
+        TestSingleAutomata(Automata::RIGHTBRACE, "}", true, "RIGHTBRACE");
+
+        // Неправильные случаи
+        TestSingleAutomata(Automata::PLUS, "++", false, "PLUS");
+        TestSingleAutomata(Automata::SEMICOLON, ";;", false, "SEMICOLON");
+    }
+
+    // Тестирование функции getLexemeCode
+    void TestGetLexemeCode() {
+        cout << "\n=== ТЕСТИРОВАНИЕ GETLEXEMECODE ===" << endl;
+
+        struct TestCase {
+            const char* input;
+            char expected;
+            const char* description;
+        };
+
+        TestCase testCases[] = {
+            {"integer", LEX_INTEGER, "ключевое слово integer"},
+            {"string", LEX_STRING, "ключевое слово string"},
+            {"function", LEX_FUNCTION, "ключевое слово function"},
+            {"declare", LEX_DECLARE, "ключевое слово declare"},
+            {"return", LEX_RETURN, "ключевое слово return"},
+            {"print", LEX_PRINT, "ключевое слово print"},
+            {"main", 'm', "ключевое слово main"},
+            {"variable", LEX_ID, "идентификатор"},
+            {"x1", LEX_ID, "идентификатор с цифрами"},
+            {"123", LEX_LITERAL, "числовой литерал"},
+            {"'hello'", LEX_LITERAL, "строковый литерал"},
+            {"+", LEX_PLUS, "оператор плюс"},
+            {"-", LEX_MINUS, "оператор минус"},
+            {"*", LEX_STAR, "оператор умножения"},
+            {"/", LEX_DIRSLASH, "оператор деления"},
+            {"=", '=', "оператор присваивания"},
+            {";", LEX_SEMICOLON, "точка с запятой"},
+            {",", LEX_COMMA, "запятая"},
+            {"(", LEX_LEFTHESIS, "левая скобка"},
+            {")", LEX_RIGHTHESIS, "правая скобка"},
+            {"{", LEX_LEFTBRACE, "левая фигурная скобка"},
+            {"}", LEX_RIGHTBRACE, "правая фигурная скобка"},
+            {"unknown", '?', "неизвестная лексема"}
+        };
+
+        for (const auto& testCase : testCases) {
+            char result = Automata::getLexemeCode(testCase.input);
+            cout << "getLexemeCode(\"" << testCase.input << "\"): ";
+
+            if (result == testCase.expected) {
+                cout << "ПРОЙДЕН (" << testCase.description << " -> '" << result << "')";
+            }
+            else {
+                cout << "НЕ ПРОЙДЕН (ожидалось: '" << testCase.expected
+                    << "', получено: '" << result << "')";
+            }
+            cout << endl;
+        }
+    }
+
+    // Запуск всех тестов автоматов
+    void RunAllTests() {
+        cout << "ЗАПУСК ТЕСТОВ АВТОМАТОВ" << endl;
+        cout << "=======================" << endl;
+
+        TestKeywordAutomata();
+        TestIdentifierAutomata();
+        TestLiteralAutomata();
+        TestOperatorAutomata();
+        TestGetLexemeCode();
+
+        cout << "\n=======================" << endl;
+        cout << "ТЕСТИРОВАНИЕ АВТОМАТОВ ЗАВЕРШЕНО" << endl;
     }
 }

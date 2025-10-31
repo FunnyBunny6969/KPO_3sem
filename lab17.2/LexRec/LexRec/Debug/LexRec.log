@@ -1,2 +1,72 @@
-﻿  Error.cpp
-  LexRec.vcxproj -> D:\UNIK\02\kpo\kpo_3sem\lab17.2\LexRec\Debug\LexRec.exe
+﻿  Automata.cpp
+  Lexer.cpp
+  SELab17.cpp
+  Tests.cpp
+  Создание кода...
+Lexer.obj : error LNK2005: "char * Automata::EMPTYstring" (?EMPTYstring@Automata@@3PADA) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::INTEGER" (?INTEGER@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::STRING" (?STRING@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::FUNCTION" (?FUNCTION@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::DECLARE" (?DECLARE@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::RETURN" (?RETURN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::PRINT" (?PRINT@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::MAIN" (?MAIN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::IDENTIFIER" (?IDENTIFIER@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::NUMBER_LITERAL" (?NUMBER_LITERAL@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::STRING_LITERAL" (?STRING_LITERAL@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::SEMICOLON" (?SEMICOLON@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::COMMA" (?COMMA@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::LEFTPAREN" (?LEFTPAREN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::RIGHTPAREN" (?RIGHTPAREN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::LEFTBRACE" (?LEFTBRACE@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::RIGHTBRACE" (?RIGHTBRACE@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::ASSIGN" (?ASSIGN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::PLUS" (?PLUS@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::MINUS" (?MINUS@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::STAR" (?STAR@Automata@@3UFST@2@A) уже определен в Automata.obj
+Lexer.obj : error LNK2005: "struct FST::FST Automata::SLASH" (?SLASH@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "char * Automata::EMPTYstring" (?EMPTYstring@Automata@@3PADA) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::INTEGER" (?INTEGER@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::STRING" (?STRING@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::FUNCTION" (?FUNCTION@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::DECLARE" (?DECLARE@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::RETURN" (?RETURN@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::PRINT" (?PRINT@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::MAIN" (?MAIN@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::IDENTIFIER" (?IDENTIFIER@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::NUMBER_LITERAL" (?NUMBER_LITERAL@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::STRING_LITERAL" (?STRING_LITERAL@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::SEMICOLON" (?SEMICOLON@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::COMMA" (?COMMA@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::LEFTPAREN" (?LEFTPAREN@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::RIGHTPAREN" (?RIGHTPAREN@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::LEFTBRACE" (?LEFTBRACE@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::RIGHTBRACE" (?RIGHTBRACE@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::ASSIGN" (?ASSIGN@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::PLUS" (?PLUS@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::MINUS" (?MINUS@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::STAR" (?STAR@Automata@@3UFST@2@A) уже определен в Automata.obj
+SELab17.obj : error LNK2005: "struct FST::FST Automata::SLASH" (?SLASH@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "char * Automata::EMPTYstring" (?EMPTYstring@Automata@@3PADA) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::INTEGER" (?INTEGER@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::STRING" (?STRING@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::FUNCTION" (?FUNCTION@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::DECLARE" (?DECLARE@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::RETURN" (?RETURN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::PRINT" (?PRINT@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::MAIN" (?MAIN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::IDENTIFIER" (?IDENTIFIER@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::NUMBER_LITERAL" (?NUMBER_LITERAL@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::STRING_LITERAL" (?STRING_LITERAL@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::SEMICOLON" (?SEMICOLON@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::COMMA" (?COMMA@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::LEFTPAREN" (?LEFTPAREN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::RIGHTPAREN" (?RIGHTPAREN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::LEFTBRACE" (?LEFTBRACE@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::RIGHTBRACE" (?RIGHTBRACE@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::ASSIGN" (?ASSIGN@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::PLUS" (?PLUS@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::MINUS" (?MINUS@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::STAR" (?STAR@Automata@@3UFST@2@A) уже определен в Automata.obj
+Tests.obj : error LNK2005: "struct FST::FST Automata::SLASH" (?SLASH@Automata@@3UFST@2@A) уже определен в Automata.obj
+D:\UNIK\02\kpo\kpo_3sem\lab17.2\LexRec\Debug\LexRec.exe : fatal error LNK1169: обнаружен многократно определенный символ - один или более
