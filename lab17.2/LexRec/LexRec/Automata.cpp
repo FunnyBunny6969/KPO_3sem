@@ -14,8 +14,8 @@ namespace Automata {
         FST::NODE(1, FST::RELATION('t', 3)),
         FST::NODE(1, FST::RELATION('e', 4)),
         FST::NODE(1, FST::RELATION('g', 5)),
-        FST::NODE(1, FST::RELATION('e', 5)), 
-        FST::NODE(1, FST::RELATION('r', 6)), 
+        FST::NODE(1, FST::RELATION('e', 6)), 
+        FST::NODE(1, FST::RELATION('r', 7)), 
         FST::NODE()
     );
 

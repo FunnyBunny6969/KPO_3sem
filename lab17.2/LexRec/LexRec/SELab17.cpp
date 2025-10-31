@@ -1,17 +1,13 @@
 ﻿#include "stdafx.h"
 #include "Tests.h"
+#include <iostream>
+using namespace std;
 
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_CTYPE, "Russian");
-	TestLT::TestLT();
-	TestIT::TestIT();
 
-	
-
-
-/*
 	Log::LOG log = Log::INITLOG;
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
@@ -39,11 +35,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	catch (Error::ERROR e)
 	{
-		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
+		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
 
-	*/
+
+	//TestLT::TestLT();
+	//TestIT::TestIT();
 
 	return 0;
 }
