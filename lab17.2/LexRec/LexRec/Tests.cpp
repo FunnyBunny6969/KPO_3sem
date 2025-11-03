@@ -107,7 +107,6 @@ void outTEST(int argc, _TCHAR* argv[]) {
 
 // Вспомогательные функции для тестирования LT
 namespace TestLT {
-    // Создать лексему для добавления в таблицу
     LT::Entry CreateLTEntry(char lexema, int lineNumber, int tiIndex) {
         LT::Entry entry;
         entry.lexema[0] = lexema;
@@ -117,7 +116,6 @@ namespace TestLT {
         return entry;
     }
 
-    // Вывести таблицу лексем в формате из задания
     void PrintLexTable(LT::LexTable& lextable) {
         if (lextable.size == 0) {
             cout << "Таблица лексем пуста" << std::endl;
@@ -149,7 +147,6 @@ namespace TestLT {
         std::cout << std::endl;
     }
 
-    // Вспомогательные для IT...
     IT::Entry CreateITEntry(const char* id, int lexemeIndex, IT::IDDATATYPE dataType, IT::IDTYPE type) {
         IT::Entry entry;
         strcpy_s(entry.id, ID_MAXSIZE, id);
@@ -165,7 +162,6 @@ namespace TestLT {
 
 		LT::LexTable lt = LT::Create(10);
 
-		// Добавляем лексемы используя функции из TestHelpers
 		LT::Add(lt, CreateLTEntry('t', 1, LT_TI_NULLIDX)); // integer
 		LT::Add(lt, CreateLTEntry('i', 1, 0));             // идентификатор
 		LT::Add(lt, CreateLTEntry('f', 1, LT_TI_NULLIDX)); // function
@@ -175,7 +171,6 @@ namespace TestLT {
 
 		std::cout << "Размер таблицы: " << lt.size << std::endl;
 
-		// Выводим используя функцию из TestHelpers
 		PrintLexTable(lt);
 
 		LT::Delete(lt);
@@ -184,18 +179,16 @@ namespace TestLT {
 
 // Вспомогательные функции для тестирования IT
 namespace TestIT {
-    // Создать запись идентификатора
     IT::Entry CreateEntry(const char* id, int lexemeIndex, IT::IDDATATYPE dataType, IT::IDTYPE type) {
         IT::Entry entry;
-        strcpy_s(entry.id, ID_MAXSIZE, id);  // Убрал IT::
+        strcpy_s(entry.id, ID_MAXSIZE, id);  
         entry.idxfirstLE = lexemeIndex;
         entry.iddatatype = dataType;
         entry.idtype = type;
-        entry.value.vint = TI_INT_DEFAULT;   // Убрал IT::
+        entry.value.vint = TI_INT_DEFAULT;  
         return entry;
     }
 
-    // Вывести таблицу идентификаторов
     void PrintTable(IT::IdTable& idtable) {
         if (idtable.size == 0) {
             std::cout << "Таблица идентификаторов пуста" << std::endl;
@@ -229,7 +222,6 @@ namespace TestIT {
 
         IT::IdTable it = IT::Create(10);
 
-        // Добавляем идентификаторы
         IT::Add(it, CreateEntry("main", 0, IT::INT, IT::F));    // функция
         IT::Add(it, CreateEntry("x", 2, IT::INT, IT::P));       // параметр
         IT::Add(it, CreateEntry("y", 3, IT::INT, IT::P));       // параметр
@@ -237,12 +229,10 @@ namespace TestIT {
 
         std::cout << "Размер таблицы: " << it.size << std::endl;
 
-        // Самый простой вариант
         char mainId[] = "main";
         int index = IT::IsId(it, mainId);
         std::cout << "Идентификатор 'main' найден по индексу: " << index << std::endl;
 
-        // Выводим таблицу
         PrintTable(it);
 
         IT::Delete(it);
@@ -250,13 +240,14 @@ namespace TestIT {
 }
 
 
+
 namespace TestAutomata {
 
     // Вспомогательная функция для тестирования одного автомата
     void TestSingleAutomata(
-        const FST::FST& automata, 
-        const char* testString, 
-        bool expected, 
+        const FST::FST& automata,
+        const char* testString,
+        bool expected,
         const char* automataName) {
 
         bool result = Automata::executeAutomata(automata, testString);

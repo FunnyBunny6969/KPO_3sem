@@ -28,17 +28,19 @@ namespace TestLT {
 	void TestLT();
 }
 
-
-// Вспомогательные функции для тестирования IT
 namespace TestIT {
 	IT::Entry CreateEntry(const char*, int, IT::IDDATATYPE, IT::IDTYPE );
 	void PrintTable(IT::IdTable&);
 	void TestIT();
 }
 
-// Тестирование автоматов
+
 namespace TestAutomata {
-    void TestSingleAutomata(const FST::FST& automata, const char* testString, bool expected, const char* automataName);
+    void TestSingleAutomata(
+        const FST::FST& automata, 
+        const char* testString, 
+        bool expected, 
+        const char* automataName);
     void TestKeywordAutomata();
     void TestIdentifierAutomata();
     void TestLiteralAutomata();

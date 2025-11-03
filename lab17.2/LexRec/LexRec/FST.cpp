@@ -26,7 +26,7 @@ namespace FST {
         for (short i = 0; i < n; i++) relations[i] = p[i];
 	}
 
-	FST::FST(char* s, short ns, NODE n, ...) {
+	FST::FST(const char* s, short ns, NODE n, ...) {
         string = s;
         nstates = ns;
         nodes = new NODE[ns];
@@ -37,8 +37,6 @@ namespace FST {
         rstates[0] = 0;
         position = -1;
 	}
-
-
 
     bool step(FST& fst, short*& rstates) // один шаг автомата
     {
