@@ -1,4 +1,10 @@
-﻿  SELab17.cpp
+﻿  Error.cpp
+  In.cpp
+D:\UNIK\02\kpo\kpo_3sem\lab17.1\SELab17\In.cpp(166,37): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  Log.cpp
+  Out.cpp
+  Parm.cpp
+  SELab17.cpp
   SE_Lab14.cpp
   Создание кода...
-  SELab17.vcxproj -> D:\UNIK\02\kpo\kpo_3sem\SELab17\x64\Debug\SELab17.exe
+  SELab17.vcxproj -> D:\UNIK\02\kpo\kpo_3sem\lab17.1\x64\Debug\SELab17.exe

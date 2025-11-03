@@ -101,6 +101,68 @@ namespace In {
         result.text[result.size] = '\0';
 
         file.close();
+
+        // Удаляем лишние пробелы из уже обработанного текста
+        removeExtraSpacesFromResult(result);
         return result;
+    }
+
+
+    void removeExtraSpacesFromResult(IN& result) {
+        std::string cleaned;
+        bool in_string = false;
+        bool last_was_space = false;
+        bool at_line_start = true;  // Флаг начала строки
+
+        for (int i = 0; i < result.size; i++) {
+            unsigned char c = result.text[i];
+
+            if (c == '\'') {
+                in_string = !in_string;
+                cleaned += c;
+                last_was_space = false;
+                at_line_start = false;
+                continue;
+            }
+
+            if (c == '|') {
+                // Конец строки - сбрасываем флаг
+                cleaned += c;
+                last_was_space = false;
+                at_line_start = true;  // Следующий символ - начало новой строки
+                continue;
+            }
+
+            if (in_string) {
+                cleaned += c;
+                last_was_space = false;
+                at_line_start = false;
+            }
+            else {
+                if (c == ' ' || c == '\t') {
+                    if (!last_was_space && !cleaned.empty() && !at_line_start) {
+                        // Сохраняем пробел только если:
+                        // - не начало строки
+                        // - не подряд идущие пробелы  
+                        // - не первый символ в тексте
+                        cleaned += ' ';
+                        last_was_space = true;
+                    }
+                    // Пропускаем пробелы в начале строки и лишние пробелы
+                }
+                else {
+                    cleaned += c;
+                    last_was_space = false;
+                    at_line_start = false;
+                }
+            }
+        }
+
+        // Копируем обратно в result.text
+        for (int i = 0; i < cleaned.length() && i < IN_MAX_LEN_TEXT - 1; i++) {
+            result.text[i] = cleaned[i];
+        }
+        result.text[cleaned.length()] = '\0';
+        result.size = cleaned.length();
     }
 }

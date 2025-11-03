@@ -8,7 +8,7 @@ namespace Automata {
 	// ========== йкчвебше якнбю ==========
 
 	FST::FST INTEGER(
-		EMPTYstring, 8,
+		(char*)"", 8,
 		FST::NODE(1, FST::RELATION('i', 1)),
 		FST::NODE(1, FST::RELATION('n', 2)),
 		FST::NODE(1, FST::RELATION('t', 3)),
