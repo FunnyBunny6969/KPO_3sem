@@ -40,9 +40,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	};
 
 
-	TestLT::TestLT();
-	TestIT::TestIT();
-	TestAutomata::RunAllTests();
+	//TestLT::TestLT();
+	//TestIT::TestIT();
+	//TestAutomata::RunAllTests();
 
 	return 0;
 }

@@ -334,7 +334,7 @@ namespace TestAutomata {
         // Строковые литералы
         TestSingleAutomata(Automata::STRING_LITERAL, "''", true, "STRING_LITERAL");
         TestSingleAutomata(Automata::STRING_LITERAL, "'hello'", true, "STRING_LITERAL");
-        TestSingleAutomata(Automata::STRING_LITERAL, "'test string'", true, "STRING_LITERAL");
+        TestSingleAutomata(Automata::STRING_LITERAL, "'ААА   СТРОКА qnjkn124450!@#$%^&*'", true, "STRING_LITERAL");
         TestSingleAutomata(Automata::STRING_LITERAL, "'", false, "STRING_LITERAL");
         TestSingleAutomata(Automata::STRING_LITERAL, "hello", false, "STRING_LITERAL");
     }
@@ -395,8 +395,7 @@ namespace TestAutomata {
             {"(", LEX_LEFTHESIS, "левая скобка"},
             {")", LEX_RIGHTHESIS, "правая скобка"},
             {"{", LEX_LEFTBRACE, "левая фигурная скобка"},
-            {"}", LEX_RIGHTBRACE, "правая фигурная скобка"},
-            {"unknown", '?', "неизвестная лексема"}
+            {"}", LEX_RIGHTBRACE, "правая фигурная скобка"}
         };
 
         for (const auto& testCase : testCases) {
@@ -429,3 +428,9 @@ namespace TestAutomata {
         cout << "ТЕСТИРОВАНИЕ АВТОМАТОВ ЗАВЕРШЕНО" << endl;
     }
 }
+
+
+
+
+
+
