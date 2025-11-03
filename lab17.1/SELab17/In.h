@@ -11,17 +11,17 @@
 /*	DLE		DC1		DC2		DC3		DC4		NAK		SYN		ETB		CAN		EM		SUB		ESC		FS		GS		RS		US	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	SP		!		"		#		$		%		&		'		(		)		*		+		,		-		.		/	*/   \
-	IN::T,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::T,	 IN::T,	 \
+	IN::T,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 IN::T,	 IN::F,	 IN::T,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 \
 /*	0		1		2		3		4		5		6		7		8		9		:		;		<		=		>		?	*/   \
-	IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 \
+	IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 IN::R,	 \
 /*	@		A		B		C		D		E		F		G		H		I		J		K		L		M		N		O	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
 /*	P		Q		R		S		T		U		V		W		X		Y		Z		[		\		]		^		_	*/   \
-	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::F,	 \
+	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::R,	 IN::F,	 IN::R,	 IN::F,	 IN::F,	 \
 /*	`		a		b		c		d		e		f		g		h		i		j		k		l		m		n		o	*/	 \
 	IN::F,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 \
 /*	p		q		r		s		t		u		v		w		x		y		z		{		|		}		~		DEL	*/   \
-	IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::F,	 IN::T,	 IN::F,	 IN::F,	 \
+	IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::T,	 IN::R,	 IN::F,	 IN::R,	 IN::F,	 IN::F,	 \
 \
 /*	Ђ		Ѓ		‚		ѓ		„		…		†		‡		€		‰		Љ		‹		Њ		Ќ		Ћ		Џ	*/   \
 	IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 \
@@ -47,7 +47,14 @@ namespace In
 {
 	struct IN
 	{
-		enum {T = 1024, F = 2048, I = 4096}; 
+		enum {
+			T = 1024, 
+			F = 2048, 
+			I = 4096,
+
+			R = 8192,
+
+			}; 
 		int size;
 		int lines;
 		int ignor;
