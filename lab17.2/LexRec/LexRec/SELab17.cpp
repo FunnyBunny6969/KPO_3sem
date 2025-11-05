@@ -31,6 +31,7 @@ void run(int argc, _TCHAR* argv[]) {
         // Выводим результаты
         TestLT::PrintLexTable(lexTable);
         TestIT::PrintTable(idTable);
+		TestLexer::TestSplitter(in);
 
         // Очищаем память
         LT::Delete(lexTable);
