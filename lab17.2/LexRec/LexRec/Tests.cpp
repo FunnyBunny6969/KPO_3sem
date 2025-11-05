@@ -433,4 +433,20 @@ namespace TestAutomata {
 
 
 
+namespace TestLexer {
+    void TestSplitter(In::IN in) {
+		std::vector<std::vector<std::string>> lines;
+		Lexer::SplitIntoWords((const char*)in.text, lines);
+		std::cout << "=== РЕЗУЛЬТАТ РАЗБИВКИ ===" << std::endl;
 
+		for (int i = 0; i < lines.size(); i++) {
+			std::cout << "Строка " << (i + 1) << " (" << lines[i].size() << " слов): ";
+
+			for (int j = 0; j < lines[i].size(); j++) {
+				std::cout << "[" << lines[i][j] << "] ";
+			}
+			std::cout << std::endl;
+		}
+		std::cout << "Всего строк: " << lines.size() << std::endl;
+    }
+}

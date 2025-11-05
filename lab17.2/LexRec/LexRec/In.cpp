@@ -132,7 +132,7 @@ namespace In {
                 continue;
             }
 
-            if (c == '|') {
+            if (c == SEP) {
                 // Конец строки - сбрасываем флаг
                 cleaned += c;
                 last_was_space = false;

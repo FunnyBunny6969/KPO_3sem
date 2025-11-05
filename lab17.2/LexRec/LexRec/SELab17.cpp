@@ -5,53 +5,43 @@
 using namespace std;
 
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-	setlocale(LC_CTYPE, "Russian");
 
+void run(int argc, _TCHAR* argv[]) {
 	Log::LOG log = Log::INITLOG;
+	In::IN in;
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		log = Log::getlog(parm.log);
 		Log::WriteLog(log);
 		Log::WriteParm(log, parm);
-		In::IN in = In::getin(parm.in);
+		in = In::getin(parm.in);
 		Log::WriteIn(log, in);
 		Log::Close(log);
 
 
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
-
         // Создаем таблицы
         LT::LexTable lexTable = LT::Create(1000);
         IT::IdTable idTable = IT::Create(100);
-        std::vector<Error::ERROR> lexErrors;
+
 
         // Запускаем лексический анализ
-		Lexer::Analyze((const char*)in.text, lexTable, idTable, lexErrors);
+        Lexer::Analyze((const char*)in.text, lexTable, idTable);
 
         // Выводим результаты
         TestLT::PrintLexTable(lexTable);
         TestIT::PrintTable(idTable);
 
-        // Выводим ошибки лексического анализа
-        if (!lexErrors.empty()) {
-            cout << "\n=== ОШИБКИ ЛЕКСИЧЕСКОГО АНАЛИЗА ===" << endl;
-            for (const auto& error : lexErrors) {
-                cout << "Строка " << error.inext.line << ", позиция " << error.inext.col
-                    << ": " << error.message << endl;
-            }
-        }
-
         // Очищаем память
         LT::Delete(lexTable);
         IT::Delete(idTable);
-        // === КОНЕЦ ЛЕКСЕРА ===
-
         Log::Close(log);
     }
 	catch (const Error::ERROR& e) {
-		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
+		std::cout << "Ошибка " << e.id << " : " << e.message 
+			<< " LINE " << e.inext.line 
+			<< " COL "  << e.inext.col << std::endl << std::endl;
+		TestLexer::TestSplitter(in);
 		Log::WriteError(log, e);
 	}
 
@@ -70,6 +60,22 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
+
+}
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_CTYPE, "Russian");
+
+
+
+
+	run(argc, argv);
+	//TestIT::TestIT();
+	//TestLT::TestLT();
+	//TestAutomata::RunAllTests();
 
 
 

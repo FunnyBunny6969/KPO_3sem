@@ -4,6 +4,7 @@
 #include <cwchar>
 #include <tchar.h>
 #include <cassert>
+#include <vector>
 
 #include "Error.h"
 #include "Parm.h"
@@ -13,6 +14,7 @@
 #include "LT.h"
 #include "IT.h"
 #include "Automata.h"
+#include "Lexer.h"
 
 void geterrorTEST();
 void getparmTEST(int, _TCHAR*[]);
@@ -47,5 +49,9 @@ namespace TestAutomata {
     void TestOperatorAutomata();
     void TestGetLexemeCode();
     void RunAllTests();
+}
+
+namespace TestLexer {
+    void TestSplitter(In::IN);
 }
 
