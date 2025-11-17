@@ -181,11 +181,11 @@ namespace TestLT {
 namespace TestIT {
     IT::Entry CreateEntry(const char* id, int lexemeIndex, IT::IDDATATYPE dataType, IT::IDTYPE type) {
         IT::Entry entry;
-        strcpy_s(entry.id, ID_MAXSIZE, id);  
+        strcpy_s(entry.id, ID_MAXSIZE, id);
         entry.idxfirstLE = lexemeIndex;
         entry.iddatatype = dataType;
         entry.idtype = type;
-        entry.value.vint = TI_INT_DEFAULT;  
+        entry.value.vint = TI_INT_DEFAULT;
         return entry;
     }
 
@@ -195,25 +195,43 @@ namespace TestIT {
             return;
         }
 
-        std::cout << "----- ТАБЛИЦА ИДЕНТИФИКАТОРОВ -----" << std::endl;
-        printf("%-7s | %-13s | %-11s | %-11s | %-15s\n",
-            "Индекс", "Идентификатор", "Тип данных", "Тип", "Первое вхождение");
+        std::cout << "IT (Identifier Table): size=" << idtable.size << std::endl;
+        printf("%-6s %-15s %-8s %-8s %-12s %s\n",
+            "Index", "Identifier", "Type", "DataType", "FirstLT", "Value");
         std::cout << "--------------------------------------------------------------------" << std::endl;
 
         for (int i = 0; i < idtable.size; i++) {
             IT::Entry entry = idtable.table[i];
 
-            const char* dataTypeStr = (entry.iddatatype == IT::INT) ? "integer" : "string";
+            const char* dataTypeStr = (entry.iddatatype == IT::INT) ? "INT" : "STR";
             const char* typeStr = "";
             switch (entry.idtype) {
-            case IT::V: typeStr = "переменная"; break;
-            case IT::F: typeStr = "функция"; break;
-            case IT::P: typeStr = "параметр"; break;
-            case IT::L: typeStr = "литерал"; break;
+            case IT::V: typeStr = "VAR"; break;
+            case IT::F: typeStr = "FUNC"; break;
+            case IT::P: typeStr = "PARM"; break;
+            case IT::L: typeStr = "LIT"; break;
             }
 
-            printf("%-7d | %-13s | %-11s | %-11s | %-15d\n",
-                i, entry.id, dataTypeStr, typeStr, entry.idxfirstLE);
+            // Формируем значение для вывода
+            std::string valueStr = "";
+            if (entry.idtype == IT::L) {
+                if (entry.iddatatype == IT::INT) {
+                    valueStr = std::to_string(entry.value.vint);
+                }
+                else {
+                    valueStr = "'";
+                    for (int j = 0; j < entry.value.vstr[0].len; j++) {
+                        valueStr += entry.value.vstr[0].str[j];
+                    }
+                    valueStr += "'";
+                }
+            }
+            else {
+                valueStr = "-"; // для не-литералов
+            }
+
+            printf("%-6d %-15s %-8s %-8s %-12d %s\n",
+                i, entry.id, typeStr, dataTypeStr, entry.idxfirstLE, valueStr.c_str());
         }
     }
 
@@ -227,6 +245,24 @@ namespace TestIT {
         IT::Add(it, CreateEntry("y", 3, IT::INT, IT::P));       // параметр
         IT::Add(it, CreateEntry("z", 4, IT::INT, IT::V));       // переменная
 
+        // Добавим тестовые литералы
+        IT::Entry litEntry;
+        strcpy_s(litEntry.id, ID_MAXSIZE, "L1");
+        litEntry.idxfirstLE = 5;
+        litEntry.iddatatype = IT::INT;
+        litEntry.idtype = IT::L;
+        litEntry.value.vint = 123;
+        IT::Add(it, litEntry);
+
+        IT::Entry strLitEntry;
+        strcpy_s(strLitEntry.id, ID_MAXSIZE, "L2");
+        strLitEntry.idxfirstLE = 6;
+        strLitEntry.iddatatype = IT::STR;
+        strLitEntry.idtype = IT::L;
+        strLitEntry.value.vstr[0].len = 11;
+        strcpy_s(strLitEntry.value.vstr[0].str, TI_STR_MAXSIZE, "hello world");
+        IT::Add(it, strLitEntry);
+
         std::cout << "Размер таблицы: " << it.size << std::endl;
 
         char mainId[] = "main";
@@ -238,7 +274,6 @@ namespace TestIT {
         IT::Delete(it);
     }
 }
-
 
 
 namespace TestAutomata {

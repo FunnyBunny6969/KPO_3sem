@@ -8,7 +8,6 @@
 
 
 
-
 #define IN_CODE_TABLE {\
 /*	NUL		SOH		STX		ETX		EOT		ENQ	T	ACK		BEL		BS		TAB		LF		VT		FF		CR		SO		SI	*/   \
 	IN::F,	 IN::F,	 IN::F,  IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::F,	 IN::I,	 SEP,	 IN::F,	 IN::F,	 IN::I,	 IN::F,	 IN::F,	 \

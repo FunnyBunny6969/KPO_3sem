@@ -1,5 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS  
-#include "Lexer.h"
+﻿#include "Lexer.h"
 #include <sstream>
 #include <cctype>
 #include <string>
@@ -75,6 +74,13 @@ namespace Lexer {
 
         int lineNumber = 1;
         int wordNumber = 1;
+        int literalCount = 1;
+
+        // Контекст для определения типов
+        std::string currentFunction = "";
+        IT::IDTYPE currentIdType = IT::V;
+        IT::IDDATATYPE currentDataType = IT::INT;
+        bool inParams = false;
 
         // Проходим по всем строкам
         for (const auto& line : lines) {
@@ -88,6 +94,33 @@ namespace Lexer {
                     throw ERROR_THROW_IN(200, lineNumber, wordNumber);
                 }
 
+                if (code == LEX_FUNCTION) {
+                    currentIdType = IT::F;  // следующий ID будет функцией
+                }
+                else if (code == 't') { // integer/string
+                    currentDataType = (word == "integer") ? IT::INT : IT::STR;
+                    if (inParams) {
+                        currentIdType = IT::P;  // в параметрах - следующий ID будет параметром
+                    }
+                }
+                else if (code == LEX_LEFTHESIS) {
+                    inParams = true;  // начались параметры
+                }
+                else if (code == LEX_RIGHTHESIS) {
+                    inParams = false; // закончились параметры
+                    currentIdType = IT::V;
+                }
+                else if (code == LEX_LEFTBRACE) {
+                    // Начало тела функции
+                    currentIdType = IT::V;
+                    inParams = false;
+                }
+                else if (code == LEX_RIGHTBRACE) {
+                    // Конец функции
+                    currentFunction = "";
+                    currentIdType = IT::V;
+                }
+
                 // Создаем запись для таблицы лексем
                 LT::Entry lexEntry;
                 lexEntry.lexema[0] = code;
@@ -96,15 +129,21 @@ namespace Lexer {
 
                 // Обрабатываем идентификаторы и литералы
                 if (code == LEX_ID || code == LEX_LITERAL) {
-                    // Проверяем, есть ли уже такой идентификатор/литерал
                     bool found = false;
                     int idIndex = TI_NULLIDX;
 
-                    for (int i = 0; i < idTable.size; i++) {
-                        if (strcmp(idTable.table[i].id, word.c_str()) == 0) {
-                            found = true;
-                            idIndex = i;
-                            break;
+                    // Для литералов всегда создаем новую запись
+                    if (code == LEX_LITERAL) {
+                        found = false;
+                    }
+                    else {
+                        // Для идентификаторов проверяем существование
+                        for (int i = 0; i < idTable.size; i++) {
+                            if (strcmp(idTable.table[i].id, word.c_str()) == 0) {
+                                found = true;
+                                idIndex = i;
+                                break;
+                            }
                         }
                     }
 
@@ -112,27 +151,43 @@ namespace Lexer {
                     if (!found) {
                         IT::Entry idEntry;
 
-                        // Безопасное копирование идентификатора
-                        int copyLen = word.length();
-                        if (copyLen >= ID_MAXSIZE)
-                            copyLen = ID_MAXSIZE - 1;
-
-                        for (int i = 0; i < copyLen; i++) {
-                            idEntry.id[i] = word[i];
-                        }
-                        idEntry.id[copyLen] = '\0';
-
-                        idEntry.idxfirstLE = lexTable.size;
-
-                        // Определяем тип данных и значение
                         if (code == LEX_ID) {
-                            // Идентификатор
-                            idEntry.iddatatype = IT::INT;
-                            idEntry.idtype = IT::V;
+                            // ИДЕНТИФИКАТОР - обрезаем до 5 символов
+                            int copyLen = word.length();
+                            if (copyLen >= ID_MAXSIZE)
+                                copyLen = ID_MAXSIZE - 1;
+
+                            for (int i = 0; i < copyLen; i++) {
+                                idEntry.id[i] = word[i];
+                            }
+                            idEntry.id[copyLen] = '\0';
+
+                            // ИСПОЛЬЗУЕМ КОНТЕКСТ ДЛЯ ОПРЕДЕЛЕНИЯ ТИПОВ
+                            idEntry.idtype = currentIdType;
+                            idEntry.iddatatype = currentDataType;
                             idEntry.value.vint = TI_INT_DEFAULT;
+
+                            // После использования сбрасываем контекстные типы
+                            if (currentIdType == IT::F) {
+                                currentFunction = word; // запоминаем имя функции
+                                currentIdType = IT::V;
+                            }
+                            else if (currentIdType == IT::P) {
+                                currentIdType = IT::V;
+                            }
                         }
                         else {
-                            // Литерал
+                            // ЛИТЕРАЛ - генерируем имя L1, L2, L3...
+                            std::string litName = "L" + std::to_string(literalCount++);
+                            int copyLen = litName.length();
+                            if (copyLen >= ID_MAXSIZE)
+                                copyLen = ID_MAXSIZE - 1;
+
+                            for (int i = 0; i < copyLen; i++) {
+                                idEntry.id[i] = litName[i];
+                            }
+                            idEntry.id[copyLen] = '\0';
+
                             idEntry.idtype = IT::L;
 
                             // Числовой литерал
@@ -157,6 +212,7 @@ namespace Lexer {
                             }
                         }
 
+                        idEntry.idxfirstLE = lexTable.size;
                         IT::Add(idTable, idEntry);
                         idIndex = idTable.size - 1;
                     }
