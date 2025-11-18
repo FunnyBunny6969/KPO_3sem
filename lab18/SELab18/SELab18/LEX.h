@@ -12,7 +12,6 @@ namespace LEX {
         LT::LexTable lexTable;
         IT::IdTable idTable;
 
-        // Конструктор для инициализации с заданными размерами
         LEX(size_t ltSize = 1000, size_t itSize = 100) {
             lexTable = LT::Create(ltSize);
             idTable = IT::Create(itSize);

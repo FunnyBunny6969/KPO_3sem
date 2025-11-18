@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\SELab17.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|solutionrelative:LexRec\\SELab17.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\Tests.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|solutionrelative:LexRec\\Tests.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\IT.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|solutionrelative:LexRec\\IT.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\SELab17.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|solutionrelative:LexRec\\SELab17.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BEFADAE5-259B-45E3-931B-86062E373603}|LexRec\\LexRec.vcxproj|D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\Lexer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -82,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 15,
           "Children": [
             {
               "$type": "Bookmark",
@@ -146,8 +146,7 @@
               "RelativeToolTip": "LexRec\\Automata.cpp",
               "ViewState": "AgIAAJoBAAAAAAAAAAAAAGUBAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-30T14:37:41.866Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T14:37:41.866Z"
             },
             {
               "$type": "Document",
@@ -159,8 +158,7 @@
               "RelativeToolTip": "LexRec\\Automata.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-30T14:33:07.723Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T14:33:07.723Z"
             },
             {
               "$type": "Document",
@@ -172,8 +170,7 @@
               "RelativeToolTip": "LexRec\\Lexer.cpp",
               "ViewState": "AgIAANkAAAAAAAAAAAAawN4AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-30T14:30:53.896Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T14:30:53.896Z"
             },
             {
               "$type": "Document",
@@ -197,8 +194,7 @@
               "RelativeToolTip": "LexRec\\FST.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-30T14:38:17.534Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T14:38:17.534Z"
             },
             {
               "$type": "Document",
@@ -210,12 +206,11 @@
               "RelativeToolTip": "LexRec\\LT.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-30T13:34:05.545Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T13:34:05.545Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "IT.cpp",
               "DocumentMoniker": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\IT.cpp",
               "RelativeDocumentMoniker": "LexRec\\IT.cpp",
@@ -223,8 +218,7 @@
               "RelativeToolTip": "LexRec\\IT.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-10-30T13:12:37.065Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T13:12:37.065Z"
             },
             {
               "$type": "Document",
@@ -236,18 +230,17 @@
               "RelativeToolTip": "LexRec\\Tests.h",
               "ViewState": "AgIAABIAAAAAAAAAAAAAABsAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-30T13:21:48.959Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T13:21:48.959Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Tests.cpp",
               "DocumentMoniker": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\Tests.cpp",
               "RelativeDocumentMoniker": "LexRec\\Tests.cpp",
               "ToolTip": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\Tests.cpp",
               "RelativeToolTip": "LexRec\\Tests.cpp",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAqwAsBAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAPcAAAAAAAAAAAAIwAsBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-30T13:20:46.202Z",
               "EditorCaption": ""
@@ -266,20 +259,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "SELab17.cpp",
               "DocumentMoniker": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\SELab17.cpp",
               "RelativeDocumentMoniker": "LexRec\\SELab17.cpp",
               "ToolTip": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\SELab17.cpp",
               "RelativeToolTip": "LexRec\\SELab17.cpp",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACAAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAD4AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-10-30T14:17:08.842Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IT.h",
               "DocumentMoniker": "D:\\UNIK\\02\\kpo\\kpo_3sem\\lab17.2\\LexRec\\LexRec\\IT.h",
               "RelativeDocumentMoniker": "LexRec\\IT.h",
@@ -287,8 +280,7 @@
               "RelativeToolTip": "LexRec\\IT.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-10-30T13:10:01.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-30T13:10:01.999Z"
             },
             {
               "$type": "Document",

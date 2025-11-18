@@ -30,5 +30,4 @@ namespace Error {
 
 	ERROR geterror(int id);
 	ERROR geterrorin(int id, int line, int col);
-	ERROR geterrorinchar(int id, int line, char ch, int col = -1);
 };

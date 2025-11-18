@@ -64,14 +64,14 @@ namespace GRB
     struct Greibach  // грамматика Грейбах
     {
         short size;          // количество правил
-        GRBALPHABET startW;  // стартовый символ
+        GRBALPHABET startN;  // стартовый символ
         GRBALPHABET stbottomT; // дно стека
         Rule* rules;         // множество правил
 
         Greibach()
         {
             size = 0;
-            startW = 0;
+            startN = 0;
             stbottomT = 0;
             rules = 0;
         };

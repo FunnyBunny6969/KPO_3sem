@@ -2,6 +2,7 @@
 #include "Tests.h"
 #include "LEX.h"
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 
@@ -12,23 +13,15 @@ void run(int argc, _TCHAR* argv[]) {
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		in = In::getin(parm.in);
-		cout << "0";
 		log = Log::getlog(parm.log);
-		cout << "1";
 		Log::WriteLog(log);
-		cout << "2";
 		Log::WriteParm(log, parm);
-		cout << "3";
 		Log::WriteIn(log, in);
-		cout << "4";
-		Log::Close(log);
 
 
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
-        // Создаем таблицы
 		LEX::LEX tables; 
 
-        // Запускаем лексический анализ
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
 
         // Выводим результаты
@@ -38,12 +31,8 @@ void run(int argc, _TCHAR* argv[]) {
 
         // Очищаем память
         LT::Delete(tables.lexTable);
-		cout << "h";
         IT::Delete(tables.idTable);
-		cout << "u";
         Log::Close(log);
-		cout << "i";
-		cout << "THE END ITS ME====" << endl;
     }
 	catch (const Error::ERROR& e) {
 		std::cout << "Ошибка " << e.id << " : " << e.message 
@@ -51,12 +40,27 @@ void run(int argc, _TCHAR* argv[]) {
 			<< " COL "  << e.inext.col << std::endl << std::endl;
 		Log::WriteError(log, e);
 
-		cout << "ebat its me";
-
 		if (e.id != 111) {
 			TestLexer::TestSplitter(in);
 		}
 	}
+
+
+
+	Out::OUT out = Out::INITOUT;
+	try {
+		Parm::PARM parm = Parm::getparm(argc, argv);
+		out = Out::getout(parm.out);
+		In::IN in = In::getin(parm.in);
+		Out::WriteInOut(out, in);
+		Out::Close(out);
+	}
+	catch (Error::ERROR e)
+	{
+		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
+		Out::WriteErrorOut(out, e);
+	};
+	
 
 }
 

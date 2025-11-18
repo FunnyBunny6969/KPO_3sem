@@ -98,10 +98,7 @@ namespace Log {
 
 	// закрывает поток
 	void Close(LOG log) {
-		std::cout << "hahahaha";
 		log.stream->close();
-		std::cout << "hahahaha";
 		delete log.stream;
-		std::cout << "hahahaha";
 	}
 }
