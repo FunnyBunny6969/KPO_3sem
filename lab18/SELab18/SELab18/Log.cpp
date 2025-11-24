@@ -10,9 +10,6 @@
 #include <ctime>
 
 
-#include <iostream>
-
-
 namespace Log {
 	LOG getlog(wchar_t logfile[]) {
 

@@ -70,7 +70,6 @@ namespace In {
 				int symbol_code = result.code[static_cast<unsigned char>(ch)];
 
 
-                std::cout << "|" << ch << "|" << endl;
 				switch (symbol_code)
 				{
 				case IN::F:

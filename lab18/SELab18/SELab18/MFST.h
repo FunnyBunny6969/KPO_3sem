@@ -1,17 +1,61 @@
 #pragma once
 #include <stack>
 #include "GRB.h"
+#include "LT.h"
 #include "LEX.h"
 
 
+#define MFST_DIAGN_MAXSIZE		2*ERROR_MAXSIZE_MESSAGE
 #define MFST_DIAGN_NUMBER 3
-typedef std::stack<short> MFSTSTSTACK;    // стек автомата
+
+class MFSTSTSTACK :public std::stack<short> { //стек автомата
+public:
+	using std::stack<short>::c;
+};
+
+//typedef std::stack<short> MFSTSTSTACK;    // стек автомата
+
+#define MFST_TRACE_START \
+	cout << setw(4) <<  std::setfill(' ') << left << "Ўаг:"\
+		<< setw(20) << left << " ѕравило" \
+		<< setw(30) << left << " ¬ходна€ лента" \
+		<< setw(20) << left << " —тек" << endl;
+
+#define MFST_TRACE1	cout << setw(4) << left << ++FST_TRACE_n << ": "\
+					     << setw(20) << left << rule.getCRule(rbuf, nrulechain)\
+					     << setw(30) << left << getCLenta(lbuf, lenta_position)\
+					     << setw(20) << left << getCSt(sbuf) << endl;
+
+#define MFST_TRACE2	 cout << setw(4) << left << FST_TRACE_n << ": "\
+					     << setw(20) << left << " "\
+					     << setw(30) << left << getCLenta(lbuf, lenta_position)\
+					     << setw(20) << left << getCSt(sbuf) << endl;
+
+#define MFST_TRACE3	cout << setw(4) << left << ++FST_TRACE_n << ": "\
+					     << setw(20) << left << " "\
+					     << setw(30) << left << getCLenta(lbuf, lenta_position)\
+					     << setw(20) << left << getCSt(sbuf) << endl;
+
+#define MFST_TRACE4(c)	cout << setw(4) << left << ++FST_TRACE_n << ": " << setw(20) << left << c << endl;
+
+#define MFST_TRACE5(c)	cout << setw(4) << left << FST_TRACE_n << ": " << setw(20) << left << c << endl;
+
+#define MFST_TRACE6(c, k)	cout << setw(4) << left << FST_TRACE_n << ": " << setw(20) << left << c << k << endl;
+
+#define MFST_TRACE7	cout << setw(4) << left << state.lenta_position<< ": "\
+					     << setw(20) << left << rule.getCRule(rbuf, state.nrulechain) << endl;
+
+
+
+
+
 
 namespace MFST
 {
     struct MfstState    // состо€ние автомата (дл€ сохранени€)
     {
         short lenta_position;    // позици€ на ленте
+		short nrule;			 // номер текущего правила
         short nrulechain;        // номер текущей цепочки, текущего правила
         MFSTSTSTACK st;          // стек автомата
 
@@ -22,7 +66,21 @@ namespace MFST
             MFSTSTSTACK pst,      // стек автомата
             short pnrulechain     // номер текущей цепочки, текущего правила
         );
+		MfstState(
+			short pposition,      // позици€ на ленте
+            MFSTSTSTACK pst,      // стек автомата
+			short pnrule,         // номер текущего правила
+			short pnrulechain     // номер текущей цепочки, текущего правила
+		);
+
     };
+
+
+	class MFSTSTATE :public std::stack<MfstState> { //стек автомата
+	public:
+		using std::stack<MfstState>::c;
+	};
+
 
 
 	struct Mfst    // магазинный автомат
@@ -62,14 +120,14 @@ namespace MFST
 		short nrule;                        // номер текущего правила
 		short nrulechain;                   // номер текущей цепочки, текущего правила
 		short lenta_size;                   // размер ленты
-		GRB::Greibach greibach;             // грамматика √рейбах
+		GRB::Greibach grebach;              // грамматика √рейбах
 		LEX::LEX lex;                       // результат работы лексического анализатора
 		MFSTSTSTACK st;                     // стек автомата
 		std::stack<MfstState> storestate;   // стек дл€ сохранени€ состо€ний
 
 		Mfst();
 		Mfst(
-			LEX::LEX plex,                  // результат работы лексического анализатора
+			LT::LexTable plex,                  // результат работы лексического анализатора
 			GRB::Greibach pgreibach         // грамматика √рейбах
 		);
 
@@ -86,5 +144,15 @@ namespace MFST
 		bool savediagnosis(
 			RC_STEP pprc_step                             // код завершени€ шага
 		);
+
+		void printrules();
+
+		struct Deducation {
+			short size;              // количество шагов в выводе
+			short* nrules;           // номера правил грамматики
+			short* nrulechains;      // номера цепочек правил грамматики (nrules)
+			Deducation() { size = 0; nrules = 0; nrulechains = 0; };
+		} deducation;
+		bool savededucation();                // сохранить дерево вывода
 	};
 };

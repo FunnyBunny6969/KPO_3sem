@@ -1,5 +1,6 @@
-#include "stdafx.h"
 #include "GRB.h"
+#include "MFST.h"
+#include "Rules.h"
 #include <cstdarg>
 #include <cstring>
 
