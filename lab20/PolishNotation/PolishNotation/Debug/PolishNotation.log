@@ -127,7 +127,6 @@ K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(311,18): warning C4309: аргумент: усечение константного значения
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(312,18): warning C4309: аргумент: усечение константного значения
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(313,18): warning C4309: аргумент: усечение константного значения
-  GRB.cpp
   LEX.cpp
   LT.cpp
   MAIN.cpp

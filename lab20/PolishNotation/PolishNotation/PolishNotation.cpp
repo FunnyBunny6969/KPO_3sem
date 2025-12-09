@@ -1,242 +1,258 @@
-﻿#include "stdafx.h"
-#include "PolishNotation.h"
-#include <stack>
-#include <queue>
+﻿#include "PolishNotation.h"
 #include <iostream>
+#include <stack>
+using namespace std;
 
+namespace PN
+{
+    // Приоритеты операций 
+    // 0: ( )
+    // 1: , (запятая)
+    // 2: = yield display
+    // 3: & > < @ # (сравнения)
+    // 4: + -
+    // 5: * / %
+    int GetPriority(LT::Entry entry)
+    {
+        switch (entry.lexema[0])
+        {
+        case LEX_LEFTHESIS: // (
+        case LEX_RIGHTHESIS: // )
+            return 0;
 
-namespace PN {
-    //================================================================
-    namespace {
+        case LEX_COMMA:// ,
+            return 1;
 
-        int GetPriority(char op) {
-            switch (op) {
-            case '*': case '/': return 7;
-            case '+': case '-': return 6;
-            case '=':           return 1;  // самый низкий
-            default:            return 0;
-            }
-        }
+        case LEX_EQUALS: // =
+        case LEX_RETURN:   // yield (return)
+        case LEX_PRINT: // display (print)
+            return 2;
 
-        bool IsOperator(char op) {
-            return op == LEX_PLUS || op == '-' || op == '*' || op == '/' || op == '=';
-        }
+        case LEX_MORE:   // >
+        case LEX_LESS:   // <
+        case LEX_LE:    // @ (<=)
+        case LEX_GE:    // # (>=)
+        case LEX_EQUAL:     // & (==)
+        case LEX_NOTEQUAL: // ! (!=)
+            return 3;
 
-        bool IsOperand(char lex) {
-            return lex == 'i' || lex == 'l' || lex == 't' || lex == 'n';
-        }
+        case LEX_PLUS:  // +
+        case LEX_MINUS: // -
+            return 4;
 
-        bool IsUnaryMinus(int pos, const LT::LexTable& lextable) {
-            if (lextable.table[pos].lexema[0] != '-') return false;
+        case LEX_STAR:    // *
+        case LEX_DIRSLASH: // /
+        case LEX_MOD:    // %
+            return 5;
 
-            // Начало выражения?
-            if (pos == 0) return true;
-
-            // После '=', '(', ',' или другого оператора?
-            char prev = lextable.table[pos - 1].lexema[0];
-            return (prev == '=' || prev == '(' || prev == ',' ||
-                prev == '+' || prev == '-' || prev == '*' || prev == '/');
-        }
-
-
-        // Вспомогательная функция: печать лексемы с расшифровкой
-        void PrintLexemeWithDecode(const LT::Entry& entry, const IT::IdTable& idtable) {
-            char lex = entry.lexema[0];
-
-            if (lex == 'i' || lex == 'l') {  // идентификатор или литерал
-                if (entry.idxTI != LT_TI_NULLIDX && entry.idxTI < idtable.size) {
-                    IT::Entry id_entry = idtable.table[entry.idxTI];
-
-                    if (lex == 'i') {
-                        std::cout << "{" << id_entry.id << "}";  // имя идентификатора
-                    }
-                    else if (lex == 'l') {
-                        // Литерал: покажем значение
-                        if (id_entry.iddatatype == IT::INT) {
-                            std::cout << "[" << id_entry.value.vint << "]";  // число
-                        }
-                        else if (id_entry.iddatatype == IT::STR) {
-                            std::cout << "['";
-                            for (int i = 0; i < (int)id_entry.value.vstr->len; i++) {
-                                std::cout << id_entry.value.vstr->str[i];
-                            }
-                            std::cout << "']";
-                        }
-                    }
-                }
-                else {
-                    std::cout << lex << "?";  // неизвестно
-                }
-            }
-            else if (lex == '~') {
-                std::cout << "~";  // заполнитель
-            }
-            else {
-                std::cout << lex;  // операторы, скобки и т.д.
-            }
+        default:
+            return -1;
         }
     }
-    //================================================================
 
+    bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable)
+    {
+        std::stack<LT::Entry> stack;
+        std::vector<LT::Entry> out_string;
+        std::stack<int> args_count;
 
-
-    bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable) {
-        // 1. Проверка входных данных
-        if (lextable_pos >= lextable.size) return false;
-
-        // 2. Найти конец выражения (до ';')
-        int start = lextable_pos;
-        int end = start;
-        while (end < lextable.size && lextable.table[end].lexema[0] != ';') {
-            end++;
+        int expr_end = lextable_pos;
+        while (expr_end < lextable.size && lextable.table[expr_end].lexema[0] != LEX_SEMICOLON) {
+            expr_end++;
         }
+        if (expr_end >= lextable.size) return false;
 
-        if (end <= start) return false; // пустое выражение
+        for (int i = lextable_pos; i < expr_end; i++)
+        {
+            LT::Entry entry = lextable.table[i];
 
-        // 3. Преобразование инфикс → постфикс
-        std::stack<LT::Entry> op_stack;
-        std::queue<LT::Entry> output;
+            if (entry.lexema == 0) continue;
 
-        for (int i = start; i < end; i++) {
-            LT::Entry token = lextable.table[i];
-            char lex = token.lexema[0];
-
-            // 3.1 Операнд → сразу в выход
-            if (IsOperand(lex)) {
-                output.push(token);
-            }
-            // 3.2 '(' → в стек
-            else if (lex == '(') {
-                op_stack.push(token);
-            }
-            // 3.3 ')' → выталкиваем до '('
-            else if (lex == ')') {
-                while (!op_stack.empty() && op_stack.top().lexema[0] != '(') {
-                    output.push(op_stack.top());
-                    op_stack.pop();
+            switch (entry.lexema[0])
+            {
+            case LEX_ID:
+            case LEX_LITERAL:
+            {
+                bool isFunction = false;
+                if (entry.lexema[0] == LEX_ID && entry.idxTI != LT_TI_NULLIDX) {
+                    IT::Entry idEntry = IT::GetEntry(idtable, entry.idxTI);
+                    if (idEntry.idtype == IT::F) {
+                        isFunction = true;
+                    }
                 }
-                if (!op_stack.empty()) op_stack.pop(); // удаляем '('
-            }
-            // 3.4 ОПЕРАТОР (+, -, *, /, =)
-            else if (IsOperator(lex)) {
-                // Проверяем унарный минус
-                bool is_unary = (lex == '-' && IsUnaryMinus(i, lextable));
-                int priority = GetPriority(lex);
 
-                if (is_unary) {
-                    // Унарный минус: сразу в стек с высоким приоритетом
-                    op_stack.push(token);
+                if (isFunction) {
+                    stack.push(entry);
                 }
                 else {
-                    // Бинарный оператор: выталкиваем операторы с >= приоритетом
-                    while (!op_stack.empty()) {
-                        char top_lex = op_stack.top().lexema[0];
-                        if (top_lex == '(') break;
+                    out_string.push_back(entry);
+                }
+                break;
+            }
 
-                        int top_priority = GetPriority(top_lex);
-                        if (top_priority < priority) break;
-
-                        output.push(op_stack.top());
-                        op_stack.pop();
+            case LEX_LEFTHESIS:
+            {
+                if (!stack.empty()) {
+                    LT::Entry top = stack.top();
+                    if (top.lexema[0] == LEX_ID && top.idxTI != LT_TI_NULLIDX) {
+                        IT::Entry idEntry = IT::GetEntry(idtable, top.idxTI);
+                        if (idEntry.idtype == IT::F) {
+                            if (i + 1 < expr_end && lextable.table[i + 1].lexema[0] == LEX_RIGHTHESIS) {
+                                args_count.push(0);
+                            }
+                            else {
+                                args_count.push(1);
+                            }
+                        }
                     }
-                    op_stack.push(token);
                 }
+                stack.push(entry);
+                break;
             }
-            // 3.5 ',' → игнорируем (не нужен в ПОЛИЗ)
-            else if (lex == ',') {
-                // Ничего не делаем
-            }
-            // 3.6 Неизвестная лексема
-            else {
-                std::cerr << "Неизвестная лексема: " << lex << std::endl;
-                return false;
-            }
-        }
 
-        // 4. Выталкиваем оставшиеся операторы
-        while (!op_stack.empty()) {
-            if (op_stack.top().lexema[0] == '(') {
-                std::cerr << "Несбалансированные скобки" << std::endl;
-                return false;
-            }
-            output.push(op_stack.top());
-            op_stack.pop();
-        }
-
-        // 5. Записать ПОЛИЗ обратно в таблицу
-        int write_pos = start;
-        while (!output.empty() && write_pos < end) {
-            lextable.table[write_pos++] = output.front();
-            output.pop();
-        }
-
-        // 6. Заполнить остаток символом-заполнителем
-        const char FILLER = '~';
-        while (write_pos < end) {
-            lextable.table[write_pos].lexema[0] = FILLER;
-            lextable.table[write_pos].idxTI = LT_TI_NULLIDX;
-            write_pos++;
-        }
-
-        // 7. Обновить idxfirstLE
-        for (int i = start; i < end; i++) {
-            char lex = lextable.table[i].lexema[0];
-            if (lex == 'i' || lex == 'l') {
-                int idxTI = lextable.table[i].idxTI;
-                if (idxTI >= 0 && idxTI < idtable.size) {
-                    idtable.table[idxTI].idxfirstLE = i;
+            case LEX_COMMA:
+            {
+                while (!stack.empty() && stack.top().lexema[0] != LEX_LEFTHESIS)
+                {
+                    out_string.push_back(stack.top());
+                    stack.pop();
                 }
+                if (!args_count.empty()) {
+                    args_count.top()++;
+                }
+                break;
+            }
+
+            case LEX_RIGHTHESIS:
+            {
+                while (!stack.empty() && stack.top().lexema[0] != LEX_LEFTHESIS)
+                {
+                    out_string.push_back(stack.top());
+                    stack.pop();
+                }
+
+                if (stack.empty()) return false;
+                stack.pop();
+
+                if (!stack.empty())
+                {
+                    LT::Entry top = stack.top();
+                    if (top.lexema[0] == LEX_ID && top.idxTI != LT_TI_NULLIDX)
+                    {
+                        IT::Entry idEntry = IT::GetEntry(idtable, top.idxTI);
+                        if (idEntry.idtype == IT::F)
+                        {
+                            stack.pop();
+                            int params = 0;
+                            if (!args_count.empty()) {
+                                params = args_count.top();
+                                args_count.pop();
+                            }
+                            top.lexema[0] = '$';
+                            top.idxTI = params;
+                            out_string.push_back(top);
+                        }
+                    }
+                }
+                break;
+            }
+
+
+            case LEX_PLUS: case LEX_MINUS: case LEX_STAR: case LEX_DIRSLASH:
+            case LEX_MOD: case LEX_EQUALS: case LEX_MORE: case LEX_LESS:
+            case LEX_LE: case LEX_GE: case LEX_EQUAL: case LEX_NOTEQUAL:
+            {
+                while (!stack.empty() && stack.top().lexema[0] != LEX_LEFTHESIS &&
+                    (GetPriority(stack.top()) >= GetPriority(entry)))
+                {
+                    out_string.push_back(stack.top());
+                    stack.pop();
+                }
+                stack.push(entry);
+                break;
+            }
             }
         }
 
-        // 8. Вывести результат
-        std::cout << "ПОЛИЗ: ";
-        for (int i = start; i < end; i++) {
-            if (lextable.table[i].lexema[0] != FILLER) {
-                std::cout << lextable.table[i].lexema[0] << " ";
-            }
+        while (!stack.empty())
+        {
+            if (stack.top().lexema[0] == LEX_LEFTHESIS || stack.top().lexema[0] == LEX_RIGHTHESIS)
+                return false;
+            out_string.push_back(stack.top());
+            stack.pop();
         }
-        std::cout << std::endl;
 
-        std::cout << "ПОЛИЗ (расшифрованная): ";
-        for (int i = start; i < end; i++) {
-            if (lextable.table[i].lexema[0] != FILLER) {
-                PrintLexemeWithDecode(lextable.table[i], idtable);
-                std::cout << " ";
-            }
+        int outIndex = 0;
+        for (const auto& rpnEntry : out_string)
+        {
+            lextable.table[lextable_pos + outIndex] = rpnEntry;
+            outIndex++;
         }
-        std::cout << std::endl;
+
+        for (int i = lextable_pos + outIndex; i < expr_end; i++)
+        {
+            lextable.table[i].lexema[0] = 0;
+            lextable.table[i].idxTI = LT_TI_NULLIDX;
+        }
 
         return true;
     }
 
-
-    bool ConvertAllExpressions(LT::LexTable& lextable, IT::IdTable& idtable) {
-        std::cout << "=== ПРЕОБРАЗОВАНИЕ ВСЕХ ВЫРАЖЕНИЙ ===" << std::endl;
-
-        bool success = true;
-
-        for (int i = 0; i < lextable.size; i++) {
-            if (lextable.table[i].lexema[0] == '=') {
-                int expr_start = i + 1;
-
-                std::cout << "\nВыражение (поз. " << expr_start << "): ";
-
-                // Покажем исходное выражение
-                for (int j = expr_start; j < lextable.size; j++) {
-                    if (lextable.table[j].lexema[0] == ';') break;
-                    std::cout << lextable.table[j].lexema[0] << " ";
+    bool Start(LT::LexTable& lextable, IT::IdTable& idtable)
+    {
+        for (int i = 0; i < lextable.size; i++)
+        {
+            if (lextable.table[i].lexema[0] == LEX_EQUALS ||
+                lextable.table[i].lexema[0] == LEX_RETURN ||
+                lextable.table[i].lexema[0] == LEX_PRINT)
+            {
+                if (!PolishNotation(i + 1, lextable, idtable)) {
+                    return false;
                 }
-                std::cout << std::endl;
+            }
+            else if (lextable.table[i].lexema[0] == LEX_FUNCTION)
+            {
+                if (i + 2 < lextable.size && lextable.table[i + 2].lexema[0] == LEX_LEFTHESIS)
+                {
+                    int openParenPos = i + 2;
+                    int closeParenPos = -1;
+                    int paramCount = 0;
 
-                // Преобразуем
-                if (!PolishNotation(expr_start, lextable, idtable)) {
-                    success = false;
-                    std::cout << "Ошибка!" << std::endl;
+                    if (lextable.table[openParenPos + 1].lexema[0] == LEX_RIGHTHESIS)
+                    {
+                        paramCount = 0;
+                        closeParenPos = openParenPos + 1;
+                    }
+                    else
+                    {
+                        paramCount = 1;
+                        for (int k = openParenPos + 1; k < lextable.size; k++)
+                        {
+                            if (lextable.table[k].lexema[0] == LEX_RIGHTHESIS)
+                            {
+                                closeParenPos = k;
+                                break;
+                            }
+                            if (lextable.table[k].lexema[0] == LEX_COMMA)
+                            {
+                                paramCount++;
+                            }
+                        }
+                    }
+
+                    if (closeParenPos == -1) return false;
+
+                    lextable.table[openParenPos].lexema[0] = '$';
+                    lextable.table[openParenPos].idxTI = paramCount;
+
+                    for (int k = openParenPos + 1; k <= closeParenPos; k++)
+                    {
+                        lextable.table[k].lexema[0] = 0;
+                        lextable.table[k].idxTI = LT_TI_NULLIDX;
+                    }
                 }
             }
         }
-
-        return success;
+        return true;
     }
 }
