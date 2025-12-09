@@ -406,7 +406,7 @@ namespace Automata {
 		if (executeAutomata(DECLARE, text)) return LEX_DECLARE;
 		if (executeAutomata(RETURN, text)) return LEX_RETURN;
 		if (executeAutomata(PRINT, text)) return LEX_PRINT;
-		if (executeAutomata(MAIN, text)) return 'm';  
+		if (executeAutomata(MAIN, text)) return LEX_MAIN;  
 
 		if (executeAutomata(IDENTIFIER, text)) return LEX_ID;
 		if (executeAutomata(NUMBER_LITERAL, text)) return LEX_LITERAL;
@@ -418,13 +418,13 @@ namespace Automata {
 		if (executeAutomata(RIGHTPAREN, text)) return LEX_RIGHTHESIS;
 		if (executeAutomata(LEFTBRACE, text)) return LEX_LEFTBRACE;
 		if (executeAutomata(RIGHTBRACE, text)) return LEX_RIGHTBRACE;
-		if (executeAutomata(ASSIGN, text)) return '=';
+		if (executeAutomata(ASSIGN, text)) return LEX_EQUALS;
 		if (executeAutomata(PLUS, text)) return LEX_PLUS;
 		if (executeAutomata(MINUS, text)) return LEX_MINUS;
 		if (executeAutomata(STAR, text)) return LEX_STAR;
 		if (executeAutomata(SLASH, text)) return LEX_DIRSLASH;
 
-		return '?'; 
+		return LEX_UNKNOWN; 
 	}
 }
 

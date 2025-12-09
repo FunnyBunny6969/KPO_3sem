@@ -98,8 +98,8 @@ namespace LEX {
                 if (code == LEX_FUNCTION) {
                     currentIdType = IT::F;  // следующий ID будет функцией
                 }
-                else if (code == 't') { // integer/string
-                    currentDataType = (word == "integer") ? IT::INT : IT::STR;
+                else if (code == LEX_INTEGER || code == LEX_STRING) { // integer/string
+                    currentDataType = (Automata::executeAutomata(Automata::INTEGER, word.c_str())) ? IT::INT : IT::STR;
                     if (inParams) {
                         currentIdType = IT::P;  // в параметрах - следующий ID будет параметром
                     }
@@ -125,7 +125,7 @@ namespace LEX {
                 // Создаем запись для таблицы лексем
                 LT::Entry lexEntry;
                 lexEntry.lexema[0] = code;
-                lexEntry.lexema[1] = '\0';
+                lexEntry.lexema[1] = IN_CODE_ENDS;
                 lexEntry.sn = lineNumber;
 
                 // Обрабатываем идентификаторы и литералы
@@ -161,7 +161,7 @@ namespace LEX {
                             for (int i = 0; i < copyLen; i++) {
                                 idEntry.id[i] = word[i];
                             }
-                            idEntry.id[copyLen] = '\0';
+                            idEntry.id[copyLen] = IN_CODE_ENDS;
 
                             // ИСПОЛЬЗУЕМ КОНТЕКСТ ДЛЯ ОПРЕДЕЛЕНИЯ ТИПОВ
                             idEntry.idtype = currentIdType;
@@ -187,7 +187,7 @@ namespace LEX {
                             for (int i = 0; i < copyLen; i++) {
                                 idEntry.id[i] = litName[i];
                             }
-                            idEntry.id[copyLen] = '\0';
+                            idEntry.id[copyLen] = IN_CODE_ENDS;
 
                             idEntry.idtype = IT::L;
 

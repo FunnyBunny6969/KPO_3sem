@@ -279,9 +279,6 @@ namespace MFST
 
 	void Mfst::printrules()
 	{
-		std::cout << "PRINT RULES" << std::endl;
-		std::cout << storestate.size() << endl;
-
 		MfstState state;
 		GRB::Rule rule;
 		for (unsigned short k = 0; k < storestate.size(); k++)

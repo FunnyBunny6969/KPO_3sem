@@ -18,10 +18,14 @@
 #define LEX_RIGHTBRACE  '}'   // лексема для }
 #define LEX_LEFTHESIS   '('   // лексема для (
 #define LEX_RIGHTHESIS  ')'   // лексема для )
-#define LEX_PLUS        'v'   // лексема для +
-#define LEX_MINUS       'v'   // лексема для -
-#define LEX_STAR        'v'   // лексема для *
-#define LEX_DIRSLASH    'v'   // лексема для /
+#define LEX_PLUS        '+'   // лексема для +
+#define LEX_MINUS       '-'   // лексема для -
+#define LEX_STAR        '*'   // лексема для *
+#define LEX_DIRSLASH    '/'   // лексема для /
+
+#define LEX_EQUALS      '='
+#define LEX_MAIN        'm'
+#define LEX_UNKNOWN     '?'
 
 
 namespace LT    // таблица лексем

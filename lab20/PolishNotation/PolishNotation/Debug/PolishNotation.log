@@ -127,23 +127,14 @@ K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(311,18): warning C4309: аргумент: усечение константного значения
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(312,18): warning C4309: аргумент: усечение константного значения
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Automata.cpp(313,18): warning C4309: аргумент: усечение константного значения
-  Error.cpp
-  FST.cpp
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\FST.cpp(64,24): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
   GRB.cpp
-  In.cpp
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\In.cpp(169,27): warning C4018: <: несоответствие типов со знаком и без знака
-  IT.cpp
   LEX.cpp
-  Log.cpp
   LT.cpp
   MAIN.cpp
   MFST.cpp
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\MFST.cpp(141,5): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\MFST.cpp(148,4): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\MFST.cpp(306,66): warning C4267: =: преобразование из "size_t" в "short"; возможна потеря данных
-  Out.cpp
-  Parm.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\MFST.cpp(303,66): warning C4267: =: преобразование из "size_t" в "short"; возможна потеря данных
   PolishNotation.cpp
   Tests.cpp
 K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Tests.cpp(476,21): warning C4018: <: несоответствие типов со знаком и без знака

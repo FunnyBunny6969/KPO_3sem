@@ -2,6 +2,7 @@
 #include "Tests.h"
 #include "LEX.h"
 #include "MFST.h"
+#include "PolishNotation.h"
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
@@ -43,6 +44,17 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 
+		//==================================
+		PN::ConvertAllExpressions(tables.lexTable, tables.idTable);
+		//==================================
+
+
+        TestLT::PrintLexTable(tables.lexTable);
+        TestIT::PrintTable(tables.idTable);
+
+
+
+		
         // Очищаем память
         LT::Delete(tables.lexTable);
         IT::Delete(tables.idTable);

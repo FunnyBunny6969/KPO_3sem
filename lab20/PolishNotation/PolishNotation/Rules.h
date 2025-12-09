@@ -45,24 +45,35 @@ namespace GRB
 			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M'))
 		),
 
-		// Правило M - операции (НОВОЕ)
-		Rule(NS('M'), GRB_ERROR_SERIES + 3, 2,
-			Rule::Chain(2, TS('v'), NS('E')),
-			Rule::Chain(3, TS('v'), NS('E'), NS('M'))
+		Rule(NS('M'), GRB_ERROR_SERIES + 3,
+			8,  
+
+			Rule::Chain(2, TS('+'), NS('E')),
+			Rule::Chain(3, TS('+'), NS('E'), NS('M')),
+
+			Rule::Chain(2, TS('-'), NS('E')),
+			Rule::Chain(3, TS('-'), NS('E'), NS('M')),
+
+			Rule::Chain(2, TS('*'), NS('E')),
+			Rule::Chain(3, TS('*'), NS('E'), NS('M')),
+
+			Rule::Chain(2, TS('/'), NS('E')),
+			Rule::Chain(3, TS('/'), NS('E'), NS('M'))
 		),
 
-		// Правило F - параметры функции (НОВОЕ)  
-		Rule(NS('F'), GRB_ERROR_SERIES + 4, 2,
+		Rule(NS('F'), GRB_ERROR_SERIES + 4, 
+			2,
 			Rule::Chain(2, TS('t'), TS('i')),
 			Rule::Chain(4, TS('t'), TS('i'), TS(','), NS('F'))
 		),
 
-		// Правило W - аргументы вызова (НОВОЕ)
-		Rule(NS('W'), GRB_ERROR_SERIES + 5, 4,
+		Rule(NS('W'), GRB_ERROR_SERIES + 5, 
+			4,
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
 			Rule::Chain(3, TS('i'), TS(','), NS('W')),
 			Rule::Chain(3, TS('l'), TS(','), NS('W'))
 		)
+
 	);
 }
