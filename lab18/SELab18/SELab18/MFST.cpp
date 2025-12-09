@@ -76,16 +76,17 @@ namespace MFST
 	}
 
 
-	Mfst::Mfst(
-		LT plex, 
-		GRB::Greibach pgrebach)
+	Mfst::Mfst( LEX::LEX plex, GRB::Greibach pgrebach)
 	{
 		grebach = pgrebach;
 		lex = plex;
-		lenta = new short[lenta_size = lex.lexTable.size];
+		lenta_size = lex.lexTable.size;
+		lenta = new short[lenta_size];
 		for (int k = 0; k < lenta_size; k++) {
-			lenta[k] = TS(lex.lexTable.table[k].lexema);
+			// for LEXEMA_FIXSIZE = 1
+			lenta[k] = TS(lex.lexTable.table[k].lexema[0]);
 		}
+
 		lenta_position = 0;
 		st.push(grebach.stbottomT);
 		st.push(grebach.startN);
@@ -262,15 +263,14 @@ namespace MFST
 
 	char* Mfst::getDiagnosis(short n, char* buf)
 	{
-		char* rc = '\0';
+		char *rc = (char*)"";
 		int errid = 0;
 		int lpos = -1;
 		if (n < MFST_DIAGN_NUMBER && (lpos = diagnosis[n].lenta_position) >= 0)
 		{
 			errid = grebach.getRule(diagnosis[n].nrule).iderror;
 			Error::ERROR err = Error::geterror(errid);
-			cout << "Ошибка " << err.id << ":" << err.message << " строка " << lexTable.table[lpos].sn << endl;
-			sprintf_s(buf, MFST_DIAGN_MAXSIZE, "%d: строка %d, %s", err.id, lexTable.table[lpos].sn, err.message);
+			sprintf_s(buf, MFST_DIAGN_MAXSIZE, "%d: строка %d, %s", err.id, lex.lexTable.table[lpos].sn, err.message);
 			rc = buf;
 		}
 		return rc;
@@ -283,7 +283,13 @@ namespace MFST
 		GRB::Rule rule;
 		for (unsigned short k = 0; k < storestate.size(); k++)
 		{
-			state = storestate._Get_container()[i];
+
+			//state = storestate.c[k];
+			//state = storestate._Get_container()[i];
+			std::stack<MfstState> temp = storestate;
+			for (int j = 0; j < k; j++) temp.pop();
+			state = temp.top();
+
 			rule = grebach.getRule(state.nrule);
 			MFST_TRACE7;
 		}
@@ -296,11 +302,15 @@ namespace MFST
 		GRB::Rule rule;
 		deducation.nrules = new short[deducation.size = storestate.size()];
 		deducation.nrulechains = new short[deducation.size];
-		for (unsigned short i = 0; i < storestate.size(); i++)
+		for (unsigned short k = 0; k < storestate.size(); k++)
 		{
-			state = storestate._Get_container()[i];
-			deducation.nrules[i] = state.nrule;
-			deducation.nrulechains[i] = state.nrulechain;
+			//state = storestate._Get_container()[k];
+			std::stack<MfstState> temp = storestate;
+			for (int j = 0; j < k; j++) temp.pop();
+			state = temp.top();
+
+			deducation.nrules[k] = state.nrule;
+			deducation.nrulechains[k] = state.nrulechain;
 		}
 		return true;
 	}

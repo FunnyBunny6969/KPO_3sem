@@ -105,6 +105,8 @@ void outTEST(int argc, _TCHAR* argv[]) {
 	};
 }
 
+
+
 // Вспомогательные функции для тестирования LT
 namespace TestLT {
     LT::Entry CreateLTEntry(char lexema, int lineNumber, int tiIndex) {
@@ -482,6 +484,7 @@ namespace TestLexer {
 		std::cout << "Всего строк: " << lines.size() << std::endl;
     }
 }
+
 
 
 

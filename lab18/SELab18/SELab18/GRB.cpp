@@ -1,8 +1,10 @@
 #include "GRB.h"
-#include "MFST.h"
 #include "Rules.h"
-#include <cstdarg>
-#include <cstring>
+#include "cstring"
+
+
+#define GRB_ERROR_SERIE 600
+
 
 namespace GRB
 {

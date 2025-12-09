@@ -1,3 +1,5 @@
-﻿  In.cpp
-D:\UNIK\02\kpo\kpo_3sem\lab18\SELab18\SELab18\In.cpp(169,27): warning C4018: <: несоответствие типов со знаком и без знака
-  SELab18.vcxproj -> D:\UNIK\02\kpo\kpo_3sem\lab18\SELab18\Debug\SELab18.exe
+﻿  MFST.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\SELab18\MFST.cpp(141,5): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\SELab18\MFST.cpp(148,4): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\SELab18\MFST.cpp(303,66): warning C4267: =: преобразование из "size_t" в "short"; возможна потеря данных
+  SELab18.vcxproj -> K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\Debug\SELab18.exe

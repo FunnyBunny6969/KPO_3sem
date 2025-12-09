@@ -5,16 +5,6 @@
 #include "LEX.h"
 
 
-#define MFST_DIAGN_MAXSIZE		2*ERROR_MAXSIZE_MESSAGE
-#define MFST_DIAGN_NUMBER 3
-
-class MFSTSTSTACK :public std::stack<short> { //стек автомата
-public:
-	using std::stack<short>::c;
-};
-
-//typedef std::stack<short> MFSTSTSTACK;    // стек автомата
-
 #define MFST_TRACE_START \
 	cout << setw(4) <<  std::setfill(' ') << left << "Шаг:"\
 		<< setw(20) << left << " Правило" \
@@ -47,6 +37,16 @@ public:
 
 
 
+#define MFST_DIAGN_MAXSIZE		2*ERROR_MAXSIZE_MESSAGE
+#define MFST_DIAGN_NUMBER 3
+
+
+
+class MFSTSTSTACK :public std::stack<short> { //стек автомата
+public:
+	using std::stack<short>::c;
+};
+//typedef std::stack<short> MFSTSTSTACK;    // стек автомата
 
 
 
@@ -66,6 +66,7 @@ namespace MFST
             MFSTSTSTACK pst,      // стек автомата
             short pnrulechain     // номер текущей цепочки, текущего правила
         );
+
 		MfstState(
 			short pposition,      // позиция на ленте
             MFSTSTSTACK pst,      // стек автомата
@@ -127,12 +128,12 @@ namespace MFST
 
 		Mfst();
 		Mfst(
-			LT::LexTable plex,                  // результат работы лексического анализатора
-			GRB::Greibach pgreibach         // грамматика Грейбах
+			LEX::LEX plex,                  // результат работы лексического анализатора
+			GRB::Greibach pgrebach         // грамматика Грейбах
 		);
 
 		char* getCSt(char* buf);                           // получить содержимое стека
-		char* getClenta(char* buf, short pos, short n = 25); // лента: n символов с pos
+		char* getCLenta(char* buf, short pos, short n = 25); // лента: n символов с pos
 		char* getDiagnosis(short n, char* buf);           // получить n-ую строку диагностики или 8x80
 		bool savestate();                                 // сохранить состояние автомата
 		bool reststate();                                 // восстановить состояние автомата

@@ -15,6 +15,8 @@
 #include "IT.h"
 #include "Automata.h"
 #include "LEX.h"
+#include "MFST.h"
+#include "GRB.h"
 
 void geterrorTEST();
 void getparmTEST(int, _TCHAR*[]);

@@ -1,8 +1,10 @@
 ﻿#include "stdafx.h"
 #include "Tests.h"
 #include "LEX.h"
+#include "MFST.h"
 #include <iostream>
 #include <cstdlib>
+#include <iomanip>
 using namespace std;
 
 
@@ -27,7 +29,19 @@ void run(int argc, _TCHAR* argv[]) {
         // Выводим результаты
         TestLT::PrintLexTable(tables.lexTable);
         TestIT::PrintTable(tables.idTable);
-		TestLexer::TestSplitter(in);
+		//TestLexer::TestSplitter(in);
+
+
+		MFST_TRACE_START                              // отладка
+			MFST::Mfst mfst(tables, GRB::getGreibach());  // автомат
+
+		mfst.start();                                 // старт синтаксического анализа
+
+
+		mfst.savededucation();									// сохранить правила вывода
+		mfst.printrules();                         // отладка: вывести правила вывода
+
+
 
         // Очищаем память
         LT::Delete(tables.lexTable);
@@ -60,6 +74,10 @@ void run(int argc, _TCHAR* argv[]) {
 		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
+
+
+
+
 	
 
 }

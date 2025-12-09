@@ -8,6 +8,7 @@
 #include <string>
 
 namespace LEX {
+
     struct LEX {
         LT::LexTable lexTable;
         IT::IdTable idTable;
