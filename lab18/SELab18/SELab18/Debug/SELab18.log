@@ -1,5 +1,2 @@
-﻿  MFST.cpp
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\SELab18\MFST.cpp(141,5): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\SELab18\MFST.cpp(148,4): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\SELab18\MFST.cpp(303,66): warning C4267: =: преобразование из "size_t" в "short"; возможна потеря данных
+﻿  GRB.cpp
   SELab18.vcxproj -> K:\$MAIN$\БГТУ\02\KPO_3sem\lab18\SELab18\Debug\SELab18.exe
