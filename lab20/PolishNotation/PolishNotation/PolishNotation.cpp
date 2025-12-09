@@ -1,258 +1,378 @@
 ﻿#include "PolishNotation.h"
-#include <iostream>
+#include <vector>
 #include <stack>
-using namespace std;
+#include <iostream>
 
-namespace PN
-{
-    // Приоритеты операций 
-    // 0: ( )
-    // 1: , (запятая)
-    // 2: = yield display
-    // 3: & > < @ # (сравнения)
-    // 4: + -
-    // 5: * / %
-    int GetPriority(LT::Entry entry)
-    {
-        switch (entry.lexema[0])
-        {
-        case LEX_LEFTHESIS: // (
-        case LEX_RIGHTHESIS: // )
-            return 0;
+namespace PN {
 
-        case LEX_COMMA:// ,
-            return 1;
+    // Глобальная переменная для отслеживания уровня вложенности
+    static int g_nestingLevel = 0;
 
-        case LEX_EQUALS: // =
-        case LEX_RETURN:   // yield (return)
-        case LEX_PRINT: // display (print)
-            return 2;
+    namespace {
 
-        case LEX_MORE:   // >
-        case LEX_LESS:   // <
-        case LEX_LE:    // @ (<=)
-        case LEX_GE:    // # (>=)
-        case LEX_EQUAL:     // & (==)
-        case LEX_NOTEQUAL: // ! (!=)
-            return 3;
+        int GetPriority(char op) {
+            switch (op) {
+            case '*': case '/': return 7;
+            case '+': case '-': return 6;
+            case '=':           return 1;  // самый низкий
+            default:            return 0;
+            }
+        }
 
-        case LEX_PLUS:  // +
-        case LEX_MINUS: // -
-            return 4;
+        bool IsOperator(char op) {
+            return op == LEX_PLUS || op == '-' || op == '*' || op == '/' || op == '=';
+        }
 
-        case LEX_STAR:    // *
-        case LEX_DIRSLASH: // /
-        case LEX_MOD:    // %
-            return 5;
+        bool IsOperand(char lex) {
+            return lex == 'i' || lex == 'l' || lex == 't' || lex == 'n';
+        }
 
-        default:
-            return -1;
+        bool IsUnaryMinus(int pos, const LT::LexTable& lextable) {
+            if (lextable.table[pos].lexema[0] != '-') return false;
+
+            // Начало выражения?
+            if (pos == 0) return true;
+
+            // После '=', '(', ',' или другого оператора?
+            char prev = lextable.table[pos - 1].lexema[0];
+            return (prev == '=' || prev == '(' || prev == ',' ||
+                prev == '+' || prev == '-' || prev == '*' || prev == '/');
+        }
+
+
+        // Вспомогательная функция: печать лексемы с расшифровкой
+        void PrintLexemeWithDecode(const LT::Entry& entry, const IT::IdTable& idtable) {
+            char lex = entry.lexema[0];
+
+            if (lex == 'i' || lex == 'l') {  // идентификатор или литерал
+                if (entry.idxTI != LT_TI_NULLIDX && entry.idxTI < idtable.size) {
+                    IT::Entry id_entry = idtable.table[entry.idxTI];
+
+                    if (lex == 'i') {
+                        std::cout << "{" << id_entry.id << "}";  // имя идентификатора
+                    }
+                    else if (lex == 'l') {
+                        // Литерал: покажем значение
+                        if (id_entry.iddatatype == IT::INT) {
+                            std::cout << "[" << id_entry.value.vint << "]";  // число
+                        }
+                        else if (id_entry.iddatatype == IT::STR) {
+                            std::cout << "['";
+                            for (int i = 0; i < (int)id_entry.value.vstr->len; i++) {
+                                std::cout << id_entry.value.vstr->str[i];
+                            }
+                            std::cout << "']";
+                        }
+                    }
+                }
+                else {
+                    std::cout << lex << "?";  // неизвестно
+                }
+            }
+            else if (lex == '~') {
+                std::cout << "~";  // заполнитель
+            }
+            else {
+                std::cout << lex;  // операторы, скобки и т.д.
+            }
         }
     }
 
-    bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable)
-    {
-        std::stack<LT::Entry> stack;
-        std::vector<LT::Entry> out_string;
-        std::stack<int> args_count;
 
-        int expr_end = lextable_pos;
-        while (expr_end < lextable.size && lextable.table[expr_end].lexema[0] != LEX_SEMICOLON) {
-            expr_end++;
-        }
-        if (expr_end >= lextable.size) return false;
+    ScanResult Scanner(const LT::LexTable& lextable, int start, int end) {
+        ScanResult result = { -1, -1, -1, 0 };
 
-        for (int i = lextable_pos; i < expr_end; i++)
-        {
-            LT::Entry entry = lextable.table[i];
+        for (int i = start; i < end; i++) {
+            char lex = lextable.table[i].lexema[0];
 
-            if (entry.lexema == 0) continue;
+            // 1. Присваивание (i = выражение)
+            if (lex == LEX_ID && i + 1 < end &&
+                lextable.table[i + 1].lexema[0] == LEX_EQUALS) {
+                result.type = 1;
+                result.start = i + 2; // после "i ="
 
-            switch (entry.lexema[0])
-            {
-            case LEX_ID:
-            case LEX_LITERAL:
-            {
-                bool isFunction = false;
-                if (entry.lexema[0] == LEX_ID && entry.idxTI != LT_TI_NULLIDX) {
-                    IT::Entry idEntry = IT::GetEntry(idtable, entry.idxTI);
-                    if (idEntry.idtype == IT::F) {
-                        isFunction = true;
+                // Ищем конец (до ';' или конца диапазона)
+                for (int j = result.start; j < end; j++) {
+                    if (lextable.table[j].lexema[0] == LEX_SEMICOLON) {
+                        result.end = j;
+                        return result;
                     }
                 }
-
-                if (isFunction) {
-                    stack.push(entry);
-                }
-                else {
-                    out_string.push_back(entry);
-                }
-                break;
+                result.end = end;
+                return result;
             }
 
-            case LEX_LEFTHESIS:
-            {
-                if (!stack.empty()) {
-                    LT::Entry top = stack.top();
-                    if (top.lexema[0] == LEX_ID && top.idxTI != LT_TI_NULLIDX) {
-                        IT::Entry idEntry = IT::GetEntry(idtable, top.idxTI);
-                        if (idEntry.idtype == IT::F) {
-                            if (i + 1 < expr_end && lextable.table[i + 1].lexema[0] == LEX_RIGHTHESIS) {
-                                args_count.push(0);
-                            }
-                            else {
-                                args_count.push(1);
-                            }
+            // 2. Вызов функции (ID '(' ... ')')
+            if (lex == LEX_ID && i + 1 < end &&
+                lextable.table[i + 1].lexema[0] == LEX_LEFTHESIS) {
+                result.type = 2;
+                result.start = i;
+                result.functionName = lex;
+
+                // Ищем закрывающую скобку
+                int depth = 1;
+                for (int j = i + 2; j < end; j++) {
+                    char l = lextable.table[j].lexema[0];
+                    if (l == LEX_LEFTHESIS) depth++;
+                    else if (l == LEX_RIGHTHESIS) {
+                        depth--;
+                        if (depth == 0) {
+                            result.end = j + 1; // включая ')'
+                            return result;
                         }
                     }
                 }
-                stack.push(entry);
-                break;
+                result.end = end;
+                return result;
             }
 
-            case LEX_COMMA:
-            {
-                while (!stack.empty() && stack.top().lexema[0] != LEX_LEFTHESIS)
-                {
-                    out_string.push_back(stack.top());
-                    stack.pop();
-                }
-                if (!args_count.empty()) {
-                    args_count.top()++;
-                }
-                break;
-            }
+            // 3. Арифметическое выражение в скобках
+            if (lex == LEX_LEFTHESIS) {
+                result.type = 3;
+                result.start = i + 1; // после '('
 
-            case LEX_RIGHTHESIS:
-            {
-                while (!stack.empty() && stack.top().lexema[0] != LEX_LEFTHESIS)
-                {
-                    out_string.push_back(stack.top());
-                    stack.pop();
-                }
-
-                if (stack.empty()) return false;
-                stack.pop();
-
-                if (!stack.empty())
-                {
-                    LT::Entry top = stack.top();
-                    if (top.lexema[0] == LEX_ID && top.idxTI != LT_TI_NULLIDX)
-                    {
-                        IT::Entry idEntry = IT::GetEntry(idtable, top.idxTI);
-                        if (idEntry.idtype == IT::F)
-                        {
-                            stack.pop();
-                            int params = 0;
-                            if (!args_count.empty()) {
-                                params = args_count.top();
-                                args_count.pop();
-                            }
-                            top.lexema[0] = '$';
-                            top.idxTI = params;
-                            out_string.push_back(top);
+                // Ищем парную закрывающую скобку
+                int depth = 1;
+                for (int j = i + 1; j < end; j++) {
+                    char l = lextable.table[j].lexema[0];
+                    if (l == LEX_LEFTHESIS) depth++;
+                    else if (l == LEX_RIGHTHESIS) {
+                        depth--;
+                        if (depth == 0) {
+                            result.end = j; // не включая ')'
+                            return result;
                         }
                     }
                 }
-                break;
+                result.end = end;
+                return result;
             }
+        }
 
+        return result; // type = -1 значит ничего не найдено
+    }
 
-            case LEX_PLUS: case LEX_MINUS: case LEX_STAR: case LEX_DIRSLASH:
-            case LEX_MOD: case LEX_EQUALS: case LEX_MORE: case LEX_LESS:
-            case LEX_LE: case LEX_GE: case LEX_EQUAL: case LEX_NOTEQUAL:
-            {
-                while (!stack.empty() && stack.top().lexema[0] != LEX_LEFTHESIS &&
-                    (GetPriority(stack.top()) >= GetPriority(entry)))
-                {
-                    out_string.push_back(stack.top());
-                    stack.pop();
+    // ================== РЕКУРСИВНЫЙ POLISH NOTATION ==================
+    bool PolishNotationRecursive(LT::LexTable& lextable, IT::IdTable& idtable,
+        int start, int end, bool isTopLevel = false) {
+
+        g_nestingLevel++;
+
+        // Определяем символ конца для этого уровня
+        char stopChar = (g_nestingLevel == 1 || isTopLevel) ?
+            LEX_SEMICOLON : LEX_RIGHTHESIS;
+
+        // Находим реальный конец выражения
+        int realEnd = start;
+        while (realEnd < lextable.size && realEnd < end) {
+            char lex = lextable.table[realEnd].lexema[0];
+            if (lex == stopChar || lex == LEX_COMMA) break;
+            realEnd++;
+        }
+
+        if (realEnd <= start) {
+            g_nestingLevel--;
+            return false;
+        }
+
+        // Сканируем и обрабатываем все вложенные выражения
+        bool modified = true;
+        while (modified) {
+            modified = false;
+            ScanResult scan = Scanner(lextable, start, realEnd);
+
+            if (scan.type != -1) {
+                // Обрабатываем найденное выражение
+                if (scan.type == 2) { // Вызов функции
+                    // Обрабатываем аргументы функции
+                    int argStart = scan.start + 2; // после ID и '('
+                    int argEnd = scan.end - 1;     // перед ')'
+
+                    // Обрабатываем каждый аргумент
+                    int pos = argStart;
+                    int argCount = 0;
+
+                    while (pos < argEnd) {
+                        // Находим границы аргумента
+                        int argStartPos = pos;
+                        int argEndPos = argStartPos;
+                        int depth = 0;
+
+                        while (argEndPos < argEnd) {
+                            char l = lextable.table[argEndPos].lexema[0];
+                            if (l == LEX_LEFTHESIS) depth++;
+                            else if (l == LEX_RIGHTHESIS) depth--;
+                            else if (l == LEX_COMMA && depth == 0) break;
+                            argEndPos++;
+                        }
+
+                        if (argEndPos > argStartPos) {
+                            // Рекурсивно обрабатываем аргумент
+                            PolishNotationRecursive(lextable, idtable,
+                                argStartPos, argEndPos, false);
+                            argCount++;
+                        }
+
+                        pos = argEndPos;
+                        if (pos < argEnd && lextable.table[pos].lexema[0] == LEX_COMMA) {
+                            pos++;
+                        }
+                    }
+
+                    // Преобразуем сам вызов функции в польскую запись
+                    ConvertFunctionCall(lextable, idtable, scan.start, scan.end, argCount);
                 }
-                stack.push(entry);
-                break;
+                else { // Присваивание или скобочное выражение
+                    PolishNotationRecursive(lextable, idtable,
+                        scan.start, scan.end, scan.type == 1);
+                }
+
+                modified = true;
             }
-            }
         }
 
-        while (!stack.empty())
-        {
-            if (stack.top().lexema[0] == LEX_LEFTHESIS || stack.top().lexema[0] == LEX_RIGHTHESIS)
-                return false;
-            out_string.push_back(stack.top());
-            stack.pop();
-        }
+        // Теперь преобразуем основное выражение (уже без вложенных)
+        ConvertSimpleExpression(lextable, idtable, start, realEnd);
 
-        int outIndex = 0;
-        for (const auto& rpnEntry : out_string)
-        {
-            lextable.table[lextable_pos + outIndex] = rpnEntry;
-            outIndex++;
-        }
-
-        for (int i = lextable_pos + outIndex; i < expr_end; i++)
-        {
-            lextable.table[i].lexema[0] = 0;
-            lextable.table[i].idxTI = LT_TI_NULLIDX;
-        }
-
+        g_nestingLevel--;
         return true;
     }
 
-    bool Start(LT::LexTable& lextable, IT::IdTable& idtable)
-    {
-        for (int i = 0; i < lextable.size; i++)
-        {
-            if (lextable.table[i].lexema[0] == LEX_EQUALS ||
-                lextable.table[i].lexema[0] == LEX_RETURN ||
-                lextable.table[i].lexema[0] == LEX_PRINT)
-            {
-                if (!PolishNotation(i + 1, lextable, idtable)) {
-                    return false;
-                }
+    // ================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==================
+
+    void ConvertFunctionCall(LT::LexTable& lextable, IT::IdTable& idtable,
+        int start, int end, int argCount) {
+        // Сохраняем имя функции
+        LT::Entry funcName = lextable.table[start];
+
+        // Собираем аргументы
+        std::vector<LT::Entry> args;
+        for (int i = start + 2; i < end - 1; i++) {
+            if (lextable.table[i].lexema[0] != LEX_COMMA &&
+                lextable.table[i].lexema[0] != LEX_LEFTHESIS &&
+                lextable.table[i].lexema[0] != LEX_RIGHTHESIS) {
+                args.push_back(lextable.table[i]);
             }
-            else if (lextable.table[i].lexema[0] == LEX_FUNCTION)
-            {
-                if (i + 2 < lextable.size && lextable.table[i + 2].lexema[0] == LEX_LEFTHESIS)
-                {
-                    int openParenPos = i + 2;
-                    int closeParenPos = -1;
-                    int paramCount = 0;
+        }
 
-                    if (lextable.table[openParenPos + 1].lexema[0] == LEX_RIGHTHESIS)
-                    {
-                        paramCount = 0;
-                        closeParenPos = openParenPos + 1;
-                    }
-                    else
-                    {
-                        paramCount = 1;
-                        for (int k = openParenPos + 1; k < lextable.size; k++)
-                        {
-                            if (lextable.table[k].lexema[0] == LEX_RIGHTHESIS)
-                            {
-                                closeParenPos = k;
-                                break;
-                            }
-                            if (lextable.table[k].lexema[0] == LEX_COMMA)
-                            {
-                                paramCount++;
-                            }
-                        }
-                    }
+        // Записываем в польской записи: аргументы, имя, @N
+        int writePos = start;
 
-                    if (closeParenPos == -1) return false;
+        // Аргументы
+        for (const auto& arg : args) {
+            if (writePos < end) {
+                lextable.table[writePos++] = arg;
+            }
+        }
 
-                    lextable.table[openParenPos].lexema[0] = '$';
-                    lextable.table[openParenPos].idxTI = paramCount;
+        // Имя функции
+        if (writePos < end) {
+            lextable.table[writePos++] = funcName;
+        }
 
-                    for (int k = openParenPos + 1; k <= closeParenPos; k++)
-                    {
-                        lextable.table[k].lexema[0] = 0;
-                        lextable.table[k].idxTI = LT_TI_NULLIDX;
-                    }
+        // Маркер вызова функции с N аргументами
+        if (writePos < end) {
+            lextable.table[writePos].lexema[0] = '@';
+            lextable.table[writePos].idxTI = argCount;
+            writePos++;
+        }
+
+        // Заполнитель для остатка
+        while (writePos < end) {
+            lextable.table[writePos].lexema[0] = '~';
+            lextable.table[writePos].idxTI = LT_TI_NULLIDX;
+            writePos++;
+        }
+    }
+
+    void ConvertSimpleExpression(LT::LexTable& lextable, IT::IdTable& idtable,
+        int start, int end) {
+        // Классический Shunting-yard для арифметики
+        std::stack<LT::Entry> opStack;
+        std::vector<LT::Entry> output;
+
+        for (int i = start; i < end; i++) {
+            LT::Entry token = lextable.table[i];
+            char lex = token.lexema[0];
+
+            // Пропускаем уже обработанные маркеры
+            if (lex == '@' || lex == '~') continue;
+
+            if (IsOperand(lex)) {
+                output.push_back(token);
+            }
+            else if (lex == LEX_LEFTHESIS) {
+                opStack.push(token);
+            }
+            else if (lex == LEX_RIGHTHESIS) {
+                while (!opStack.empty() && opStack.top().lexema[0] != LEX_LEFTHESIS) {
+                    output.push_back(opStack.top());
+                    opStack.pop();
+                }
+                if (!opStack.empty()) opStack.pop();
+            }
+            else if (IsOperator(lex)) {
+                int priority = GetPriority(lex);
+                while (!opStack.empty() && opStack.top().lexema[0] != LEX_LEFTHESIS &&
+                    GetPriority(opStack.top().lexema[0]) >= priority) {
+                    output.push_back(opStack.top());
+                    opStack.pop();
+                }
+                opStack.push(token);
+            }
+        }
+
+        while (!opStack.empty()) {
+            output.push_back(opStack.top());
+            opStack.pop();
+        }
+
+        // Записать результат
+        int writePos = start;
+        for (const auto& entry : output) {
+            if (writePos < end) {
+                lextable.table[writePos++] = entry;
+            }
+        }
+
+        while (writePos < end) {
+            lextable.table[writePos].lexema[0] = '~';
+            lextable.table[writePos].idxTI = LT_TI_NULLIDX;
+            writePos++;
+        }
+    }
+
+    // ================== ИНТЕРФЕЙСНЫЕ ФУНКЦИИ ==================
+
+    bool PolishNotation(int startPos, LT::LexTable& lextable, IT::IdTable& idtable) {
+        g_nestingLevel = 0;
+        return PolishNotationRecursive(lextable, idtable, startPos, lextable.size, true);
+    }
+
+    bool ConvertAllExpressions(LT::LexTable& lextable, IT::IdTable& idtable) {
+        std::cout << "=== АВТОМАТИЧЕСКОЕ ПРЕОБРАЗОВАНИЕ ===" << std::endl;
+
+        // Ищем все выражения и обрабатываем их
+        for (int i = 0; i < lextable.size; i++) {
+            char lex = lextable.table[i].lexema[0];
+
+            if (lex == LEX_EQUALS || lex == LEX_RETURN || lex == LEX_PRINT) {
+                int exprStart = i + 1;
+
+                // Находим конец выражения
+                int exprEnd = exprStart;
+                while (exprEnd < lextable.size &&
+                    lextable.table[exprEnd].lexema[0] != LEX_SEMICOLON) {
+                    exprEnd++;
+                }
+
+                if (exprEnd > exprStart) {
+                    std::cout << "Обработка выражения на позиции " << exprStart << std::endl;
+                    PolishNotation(exprStart, lextable, idtable);
                 }
             }
         }
+
         return true;
     }
 }

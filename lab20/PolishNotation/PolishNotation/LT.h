@@ -26,17 +26,6 @@
 #define LEX_EQUALS      '='
 #define LEX_MAIN        'm'
 #define LEX_UNKNOWN     '?'
-#define LEX_LBRACKET    '['
-#define LEX_RBRACKET    ']'        
-
-#define LEX_MORE        '>'
-#define LEX_LESS        '<'
-#define LEX_LE          'L'   // <=
-#define LEX_GE          'G'   // >=
-#define LEX_EQUAL       'E'   // ==
-#define LEX_NOTEQUAL    '!'   // !=
-#define LEX_MOD         '%'
-
 
 
 namespace LT    // таблица лексем

@@ -45,7 +45,7 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 		//==================================
-		PN::Start(tables.lexTable, tables.idTable);
+		PN::ConvertAllExpressions(tables.lexTable, tables.idTable);
 		//==================================
 
 
