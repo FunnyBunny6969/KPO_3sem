@@ -146,6 +146,8 @@ namespace LEX {
                                 break;
                             }
                         }
+
+
                     }
 
                     // Если не найден - добавляем в таблицу идентификаторов
@@ -153,6 +155,9 @@ namespace LEX {
                         IT::Entry idEntry;
 
                         if (code == LEX_ID) {
+
+
+
                             // ИДЕНТИФИКАТОР - обрезаем до 5 символов
                             int copyLen = word.length();
                             if (copyLen >= ID_MAXSIZE)
@@ -232,5 +237,47 @@ namespace LEX {
             lineNumber++;
             wordNumber = 1;
         }
+
+        for (int i = 0; i < lexTable.size; i++) {
+            if (lexTable.table[i].lexema[0] == LEX_ID &&
+                i + 1 < lexTable.size) {
+
+                char nextLex = lexTable.table[i + 1].lexema[0];
+
+                // Вариант 1: Идентификатор + '(' - это вызов функции
+                if (nextLex == LEX_LEFTHESIS) {
+                    // НО: проверяем, не внутри ли мы другого вызова?
+                    bool insideFunctionCall = false;
+                    int parenDepth = 0;
+
+                    // Идём назад от текущей позиции
+                    for (int j = i - 1; j >= 0; j--) {
+                        if (lexTable.table[j].lexema[0] == LEX_RIGHTHESIS) {
+                            parenDepth++;
+                        }
+                        else if (lexTable.table[j].lexema[0] == LEX_LEFTHESIS) {
+                            if (parenDepth == 0) {
+                                // Мы внутри вызова функции - это параметр!
+                                insideFunctionCall = true;
+                                break;
+                            }
+                            parenDepth--;
+                        }
+                    }
+
+                    // Если НЕ внутри другого вызова - это самостоятельная функция
+                    if (!insideFunctionCall) {
+                        int idxTI = lexTable.table[i].idxTI;
+                        if (idxTI != LT_TI_NULLIDX && idxTI < idTable.size) {
+                            // Меняем только VAR на FUNC
+                            if (idTable.table[idxTI].idtype == IT::V) {
+                                idTable.table[idxTI].idtype = IT::F;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
