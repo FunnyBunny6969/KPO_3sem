@@ -487,5 +487,64 @@ namespace TestLexer {
 
 
 
+void PrintLexTableWithSubstit(LT::LexTable& lextab, IT::IdTable& idtab)
+{
+    std::cout << "\n----- ТАБЛИЦА ЛЕКСЕМ (с именами) -----\n";
+
+    for (int i = 0; i < lextab.size; i++)
+    {
+
+        char lex = lextab.table[i].lexema[0];
+
+        if (lextab.table[i].idxTI != LT_TI_NULLIDX && lextab.table[i].idxTI < idtab.size)
+        {
+            IT::Entry e = idtab.table[lextab.table[i].idxTI];
+
+            // ВАЖНО: проверяем не только по лексеме, но и по типу из таблицы идентификаторов!
+            if (lex == 'i' || lex == 'f' || e.idtype == IT::F) // идентификатор ИЛИ функция
+            {
+                std::cout << e.id;  // имя функции/переменной
+
+                // Добавляем пометку для функций
+                if (e.idtype == IT::F)
+                    std::cout << "[F]";
+                else if (e.idtype == IT::L)
+                    std::cout << "[LIT]";
+            }
+            else if (lex == 'l') // литерал
+            {
+                if (e.iddatatype == IT::INT)
+                    std::cout << e.value.vint;
+                else if (e.iddatatype == IT::STR)
+                    std::cout << "'" << e.value.vstr[0].str << "'";
+            }
+            else
+            {
+                std::cout << lex;
+            }
+        }
+        else
+        {
+            // Специальные символы
+            if (lex == '\0') std::cout << "~";
+            else if (lex == '@') std::cout << "@[CALL]"; // вызов функции
+            else if (lex == '$') std::cout << "$[PARAMS]"; // параметры функции
+            else std::cout << lex;
+        }
+
+        // Если это цифра после @ - это количество параметров
+        if (lex >= '0' && lex <= '9' && i > 0 &&
+            (lextab.table[i - 1].lexema[0] == '@' || lextab.table[i - 1].lexema[0] == '$'))
+        {
+            std::cout << "(" << lex << " param)";
+        }
+
+        std::cout << " ";
+
+        // Новая строка после каждой точки с запятой для удобства
+        if (lex == ';') std::cout << "\n";
+    }
+    std::cout << "\n--------------------------------------\n";
+}
 
 

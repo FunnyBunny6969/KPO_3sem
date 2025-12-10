@@ -10,6 +10,10 @@ using namespace std;
 
 
 
+
+
+
+
 void run(int argc, _TCHAR* argv[]) {
 	Log::LOG log = Log::INITLOG;
 	In::IN in;
@@ -31,8 +35,13 @@ void run(int argc, _TCHAR* argv[]) {
         TestLT::PrintLexTable(tables.lexTable);
         TestIT::PrintTable(tables.idTable);
 		//TestLexer::TestSplitter(in);
+		for (int i = 0; i < tables.lexTable.size; i++) {
+			cout << tables.lexTable.table[i].lexema[0];
+		}
+		cout << endl;
 
 
+		/*
 		MFST_TRACE_START                              // отладка
 			MFST::Mfst mfst(tables, GRB::getGreibach());  // автомат
 
@@ -41,16 +50,18 @@ void run(int argc, _TCHAR* argv[]) {
 
 		mfst.savededucation();									// сохранить правила вывода
 		mfst.printrules();                         // отладка: вывести правила вывода
+		*/
 
 
 
 		//==================================
-		PN::ConvertAllExpressions(tables.lexTable, tables.idTable);
+		PN::StartPoliz(tables.lexTable, tables.idTable);
 		//==================================
 
 
         TestLT::PrintLexTable(tables.lexTable);
         TestIT::PrintTable(tables.idTable);
+		PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 
 

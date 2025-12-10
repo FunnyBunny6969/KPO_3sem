@@ -1,242 +1,185 @@
-﻿#include "stdafx.h"
-#include "PolishNotation.h"
-#include <stack>
-#include <queue>
-#include <iostream>
+﻿#include "PolishNotation.h"
 
 
-namespace PN {
-    //================================================================
-    namespace {
-
-        int GetPriority(char op) {
-            switch (op) {
-            case '*': case '/': return 7;
-            case '+': case '-': return 6;
-            case '=':           return 1;  // самый низкий
-            default:            return 0;
-            }
-        }
-
-        bool IsOperator(char op) {
-            return op == LEX_PLUS || op == '-' || op == '*' || op == '/' || op == '=';
-        }
-
-        bool IsOperand(char lex) {
-            return lex == 'i' || lex == 'l' || lex == 't' || lex == 'n';
-        }
-
-        bool IsUnaryMinus(int pos, const LT::LexTable& lextable) {
-            if (lextable.table[pos].lexema[0] != '-') return false;
-
-            // Начало выражения?
-            if (pos == 0) return true;
-
-            // После '=', '(', ',' или другого оператора?
-            char prev = lextable.table[pos - 1].lexema[0];
-            return (prev == '=' || prev == '(' || prev == ',' ||
-                prev == '+' || prev == '-' || prev == '*' || prev == '/');
-        }
+namespace PN
+{
+	int GetPriority(char lexema)
+	{
+		switch (lexema)
+		{
+		case LEX_LEFTHESIS:
+		case LEX_RIGHTHESIS:
+			return 0;
+		case LEX_COMMA:
+			return 1;
+		case LEX_EQUALS:
+			return 2;
+		case LEX_PLUS:
+		case LEX_MINUS:
+			return 4;
+		case LEX_STAR:
+		case LEX_DIRSLASH:
+			return 5;
+		default:
+			return -1;
+		}
+	}
 
 
-        // Вспомогательная функция: печать лексемы с расшифровкой
-        void PrintLexemeWithDecode(const LT::Entry& entry, const IT::IdTable& idtable) {
-            char lex = entry.lexema[0];
+	bool Poliz(int i, LT::LexTable& lextab, IT::IdTable& idtable)
+	{
+		std::stack<LT::Entry> stack;
+		std::queue<LT::Entry> queue;
 
-            if (lex == 'i' || lex == 'l') {  // идентификатор или литерал
-                if (entry.idxTI != LT_TI_NULLIDX && entry.idxTI < idtable.size) {
-                    IT::Entry id_entry = idtable.table[entry.idxTI];
-
-                    if (lex == 'i') {
-                        std::cout << "{" << id_entry.id << "}";  // имя идентификатора
-                    }
-                    else if (lex == 'l') {
-                        // Литерал: покажем значение
-                        if (id_entry.iddatatype == IT::INT) {
-                            std::cout << "[" << id_entry.value.vint << "]";  // число
-                        }
-                        else if (id_entry.iddatatype == IT::STR) {
-                            std::cout << "['";
-                            for (int i = 0; i < (int)id_entry.value.vstr->len; i++) {
-                                std::cout << id_entry.value.vstr->str[i];
-                            }
-                            std::cout << "']";
-                        }
-                    }
-                }
-                else {
-                    std::cout << lex << "?";  // неизвестно
-                }
-            }
-            else if (lex == '~') {
-                std::cout << "~";  // заполнитель
-            }
-            else {
-                std::cout << lex;  // операторы, скобки и т.д.
-            }
-        }
-    }
-    //================================================================
+		// Создаем временную запись для заполнения пустых позиций
+		LT::Entry temp;
+		temp.idxTI = LT_TI_NULLIDX;
+		temp.lexema[0] = '~';
+		temp.sn = lextab.table[i].sn;
 
 
+		LT::Entry func;
+		func.idxTI = LT_TI_NULLIDX;
+		func.lexema[0] = '@';
+		func.sn = lextab.table[i].sn;
 
-    bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable) {
-        // 1. Проверка входных данных
-        if (lextable_pos >= lextable.size) return false;
+		int countLex = 0, countComma = 0;
+		int countParm = 1;
+		int posLex = i;
+		char* buf = new char[1];
 
-        // 2. Найти конец выражения (до ';')
-        int start = lextable_pos;
-        int end = start;
-        while (end < lextable.size && lextable.table[end].lexema[0] != ';') {
-            end++;
-        }
+		bool findComma = false;
+		bool findParm = false;
+		bool callFunc = false;
+		bool result = true;
 
-        if (end <= start) return false; // пустое выражение
+		for (i; lextab.table[i].lexema[0] != LEX_SEMICOLON; i++, countLex++)
+		{
+			switch (lextab.table[i].lexema[0])
+			{
+			case LEX_ID:
+			{
+				queue.push(lextab.table[i]);
+				continue;
+			}
+			case LEX_LITERAL:
+			{
+				queue.push(lextab.table[i]);
+				continue;
+			}
+			case LEX_PLUS:
+			{
+				while (!stack.empty() && 
+					GetPriority(lextab.table[i].lexema[0]) <= GetPriority(stack.top().lexema[0]))
+				{
+					queue.push(stack.top());
+					stack.pop();
+				}
+				stack.push(lextab.table[i]);
+				continue;
+			}
+			case LEX_COMMA:
+			{
+				findComma = true;
+				countComma++;
+				continue;
+			}
+			case LEX_LEFTHESIS:
+			{
+				stack.push(lextab.table[i]);
+				if ((lextab.table[i + 1].lexema[0] == LEX_ID || 
+					(lextab.table[i + 1].lexema[0] == LEX_LITERAL || 
+					lextab.table[i + 2].lexema[0] == LEX_LITERAL)) && 
+					lextab.table[i - 1].lexema[0] == LEX_ID)
+				{
+					findParm = true;
+					callFunc = true;
+				}
+				continue;
+			}
+			case LEX_RIGHTHESIS:
+			{
+				while (stack.top().lexema[0] != LEX_LEFTHESIS)
+				{
+					queue.push(stack.top());
+					stack.pop();
+					if (stack.empty())
+						return false;
+				}
+				if (callFunc)
+				{
+					if (findComma)
+						countParm = countComma + 1;
+					else if (findParm)
+						countParm = 1;
+					else
+						countParm = 0;
+					countComma = 0;
+					lextab.table[i] = func;
+					queue.push(lextab.table[i]);
+					_itoa_s(countParm, buf, 2, 10);
+					stack.top().lexema[0] = buf[0];
+					stack.top().idxTI = func.idxTI;
+					stack.top().sn = func.sn;
+					queue.push(stack.top());
+					callFunc = false;
+				}
+				stack.pop();
+				continue;
+			}
+			}
+		}
 
-        // 3. Преобразование инфикс → постфикс
-        std::stack<LT::Entry> op_stack;
-        std::queue<LT::Entry> output;
+		while (!stack.empty())
+		{
+			if (stack.top().lexema[0] == LEX_LEFTHESIS || 
+				stack.top().lexema[0] == LEX_RIGHTHESIS)
+				return false;
+			queue.push(stack.top());
+			stack.pop();
+		}
 
-        for (int i = start; i < end; i++) {
-            LT::Entry token = lextable.table[i];
-            char lex = token.lexema[0];
+		while (countLex)
+		{
+			if (!queue.empty())
+			{
+				lextab.table[posLex++] = queue.front();
+				queue.pop();
+			}
+			else
+			{
+				lextab.table[posLex++] = temp;
+			}
+			countLex--;
+		}
 
-            // 3.1 Операнд → сразу в выход
-            if (IsOperand(lex)) {
-                output.push(token);
-            }
-            // 3.2 '(' → в стек
-            else if (lex == '(') {
-                op_stack.push(token);
-            }
-            // 3.3 ')' → выталкиваем до '('
-            else if (lex == ')') {
-                while (!op_stack.empty() && op_stack.top().lexema[0] != '(') {
-                    output.push(op_stack.top());
-                    op_stack.pop();
-                }
-                if (!op_stack.empty()) op_stack.pop(); // удаляем '('
-            }
-            // 3.4 ОПЕРАТОР (+, -, *, /, =)
-            else if (IsOperator(lex)) {
-                // Проверяем унарный минус
-                bool is_unary = (lex == '-' && IsUnaryMinus(i, lextable));
-                int priority = GetPriority(lex);
+		for (int i = 0; i < posLex; i++)
+		{
+			if (lextab.table[i].lexema[0] == LEX_LITERAL || 
+				lextab.table[i].lexema[0] == LEX_ID)
+				idtable.table[lextab.table[i].idxTI].idxfirstLE = i;
+		}
+		return true;
+	}
 
-                if (is_unary) {
-                    // Унарный минус: сразу в стек с высоким приоритетом
-                    op_stack.push(token);
-                }
-                else {
-                    // Бинарный оператор: выталкиваем операторы с >= приоритетом
-                    while (!op_stack.empty()) {
-                        char top_lex = op_stack.top().lexema[0];
-                        if (top_lex == '(') break;
+	bool StartPoliz(LT::LexTable& lextab, IT::IdTable& idtable)
+	{
 
-                        int top_priority = GetPriority(top_lex);
-                        if (top_priority < priority) break;
+		bool result = false;
+		for (int i = 0; i < lextab.size; i++)
+		{
+			if (lextab.table[i].lexema[0] == LEX_EQUALS ||
+				(lextab.table[i].lexema[0] == LEX_ID && lextab.table[i - 1].lexema[0] != LEX_EQUALS
+					&& lextab.table[i - 1].lexema[0] != LEX_PLUS/* && lextab.table[i - 1].lexema != LEX_UNARY_MINUS && lextab.table[i - 1].lexema != LEX_LESS*/
+					&& idtable.table[lextab.table[i].idxTI].idtype == IT::IDTYPE::F
+					&& lextab.table[i - 1].lexema[0] != LEX_FUNCTION))
+			{
+				result = Poliz(i + 1, lextab, idtable);
+				if (!result)
+					return result;
+			}
+		}
+		return result;
+	}
 
-                        output.push(op_stack.top());
-                        op_stack.pop();
-                    }
-                    op_stack.push(token);
-                }
-            }
-            // 3.5 ',' → игнорируем (не нужен в ПОЛИЗ)
-            else if (lex == ',') {
-                // Ничего не делаем
-            }
-            // 3.6 Неизвестная лексема
-            else {
-                std::cerr << "Неизвестная лексема: " << lex << std::endl;
-                return false;
-            }
-        }
-
-        // 4. Выталкиваем оставшиеся операторы
-        while (!op_stack.empty()) {
-            if (op_stack.top().lexema[0] == '(') {
-                std::cerr << "Несбалансированные скобки" << std::endl;
-                return false;
-            }
-            output.push(op_stack.top());
-            op_stack.pop();
-        }
-
-        // 5. Записать ПОЛИЗ обратно в таблицу
-        int write_pos = start;
-        while (!output.empty() && write_pos < end) {
-            lextable.table[write_pos++] = output.front();
-            output.pop();
-        }
-
-        // 6. Заполнить остаток символом-заполнителем
-        const char FILLER = '~';
-        while (write_pos < end) {
-            lextable.table[write_pos].lexema[0] = FILLER;
-            lextable.table[write_pos].idxTI = LT_TI_NULLIDX;
-            write_pos++;
-        }
-
-        // 7. Обновить idxfirstLE
-        for (int i = start; i < end; i++) {
-            char lex = lextable.table[i].lexema[0];
-            if (lex == 'i' || lex == 'l') {
-                int idxTI = lextable.table[i].idxTI;
-                if (idxTI >= 0 && idxTI < idtable.size) {
-                    idtable.table[idxTI].idxfirstLE = i;
-                }
-            }
-        }
-
-        // 8. Вывести результат
-        std::cout << "ПОЛИЗ: ";
-        for (int i = start; i < end; i++) {
-            if (lextable.table[i].lexema[0] != FILLER) {
-                std::cout << lextable.table[i].lexema[0] << " ";
-            }
-        }
-        std::cout << std::endl;
-
-        std::cout << "ПОЛИЗ (расшифрованная): ";
-        for (int i = start; i < end; i++) {
-            if (lextable.table[i].lexema[0] != FILLER) {
-                PrintLexemeWithDecode(lextable.table[i], idtable);
-                std::cout << " ";
-            }
-        }
-        std::cout << std::endl;
-
-        return true;
-    }
-
-
-    bool ConvertAllExpressions(LT::LexTable& lextable, IT::IdTable& idtable) {
-        std::cout << "=== ПРЕОБРАЗОВАНИЕ ВСЕХ ВЫРАЖЕНИЙ ===" << std::endl;
-
-        bool success = true;
-
-        for (int i = 0; i < lextable.size; i++) {
-            if (lextable.table[i].lexema[0] == '=') {
-                int expr_start = i + 1;
-
-                std::cout << "\nВыражение (поз. " << expr_start << "): ";
-
-                // Покажем исходное выражение
-                for (int j = expr_start; j < lextable.size; j++) {
-                    if (lextable.table[j].lexema[0] == ';') break;
-                    std::cout << lextable.table[j].lexema[0] << " ";
-                }
-                std::cout << std::endl;
-
-                // Преобразуем
-                if (!PolishNotation(expr_start, lextable, idtable)) {
-                    success = false;
-                    std::cout << "Ошибка!" << std::endl;
-                }
-            }
-        }
-
-        return success;
-    }
 }

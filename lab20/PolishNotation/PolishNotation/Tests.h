@@ -57,3 +57,5 @@ namespace TestLexer {
     void TestSplitter(In::IN);
 }
 
+
+void PrintLexTableWithSubstit(LT::LexTable& lextab, IT::IdTable& idtab);
