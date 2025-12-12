@@ -177,10 +177,84 @@ namespace TestLT {
 
 		LT::Delete(lt);
 	}
+
+	void PrintLexTableWithSubstit(LT::LexTable& lextable, IT::IdTable& idtable)
+	{
+		std::cout << "\n----- ТАБЛИЦА ЛЕКСЕМ (с именами) -----\n";
+
+		int currentLine = 1;
+		bool firstOnLine = true;
+
+		for (int i = 0; i < lextable.size; i++) {
+			LT::Entry entry = lextable.table[i];
+
+			// 1. Обработка новой строки
+			if (entry.sn != currentLine) {
+				std::cout << std::endl;
+				currentLine = entry.sn;
+				firstOnLine = true;
+			}
+
+			// 2. Вывод номера строки
+			if (firstOnLine) {
+				if (currentLine < 10) std::cout << "0";
+				std::cout << currentLine << " ";
+				firstOnLine = false;
+			}
+
+
+			// 3. Вывод лексемы (с подстановкой из ТИ, если есть)
+
+			// Если есть привязка к Таблице Идентификаторов
+			if (entry.idxTI != LT_TI_NULLIDX) {
+				IT::Entry e = idtable.table[entry.idxTI];
+
+				// a) Функция (ID типа F)
+				if (e.idtype == IT::F) {
+					// Выводим имя функции и число аргументов
+					std::cout << e.id
+						<< "@" << e.func_meta.n_params << " ";
+				}
+				// b) Литерал (Константа: число или строка)
+				else if (e.idtype == IT::L) {
+					if (e.iddatatype == IT::INT)
+						std::cout << e.value.vint << " ";
+					else if (e.iddatatype == IT::STR)
+						// Исправлено: Обращение к структуре StringValue, 
+						// предполагая, что e.value.vstr - это указатель.
+						// Если e.value.vstr - это структура, то использовать e.value.vstr.str
+						// В текущем коде было 'vstr->str', я использую его:
+						std::cout << "'" << e.value.vstr->str << "' ";
+					else {
+						// Обработка других типов литералов, если есть
+						std::cout << "LITERAL_UNKNOWN_TYPE ";
+					}
+				}
+				// c) Переменная (ID типа V)
+				else if (e.idtype == IT::V || e.idtype == IT::P) {
+					// Выводим имя переменной/ID
+					std::cout << e.id << " ";
+				}
+				// d) Неизвестный ID
+				else {
+					std::cout << "ID_UNKNOWN_TYPE ";
+				}
+			}
+			// Если нет привязки к ТИ (операторы, скобки, ключевые слова)
+			else {
+				// Выводим сам символ лексемы (например, '+', ':', '{', 'd', 't', ';', '#')
+				std::cout << entry.lexema[0] << " ";
+			}
+		}
+		std::cout << "\n----------------------------------------\n";
+	}
+
 }
 
 // Вспомогательные функции для тестирования IT
 namespace TestIT {
+
+
     IT::Entry CreateEntry(const char* id, int lexemeIndex, IT::IDDATATYPE dataType, IT::IDTYPE type) {
         IT::Entry entry;
         strcpy_s(entry.id, ID_MAXSIZE, id);
@@ -540,66 +614,5 @@ namespace TestLexer {
     }
 }
 
-
-
-void PrintLexTableWithSubstit(LT::LexTable& lextab, IT::IdTable& idtab)
-{
-    std::cout << "\n----- ТАБЛИЦА ЛЕКСЕМ (с именами) -----\n";
-
-    for (int i = 0; i < lextab.size; i++)
-    {
-
-        char lex = lextab.table[i].lexema[0];
-
-        if (lextab.table[i].idxTI != LT_TI_NULLIDX && lextab.table[i].idxTI < idtab.size)
-        {
-            IT::Entry e = idtab.table[lextab.table[i].idxTI];
-
-            // ВАЖНО: проверяем не только по лексеме, но и по типу из таблицы идентификаторов!
-            if (lex == 'i' || lex == 'f' || e.idtype == IT::F) // идентификатор ИЛИ функция
-            {
-                std::cout << e.id;  // имя функции/переменной
-
-                // Добавляем пометку для функций
-                if (e.idtype == IT::F)
-                    std::cout << "[F]";
-                else if (e.idtype == IT::L)
-                    std::cout << "[LIT]";
-            }
-            else if (lex == 'l') // литерал
-            {
-                if (e.iddatatype == IT::INT)
-                    std::cout << e.value.vint;
-                else if (e.iddatatype == IT::STR)
-                    std::cout << "'" << e.value.vstr[0].str << "'";
-            }
-            else
-            {
-                std::cout << lex;
-            }
-        }
-        else
-        {
-            // Специальные символы
-            if (lex == '\0') std::cout << "~";
-            else if (lex == '@') std::cout << "@[CALL]"; // вызов функции
-            else if (lex == '$') std::cout << "$[PARAMS]"; // параметры функции
-            else std::cout << lex;
-        }
-
-        // Если это цифра после @ - это количество параметров
-        if (lex >= '0' && lex <= '9' && i > 0 &&
-            (lextab.table[i - 1].lexema[0] == '@' || lextab.table[i - 1].lexema[0] == '$'))
-        {
-            std::cout << "(" << lex << " param)";
-        }
-
-        std::cout << " ";
-
-        // Новая строка после каждой точки с запятой для удобства
-        if (lex == ';') std::cout << "\n";
-    }
-    std::cout << "\n--------------------------------------\n";
-}
 
 

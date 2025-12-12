@@ -30,6 +30,7 @@ namespace TestLT {
 	void PrintLexTable(LT::LexTable&);
 	IT::Entry CreateITEntry(const char*, int, IT::IDDATATYPE, IT::IDTYPE);
 	void TestLT();
+    void PrintLexTableWithSubstit(LT::LexTable& , IT::IdTable& );
 }
 
 namespace TestIT {

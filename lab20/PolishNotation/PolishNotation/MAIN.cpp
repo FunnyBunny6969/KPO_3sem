@@ -29,10 +29,7 @@ void run(int argc, _TCHAR* argv[]) {
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
 		LEX::LEX tables; 
 		IT::InitBuiltins(tables.idTable);
-		TestLexer::PrintFunctionParameters(tables.idTable);
-
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
-		TestLexer::PrintFunctionParameters(tables.idTable);
 
         // Выводим результаты
         TestLT::PrintLexTable(tables.lexTable);
@@ -62,9 +59,10 @@ void run(int argc, _TCHAR* argv[]) {
 		//==================================
 
 
+		TestLexer::PrintFunctionParameters(tables.idTable);
         TestLT::PrintLexTable(tables.lexTable);
         TestIT::PrintTable(tables.idTable);
-		PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
+		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 
 

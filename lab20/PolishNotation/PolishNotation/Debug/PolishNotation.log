@@ -1,2 +1,6 @@
-﻿  LEX.cpp
+﻿  MAIN.cpp
+  Tests.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Tests.cpp(550,21): warning C4018: <: несоответствие типов со знаком и без знака
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\PolishNotation\Tests.cpp(553,22): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
   PolishNotation.vcxproj -> K:\$MAIN$\БГТУ\02\KPO_3sem\lab20\PolishNotation\Debug\PolishNotation.exe
