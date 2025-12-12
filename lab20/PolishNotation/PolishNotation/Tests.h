@@ -55,6 +55,7 @@ namespace TestAutomata {
 
 namespace TestLexer {
     void TestSplitter(In::IN);
+    void PrintFunctionParameters(const IT::IdTable& idTable);
 }
 
 

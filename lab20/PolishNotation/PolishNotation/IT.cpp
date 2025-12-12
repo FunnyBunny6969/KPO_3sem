@@ -45,7 +45,7 @@ namespace IT {
         }
 
         // Копируем идентификатор (усекаем до ID_MAXSIZE)
-        strncpy_s(idtable.table[idtable.size].id, ID_MAXSIZE, entry.id, _TRUNCATE);
+        strncpy_s(idtable.table[idtable.size].id, ID_REALSIZE, entry.id, _TRUNCATE);
 
         // Копируем остальные поля
         idtable.table[idtable.size].idxfirstLE = entry.idxfirstLE;
@@ -60,9 +60,13 @@ namespace IT {
             // Копируем строковое значение
             idtable.table[idtable.size].value.vstr[0].len = entry.value.vstr[0].len;
             strncpy_s(idtable.table[idtable.size].value.vstr[0].str,
-                TI_STR_MAXSIZE - 1,
+                ID_REALSIZE - 1,
                 entry.value.vstr[0].str,
                 _TRUNCATE);
+        }
+
+        if (entry.idtype == IT::F) {
+            idtable.table[idtable.size].func_meta = entry.func_meta;
         }
 
         idtable.size++;
@@ -84,7 +88,7 @@ namespace IT {
     }
 
     // Проверить наличие идентификатора в таблице
-    int IsId(IdTable& idtable, char id[ID_MAXSIZE]) {
+    int IsId(IdTable& idtable, char id[ID_REALSIZE]) {
         for (int i = 0; i < idtable.size; i++) {
             if (strcmp(idtable.table[i].id, id) == 0) {
                 return i; // Найден, возвращаем индекс
@@ -101,5 +105,29 @@ namespace IT {
         }
         idtable.size = 0;
         idtable.maxsize = 0;
+    }
+
+    void InitBuiltins(IdTable& idTable) {
+        IT::Entry strlenEntry;
+        strncpy_s(strlenEntry.id, ID_REALSIZE, "strlen", _TRUNCATE);
+        strlenEntry.id[ID_REALSIZE - 1] = '\0';
+        strlenEntry.idtype = IT::F;           // Тип: Функция
+        strlenEntry.iddatatype = IT::INT;     // Возвращаемый тип: integer
+        strlenEntry.idxfirstLE = -1;          // Индекс лексемы: -1 (встроенная функция)
+        strlenEntry.func_meta.n_params = 1;                           // Арность: 1
+        strlenEntry.func_meta.params_types[0] = IT::STR;              // Тип первого параметра: string
+        IT::Add(idTable, strlenEntry);
+
+        IT::Entry substrEntry;
+        strncpy_s(substrEntry.id, ID_REALSIZE, "substr", _TRUNCATE);
+        substrEntry.id[ID_REALSIZE - 1] = '\0';
+        substrEntry.idtype = IT::F;           
+        substrEntry.iddatatype = IT::STR;    
+        substrEntry.idxfirstLE = -1;        
+        substrEntry.func_meta.n_params = 3;                           
+        substrEntry.func_meta.params_types[0] = IT::STR;             
+        substrEntry.func_meta.params_types[1] = IT::INT;            
+        substrEntry.func_meta.params_types[2] = IT::INT;           
+        IT::Add(idTable, substrEntry);
     }
 }

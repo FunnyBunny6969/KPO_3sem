@@ -483,6 +483,61 @@ namespace TestLexer {
 		}
 		std::cout << "Всего строк: " << lines.size() << std::endl;
     }
+
+
+    void PrintFunctionParameters(const IT::IdTable& idTable)
+    {
+        // Заголовок для вывода
+        printf("\n--- FUNCTION METADATA DUMP ---\n");
+        printf("%-32s | %s | %s\n", "FUNCTION NAME", "PARAMS COUNT", "PARAM TYPES");
+        printf("---------------------------------+--------------+----------------------------\n");
+
+        // Итерация по Таблице Идентификаторов
+        for (int i = 0; i < idTable.size; i++) {
+            const IT::Entry& currentId = idTable.table[i];
+
+            // Ищем только записи функций
+            if (currentId.idtype == IT::F) {
+
+                // Имя функции
+                const char* funcName = currentId.id;
+                // Количество параметров
+                int nParams = currentId.func_meta.n_params;
+
+                // Формируем строку с типами параметров
+                char paramTypesStr[100] = { 0 }; // Буфер для типов
+                char* ptr = paramTypesStr;
+
+                for (int p = 0; p < nParams; p++) {
+                    IT::IDDATATYPE type = currentId.func_meta.params_types[p];
+                    const char* typeStr = "UNKNOWN";
+
+                    // Конвертируем тип в строку (вам нужно будет адаптировать эти константы)
+                    if (type == IT::INT) {
+                        typeStr = "INT";
+                    }
+                    else if (type == IT::STR) {
+                        typeStr = "STRING";
+                    }
+                    else if (type == IT::BOOL) { typeStr = "BOOL"; } 
+
+                    // Копируем строку типа
+                    int len = snprintf(ptr, 100 - (ptr - paramTypesStr), "%s", typeStr);
+                    ptr += len;
+
+                    // Добавляем разделитель, если это не последний параметр
+                    if (p < nParams - 1) {
+                        len = snprintf(ptr, 100 - (ptr - paramTypesStr), ", ");
+                        ptr += len;
+                    }
+                }
+
+                // Вывод строки
+                printf("%-32s | %12d | %s\n", funcName, nParams, paramTypesStr);
+            }
+        }
+        printf("--------------------------------+--------------+----------------------------\n");
+    }
 }
 
 

@@ -1,6 +1,8 @@
 #pragma once
 
+#define IT_MAX_PARAMS 8
 #define ID_MAXSIZE  5              // максимальное количество символов в идентификаторе
+#define ID_REALSIZE 20
 #define TI_MAXSIZE  4096           // максимальное количество строк в таблице идентификаторов
 #define TI_INT_DEFAULT 0x00000000  // значение по умолчанию для типа integer
 #define TI_STR_DEFAULT 0x00        // значение по умолчанию для типа string
@@ -9,13 +11,13 @@
 
 namespace IT    // таблица идентификаторов
 {
-    enum IDDATATYPE {INT=1, STR=2};        // типы данных идентификаторов: integer, string
-    enum IDTYPE     {V=1, F=2, P=3, L=4};  // типы идентификаторов: переменная, функция, параметр, литерал
+    enum IDDATATYPE {INT=1, STR=2, BOOL=3, UNDEF = 0};   // типы данных идентификаторов: integer, string
+    enum IDTYPE     {V=1, F=2, P=3, L=4};                // типы идентификаторов: переменная, функция, параметр, литерал
 
     struct Entry    // строка таблицы идентификаторов
     {
         int        idxfirstLE;        // индекс первой строки в таблице лексем
-        char       id[ID_MAXSIZE];    // идентификатор (автоматически усекается до ID_MAXSIZE)
+        char       id[ID_REALSIZE];    // идентификатор (автоматически усекается до ID_MAXSIZE)
         IDDATATYPE iddatatype;        // тип данных
         IDTYPE     idtype;            // тип идентификатора
 
@@ -28,6 +30,12 @@ namespace IT    // таблица идентификаторов
                 char str[TI_STR_MAXSIZE - 1];  // символы string
             } vstr[TI_STR_MAXSIZE];            // значение string
         } value;                       // значение идентификатора
+
+        struct
+        {
+            int          n_params = 0;                // Число параметров 
+            IDDATATYPE   params_types[IT_MAX_PARAMS]; // Массив типов данных параметров
+        } func_meta;
     };
 
     struct IdTable        // экземпляр таблицы идентификаторов
@@ -57,6 +65,8 @@ namespace IT    // таблица идентификаторов
 			);
 
     void Delete(IdTable& idtable);    // удалить таблицу идентификаторов (освободить память)
+
+    void InitBuiltins(IdTable& idTable);
 }
 
 

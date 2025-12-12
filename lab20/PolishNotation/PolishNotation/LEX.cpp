@@ -238,46 +238,105 @@ namespace LEX {
             wordNumber = 1;
         }
 
-        for (int i = 0; i < lexTable.size; i++) {
-            if (lexTable.table[i].lexema[0] == LEX_ID &&
-                i + 1 < lexTable.size) {
+        CollectFunctionMetadata(lexTable, idTable);
+    }
 
-                char nextLex = lexTable.table[i + 1].lexema[0];
 
-                // Вариант 1: Идентификатор + '(' - это вызов функции
-                if (nextLex == LEX_LEFTHESIS) {
-                    // НО: проверяем, не внутри ли мы другого вызова?
-                    bool insideFunctionCall = false;
-                    int parenDepth = 0;
 
-                    // Идём назад от текущей позиции
-                    for (int j = i - 1; j >= 0; j--) {
-                        if (lexTable.table[j].lexema[0] == LEX_RIGHTHESIS) {
-                            parenDepth++;
-                        }
-                        else if (lexTable.table[j].lexema[0] == LEX_LEFTHESIS) {
-                            if (parenDepth == 0) {
-                                // Мы внутри вызова функции - это параметр!
-                                insideFunctionCall = true;
-                                break;
+    void CollectFunctionMetadata(LT::LexTable& lexTable, IT::IdTable& idTable)
+    {
+        // Итерация по Таблице Идентификаторов (ТИ)
+        for (int i = 0; i < idTable.size; i++) {
+            IT::Entry& currentId = idTable.table[i];
+
+            // 1. Ищем только записи функций
+            if (currentId.idtype == IT::F) {
+
+
+                // Индекс первой лексемы, относящейся к функции
+                int lexIndex = currentId.idxfirstLE;
+                if (lexIndex == LT_TI_NULLIDX) continue;
+                if (lexIndex < 0 || lexIndex >= lexTable.size) continue;
+
+                // Инициализация метаданных для текущей функции
+                currentId.func_meta.n_params = 0;
+                bool inFunctionParams = false;
+                bool functionBodyFound = false;
+
+                // 2. Сканируем Таблицу Лексем от начала функции
+                for (int j = lexIndex; j < lexTable.size; j++) {
+                    char code = lexTable.table[j].lexema[0];
+
+                    if (code == LEX_LEFTHESIS) {
+                        inFunctionParams = true; // Начались параметры
+                        continue;
+                    }
+
+                    if (code == LEX_RIGHTHESIS) {
+                        inFunctionParams = false; // Закончились параметры
+                        continue;
+                    }
+
+                    if (code == LEX_LEFTBRACE) {
+                        // Начало тела функции
+                        inFunctionParams = false; // Убеждаемся, что флаг сброшен
+                        functionBodyFound = true;
+
+                        int braceDepth = 1;
+                        // Новый цикл для поиска конца тела функции
+                        for (int k = j + 1; k < lexTable.size; k++) {
+                            if (lexTable.table[k].lexema[0] == LEX_LEFTBRACE) {
+                                braceDepth++;
                             }
-                            parenDepth--;
+                            else if (lexTable.table[k].lexema[0] == LEX_RIGHTBRACE) {
+                                braceDepth--;
+                                if (braceDepth == 0) {
+                                    // Найдена закрывающая скобка функции. 
+                                    // Устанавливаем j на позицию '{' (чтобы внешний цикл 
+                                    // сразу вышел на следующей итерации или был пропущен,
+                                    // но поскольку мы прерываем внешний цикл, это не так важно,
+                                    // просто прерываем оба цикла).
+                                    j = lexTable.size; // Чтобы выйти из внешнего цикла
+                                    break; // Выход из внутреннего цикла
+                                }
+                            }
+                        }
+                        // Если мы нашли тело функции, то после внутреннего цикла
+                        // мы должны выйти и из внешнего, чтобы перейти к следующей функции.
+                        // Если `j` было установлено в `lexTable.size`, внешний цикл завершится.
+                        break;
+                    }
+
+                    // 3. Собираем параметры внутри скобок
+                    if (inFunctionParams && code == LEX_ID) {
+                        int idIndex = lexTable.table[j].idxTI;
+
+                        // Проверяем, является ли этот ID параметром (IT::P)
+                        if (idIndex != LT_TI_NULLIDX && idTable.table[idIndex].idtype == IT::P) {
+
+                            if (currentId.func_meta.n_params < IT_MAX_PARAMS) {
+
+                                // Сохраняем тип параметра в метаданных функции
+                                IT::IDDATATYPE paramType = idTable.table[idIndex].iddatatype;
+
+                                currentId.func_meta.params_types[currentId.func_meta.n_params] = paramType;
+                                currentId.func_meta.n_params++;
+                            }
+                            else {
+                                std::cout << "ERR: TOO MUCH PARMS in func"
+                                    << currentId.value.vstr << std::endl;
+                            }
                         }
                     }
 
-                    // Если НЕ внутри другого вызова - это самостоятельная функция
-                    if (!insideFunctionCall) {
-                        int idxTI = lexTable.table[i].idxTI;
-                        if (idxTI != LT_TI_NULLIDX && idxTI < idTable.size) {
-                            // Меняем только VAR на FUNC
-                            if (idTable.table[idxTI].idtype == IT::V) {
-                                idTable.table[idxTI].idtype = IT::F;
-                            }
-                        }
+                    // Обработка функций-объявлений (без тела)
+                    if (!functionBodyFound && code == LEX_SEMICOLON) {
+                        // Если мы нашли ';' после параметров, это объявление функции.
+                        // Мы можем завершить сканирование для этой функции.
+                        break;
                     }
                 }
             }
         }
-
     }
 }

@@ -28,8 +28,11 @@ void run(int argc, _TCHAR* argv[]) {
 
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
 		LEX::LEX tables; 
+		IT::InitBuiltins(tables.idTable);
+		TestLexer::PrintFunctionParameters(tables.idTable);
 
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
+		TestLexer::PrintFunctionParameters(tables.idTable);
 
         // Выводим результаты
         TestLT::PrintLexTable(tables.lexTable);
@@ -55,7 +58,7 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 		//==================================
-		PN::StartPoliz(tables.lexTable, tables.idTable);
+		PN::FindExpressions(tables.lexTable, tables.idTable);
 		//==================================
 
 
