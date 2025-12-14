@@ -10,15 +10,19 @@ namespace GRB
 		6,                                      // количество правил
 		// Правило S - программа
 		Rule(NS('S'), GRB_ERROR_SERIES + 0,     // Неверная структура программы
-			3,                                  // S->m{NrE;}; | tfi(F){NrE;};S | m{NrE;};S | tfi(F){NrE;}
+			4,                                  // S->m{NrE;}; | tfi(F){NrE;};S | m{NrE;};S | tfi(F){NrE;}
 			Rule::Chain(7, TS('m'), TS('{'), /*NS('N'),*/ TS('r'), NS('E'), TS(';'), TS('}'), TS(';')),
 			Rule::Chain(14, TS('t'), TS('f'), TS('i'), TS('('), NS('F'), TS(')'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), NS('S')),
-			Rule::Chain(8, TS('m'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';') /*,NS('S')*/)
+			Rule::Chain(8, TS('m'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), /*,NS('S')*/
+
+			// Объявление функции БЕЗ параметров ---
+			// tfi(){NrE;};S
+			Rule::Chain(13, TS('t'), TS('f'), TS('i'), TS('('), TS(')'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), NS('S')))
 		),
 
 		// Правило N - операторы  
 		Rule(NS('N'), GRB_ERROR_SERIES + 1,     // Ошибочный оператор
-			10,                                  // N->dti;|rE;|i=E;|dtfi(F);|dtiN|rE;N|i=E;N|dtfi(F);N
+			16,                                  // N->dti;|rE;|i=E;|dtfi(F);|dtiN|rE;N|i=E;N|dtfi(F);N
 			Rule::Chain(4, TS('d'), TS('t'), TS('i'), TS(';')),
 			Rule::Chain(3, TS('r'), NS('E'), TS(';')),
 			Rule::Chain(4, TS('i'), TS('='), NS('E'), TS(';')),
@@ -29,12 +33,25 @@ namespace GRB
 			Rule::Chain(9, TS('d'), TS('t'), TS('f'), TS('i'), TS('('), NS('F'), TS(')'), TS(';'), NS('N')),
 
 			Rule::Chain(3, TS('p'), NS('E'), TS(';')),
-			Rule::Chain(4, TS('p'), NS('E'), TS(';'), NS('N'))
+			Rule::Chain(4, TS('p'), NS('E'), TS(';'), NS('N')),
+
+			// switch(E){N};  (одиночный)
+			Rule::Chain(8, TS('w'), TS('('), NS('E'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';')),
+			// switch(E){N};N (switch и продолжение кода)
+			Rule::Chain(9, TS('w'), TS('('), NS('E'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';'), NS('N')),
+			// case literal : N (метка case с кодом)
+			Rule::Chain(4, TS('k'), TS('l'), TS(':'), NS('N')),
+			// case literal : (пустой case, проваливание)
+			Rule::Chain(3, TS('k'), TS('l'), TS(':')),
+			// default : N (метка default с кодом)
+			Rule::Chain(3, TS('j'), TS(':'), NS('N')),
+			// default : (пустой default)
+			Rule::Chain(2, TS('j'), TS(':'))
 		),
 
 		// Правило E - выражения
 		Rule(NS('E'), GRB_ERROR_SERIES + 2,      // Ошибка в выражении
-			8,                                   // E->i|l|(E)|i(W)|iM|lM|i(W)M
+			11,                                   // E->i|l|(E)|i(W)|iM|lM|i(W)M
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
 			Rule::Chain(3, TS('('), NS('E'), TS(')')),
@@ -42,11 +59,18 @@ namespace GRB
 			Rule::Chain(2, TS('i'), NS('M')),
 			Rule::Chain(2, TS('l'), NS('M')),
 			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M')),
-			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M'))
+			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M')),
+
+			// ~E (Побитовое отрицание)
+			Rule::Chain(2, TS('~'), NS('E')),
+			// i() -> func()
+			Rule::Chain(3, TS('i'), TS('('), TS(')')),
+			// i()M -> func() + 10
+			Rule::Chain(4, TS('i'), TS('('), TS(')'), NS('M'))
 		),
 
 		Rule(NS('M'), GRB_ERROR_SERIES + 3,
-			8,  
+			12,  
 
 			Rule::Chain(2, TS('+'), NS('E')),
 			Rule::Chain(3, TS('+'), NS('E'), NS('M')),
@@ -58,7 +82,16 @@ namespace GRB
 			Rule::Chain(3, TS('*'), NS('E'), NS('M')),
 
 			Rule::Chain(2, TS('/'), NS('E')),
-			Rule::Chain(3, TS('/'), NS('E'), NS('M'))
+			Rule::Chain(3, TS('/'), NS('E'), NS('M')),
+
+
+			// Битовое И (&)
+			Rule::Chain(2, TS('&'), NS('E')),
+			Rule::Chain(3, TS('&'), NS('E'), NS('M')),
+
+			// Битовое ИЛИ (|)
+			Rule::Chain(2, TS('|'), NS('E')),
+			Rule::Chain(3, TS('|'), NS('E'), NS('M'))
 		),
 
 		Rule(NS('F'), GRB_ERROR_SERIES + 4, 
