@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include "PolishNotation.h"
+﻿#include "PolishNotation.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -9,11 +8,6 @@
 using namespace std;
 
 namespace PN {
-
-    const char FILLER_CHAR = '#';
-
-    // 1. Инициализация свойств операторов
-    // Приоритеты операторов
     int GetPriority(LT::Entry entry, bool isFunc = false)
     {
         // Функции имеют самый высокий приоритет, чтобы оставаться в стеке
@@ -54,22 +48,6 @@ namespace PN {
         }
     }
 
-
-
-    /*
-        for (int current_pos = start_pos; current_pos <= expression_end; current_pos++) {
-            LT::Entry current_entry = lextable.table[current_pos];
-            char lexema = current_entry.lexema[0];
-            std::cout << lexema;
-        }
-        std::cout << std::endl;
-    */
-
-    // --- 2. PolishNotation: Обработка ОПЗ ---
-
-    /**
-     * @brief Преобразует выражение, начинающееся с start_pos и заканчивающееся перед ';', в ОПЗ.
-     */
 
     bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable)
     {
@@ -214,7 +192,7 @@ namespace PN {
             }
             else
             {
-                lextable.table[i].lexema[0] = '#';
+                lextable.table[i].lexema[0] = FILLER_CHAR;
                 lextable.table[i].idxTI = LT_TI_NULLIDX;
                 lextable.table[i].sn = lextable.table[end_pos].sn;
             }
@@ -252,12 +230,7 @@ namespace PN {
 
         return true;
     }
-    // --- 3. FindExpressions: Поиск и запуск ОПЗ ---
 
-    /**
-     * @brief Ищет начало выражений, которые нужно преобразовать в ОПЗ.
-     */
-     // --- 3. FindExpressions: Поиск и запуск ОПЗ ---
 
     void FindExpressions(LT::LexTable& lextable, IT::IdTable& idtable) {
         std::cout << "\n=== ПРЕОБРАЗОВАНИЕ В ПОЛИЗ ===\n";
@@ -267,16 +240,12 @@ namespace PN {
 
             if (lexema == FILLER_CHAR) continue;
 
-            // Случай 1: ID = Выражение; (Присваивание)
-            if (lexema == LEX_ID && 
+            if ((lexema == LEX_ID && 
                 i + 1 < lextable.size && 
-                lextable.table[i + 1].lexema[0] == LEX_EQUALS) {
-                // Мы нашли: [ID] [=] [Выражение] [;]
-
-                // Левый операнд (LHS)
-                LT::Entry left_op_entry = lextable.table[i];
-
-                // Начало выражения (RHS)
+                lextable.table[i + 1].lexema[0] == LEX_EQUALS) ||
+                lexema == LEX_RETURN || 
+                lexema == LEX_PRINT) 
+            {
                 int expr_start = i;
 
 
@@ -285,32 +254,13 @@ namespace PN {
 				char lexema = current_entry.lexema[0];
                 while (lexema != ';')
                 {
-					std::cout << lexema;
+					cout << lexema;
 					current_entry = lextable.table[++t];
 					lexema = current_entry.lexema[0];
                 }
-				std::cout << std::endl;
+				cout << endl;
+
                 PolishNotation(expr_start, lextable, idtable);
-
-            }
-            // Случай 2: RETURN/PRINT Выражение;
-            else if (lexema == LEX_RETURN || lexema == LEX_PRINT) {
-                char operator_lex = lexema;
-
-                int expr_start = i;
-
-                int t = expr_start;
-				LT::Entry current_entry = lextable.table[t];
-				char lexema = current_entry.lexema[0];
-                while (lexema != ';')
-                {
-					std::cout << lexema;
-					current_entry = lextable.table[++t];
-					lexema = current_entry.lexema[0];
-                }
-				std::cout << std::endl;
-                PolishNotation(expr_start, lextable, idtable);
-
             }
         }
     }
