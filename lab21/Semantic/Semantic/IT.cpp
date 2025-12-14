@@ -56,6 +56,9 @@ namespace IT {
         if (entry.iddatatype == INT) {
             idtable.table[idtable.size].value.vint = entry.value.vint;
         }
+        else if (entry.iddatatype == CHAR) {
+            idtable.table[idtable.size].value.vchar = entry.value.vchar;
+        }
         else if (entry.iddatatype == STR) {
             // Копируем строковое значение
             idtable.table[idtable.size].value.vstr[0].len = entry.value.vstr[0].len;

@@ -279,7 +279,14 @@ namespace TestIT {
         for (int i = 0; i < idtable.size; i++) {
             IT::Entry entry = idtable.table[i];
 
-            const char* dataTypeStr = (entry.iddatatype == IT::INT) ? "INT" : "STR";
+            const char* dataTypeStr = "";
+            switch (entry.iddatatype) {
+            case IT::INT:    dataTypeStr = "INT"; break;
+            case IT::STR:    dataTypeStr = "STR"; break;
+            case IT::CHAR:   dataTypeStr = "CHAR";break;
+            case IT::UNDEF:  dataTypeStr = "UNDEF";break;
+            }
+
             const char* typeStr = "";
             switch (entry.idtype) {
             case IT::V: typeStr = "VAR"; break;
@@ -293,6 +300,11 @@ namespace TestIT {
             if (entry.idtype == IT::L) {
                 if (entry.iddatatype == IT::INT) {
                     valueStr = std::to_string(entry.value.vint);
+                }
+                else if (entry.iddatatype == IT::CHAR) {
+                    valueStr = "'";
+                    valueStr += entry.value.vchar;
+                    valueStr += "'";
                 }
                 else {
                     valueStr = "'";
@@ -379,10 +391,10 @@ namespace TestAutomata {
         cout << "\n=== ТЕСТИРОВАНИЕ АВТОМАТОВ КЛЮЧЕВЫХ СЛОВ ===" << endl;
 
         // INTEGER
-        TestSingleAutomata(Automata::INTEGER, "integer", true, "INTEGER");
-        TestSingleAutomata(Automata::INTEGER, "intege", false, "INTEGER");
-        TestSingleAutomata(Automata::INTEGER, "int", false, "INTEGER");
-        TestSingleAutomata(Automata::INTEGER, "INTEGER", false, "INTEGER");
+        TestSingleAutomata(Automata::U_INTEGER, "unsigned_integer", true, "INTEGER");
+        TestSingleAutomata(Automata::U_INTEGER, "intege", false, "INTEGER");
+        TestSingleAutomata(Automata::U_INTEGER, "int", false, "INTEGER");
+        TestSingleAutomata(Automata::U_INTEGER, "INTEGER", false, "INTEGER");
 
         // STRING
         TestSingleAutomata(Automata::STRING, "string", true, "STRING");
@@ -485,7 +497,7 @@ namespace TestAutomata {
         };
 
         TestCase testCases[] = {
-            {"integer", LEX_INTEGER, "ключевое слово integer"},
+            {"integer", LEX_UINT, "ключевое слово integer"},
             {"string", LEX_STRING, "ключевое слово string"},
             {"function", LEX_FUNCTION, "ключевое слово function"},
             {"declare", LEX_DECLARE, "ключевое слово declare"},
@@ -587,13 +599,9 @@ namespace TestLexer {
                     const char* typeStr = "UNKNOWN";
 
                     // Конвертируем тип в строку (вам нужно будет адаптировать эти константы)
-                    if (type == IT::INT) {
-                        typeStr = "INT";
-                    }
-                    else if (type == IT::STR) {
-                        typeStr = "STRING";
-                    }
-                    else if (type == IT::BOOL) { typeStr = "BOOL"; } 
+                    if (type == IT::INT) {       typeStr = "INT"; }
+                    else if (type == IT::STR) {  typeStr = "STRING"; }
+                    else if (type == IT::CHAR) { typeStr = "CHAR"; } 
 
                     // Копируем строку типа
                     int len = snprintf(ptr, 100 - (ptr - paramTypesStr), "%s", typeStr);

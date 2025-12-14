@@ -38,7 +38,7 @@ namespace Error
         ERROR_ENTRY(202, "Недопустимый символ в идентификаторе"),
         ERROR_ENTRY(203, "Незакрытая строковая константа"),
         ERROR_ENTRY(204, "Неизвестный оператор"),
-        ERROR_ENTRY_NODEF(205),
+        ERROR_ENTRY_NODEF(205, "Невозможно преобразовать hex (невалидный формат)"),
         ERROR_ENTRY_NODEF(206),
         ERROR_ENTRY_NODEF(207),
         ERROR_ENTRY_NODEF(208),

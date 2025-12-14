@@ -162,6 +162,34 @@ namespace Automata {
 		)
 	);
 
+
+
+	const FST::FST HEX_NUMBER_LITERAL = FST::FST(
+		"", 4,
+		FST::NODE(1, FST::RELATION('0', 1)),
+		FST::NODE(1, FST::RELATION('x', 2)),
+		FST::NODE(22,  // начальное состояние: только цифры
+			FST::RELATION('0', 3), FST::RELATION('1', 3), FST::RELATION('2', 3),
+			FST::RELATION('3', 3), FST::RELATION('4', 3), FST::RELATION('5', 3),
+			FST::RELATION('6', 3), FST::RELATION('7', 3), FST::RELATION('8', 3),
+			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3), 
+			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3), 
+			FST::RELATION('F', 3), FST::RELATION('a', 3), FST::RELATION('b', 3),
+			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3), 
+			FST::RELATION('f', 3)
+		),
+		FST::NODE(22,
+			FST::RELATION('0', 3), FST::RELATION('1', 3), FST::RELATION('2', 3),
+			FST::RELATION('3', 3), FST::RELATION('4', 3), FST::RELATION('5', 3),
+			FST::RELATION('6', 3), FST::RELATION('7', 3), FST::RELATION('8', 3),
+			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3), 
+			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3), 
+			FST::RELATION('F', 3), FST::RELATION('a', 3), FST::RELATION('b', 3),
+			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3), 
+			FST::RELATION('f', 3)
+		)
+	);
+
 	const FST::FST NUMBER_LITERAL = FST::FST(
 		"", 2,
 		FST::NODE(10,  // начальное состояние: только цифры
@@ -176,6 +204,194 @@ namespace Automata {
 			FST::RELATION('6', 1), FST::RELATION('7', 1), FST::RELATION('8', 1),
 			FST::RELATION('9', 1)
 		)
+	);
+
+	const FST::FST CHAR_LITERAL = FST::FST(
+		"", 4,
+		FST::NODE(1, FST::RELATION('\'', 1)),     
+		FST::NODE(255,                           
+			// Символы 0x01-0x1F (управляющие)
+			FST::RELATION(0x01, 2), FST::RELATION(0x02, 2), FST::RELATION(0x03, 2),
+			FST::RELATION(0x04, 2), FST::RELATION(0x05, 2), FST::RELATION(0x06, 2),
+			FST::RELATION(0x07, 2), FST::RELATION(0x08, 2), FST::RELATION(0x09, 2),
+			FST::RELATION(0x0A, 2), FST::RELATION(0x0B, 2), FST::RELATION(0x0C, 2),
+			FST::RELATION(0x0D, 2), FST::RELATION(0x0E, 2), FST::RELATION(0x0F, 2),
+			FST::RELATION(0x10, 2), FST::RELATION(0x11, 2), FST::RELATION(0x12, 2),
+			FST::RELATION(0x13, 2), FST::RELATION(0x14, 2), FST::RELATION(0x15, 2),
+			FST::RELATION(0x16, 2), FST::RELATION(0x17, 2), FST::RELATION(0x18, 2),
+			FST::RELATION(0x19, 2), FST::RELATION(0x1A, 2), FST::RELATION(0x1B, 2),
+			FST::RELATION(0x1C, 2), FST::RELATION(0x1D, 2), FST::RELATION(0x1E, 2),
+			FST::RELATION(0x1F, 2),
+
+			// Печатные символы 0x20-0x7E
+			FST::RELATION(' ', 2), FST::RELATION('!', 2), FST::RELATION('"', 2),
+			FST::RELATION('#', 2), FST::RELATION('$', 2), FST::RELATION('%', 2),
+			FST::RELATION('&', 2), FST::RELATION('(', 2), FST::RELATION(')', 2),
+			FST::RELATION('*', 2), FST::RELATION('+', 2), FST::RELATION(',', 2),
+			FST::RELATION('-', 2), FST::RELATION('.', 2), FST::RELATION('/', 2),
+			FST::RELATION('0', 2), FST::RELATION('1', 2), FST::RELATION('2', 2),
+			FST::RELATION('3', 2), FST::RELATION('4', 2), FST::RELATION('5', 2),
+			FST::RELATION('6', 2), FST::RELATION('7', 2), FST::RELATION('8', 2),
+			FST::RELATION('9', 2), FST::RELATION(':', 2), FST::RELATION(';', 2),
+			FST::RELATION('<', 2), FST::RELATION('=', 2), FST::RELATION('>', 2),
+			FST::RELATION('?', 2), FST::RELATION('@', 2), FST::RELATION('A', 2),
+			FST::RELATION('B', 2), FST::RELATION('C', 2), FST::RELATION('D', 2),
+			FST::RELATION('E', 2), FST::RELATION('F', 2), FST::RELATION('G', 2),
+			FST::RELATION('H', 2), FST::RELATION('I', 2), FST::RELATION('J', 2),
+			FST::RELATION('K', 2), FST::RELATION('L', 2), FST::RELATION('M', 2),
+			FST::RELATION('N', 2), FST::RELATION('O', 2), FST::RELATION('P', 2),
+			FST::RELATION('Q', 2), FST::RELATION('R', 2), FST::RELATION('S', 2),
+			FST::RELATION('T', 2), FST::RELATION('U', 2), FST::RELATION('V', 2),
+			FST::RELATION('W', 2), FST::RELATION('X', 2), FST::RELATION('Y', 2),
+			FST::RELATION('Z', 2), FST::RELATION('[', 2), FST::RELATION('\\', 2),
+			FST::RELATION(']', 2), FST::RELATION('^', 2), FST::RELATION('_', 2),
+			FST::RELATION('`', 2), FST::RELATION('a', 2), FST::RELATION('b', 2),
+			FST::RELATION('c', 2), FST::RELATION('d', 2), FST::RELATION('e', 2),
+			FST::RELATION('f', 2), FST::RELATION('g', 2), FST::RELATION('h', 2),
+			FST::RELATION('i', 2), FST::RELATION('j', 2), FST::RELATION('k', 2),
+			FST::RELATION('l', 2), FST::RELATION('m', 2), FST::RELATION('n', 2),
+			FST::RELATION('o', 2), FST::RELATION('p', 2), FST::RELATION('q', 2),
+			FST::RELATION('r', 2), FST::RELATION('s', 2), FST::RELATION('t', 2),
+			FST::RELATION('u', 2), FST::RELATION('v', 2), FST::RELATION('w', 2),
+			FST::RELATION('x', 2), FST::RELATION('y', 2), FST::RELATION('z', 2),
+			FST::RELATION('{', 2), FST::RELATION('|', 2), FST::RELATION('}', 2),
+			FST::RELATION('~', 2),
+
+			// Символ 0x7F (DEL)
+			FST::RELATION(0x7F, 2),
+
+			// Кириллица Win1251 0x80-0xFF
+			FST::RELATION(0x80, 2), // Ђ
+			FST::RELATION(0x81, 2), // Ѓ
+			FST::RELATION(0x82, 2), // ‚
+			FST::RELATION(0x83, 2), // ѓ
+			FST::RELATION(0x84, 2), // „
+			FST::RELATION(0x85, 2), // …
+			FST::RELATION(0x86, 2), // †
+			FST::RELATION(0x87, 2), // ‡
+			FST::RELATION(0x88, 2), // €
+			FST::RELATION(0x89, 2), // ‰
+			FST::RELATION(0x8A, 2), // Љ
+			FST::RELATION(0x8B, 2), // ‹
+			FST::RELATION(0x8C, 2), // Њ
+			FST::RELATION(0x8D, 2), // Ќ
+			FST::RELATION(0x8E, 2), // Ћ
+			FST::RELATION(0x8F, 2), // Џ
+			FST::RELATION(0x90, 2), // ђ
+			FST::RELATION(0x91, 2), // ‘
+			FST::RELATION(0x92, 2), // ’
+			FST::RELATION(0x93, 2), // “
+			FST::RELATION(0x94, 2), // ”
+			FST::RELATION(0x95, 2), // •
+			FST::RELATION(0x96, 2), // –
+			FST::RELATION(0x97, 2), // —
+			FST::RELATION(0x98, 2), // 
+			FST::RELATION(0x99, 2), // ™
+			FST::RELATION(0x9A, 2), // љ
+			FST::RELATION(0x9B, 2), // ›
+			FST::RELATION(0x9C, 2), // њ
+			FST::RELATION(0x9D, 2), // ќ
+			FST::RELATION(0x9E, 2), // ћ
+			FST::RELATION(0x9F, 2), // џ
+			FST::RELATION(0xA0, 2), // NO-BREAK SPACE
+			FST::RELATION(0xA1, 2), // Ў
+			FST::RELATION(0xA2, 2), // ў
+			FST::RELATION(0xA3, 2), // Ј
+			FST::RELATION(0xA4, 2), // ¤
+			FST::RELATION(0xA5, 2), // Ґ
+			FST::RELATION(0xA6, 2), // ¦
+			FST::RELATION(0xA7, 2), // §
+			FST::RELATION(0xA8, 2), // Ё
+			FST::RELATION(0xA9, 2), // ©
+			FST::RELATION(0xAA, 2), // Є
+			FST::RELATION(0xAB, 2), // «
+			FST::RELATION(0xAC, 2), // ¬
+			FST::RELATION(0xAD, 2), // SHY
+			FST::RELATION(0xAE, 2), // ®
+			FST::RELATION(0xAF, 2), // Ї
+			FST::RELATION(0xB0, 2), // °
+			FST::RELATION(0xB1, 2), // ±
+			FST::RELATION(0xB2, 2), // І
+			FST::RELATION(0xB3, 2), // і
+			FST::RELATION(0xB4, 2), // ґ
+			FST::RELATION(0xB5, 2), // µ
+			FST::RELATION(0xB6, 2), // ¶
+			FST::RELATION(0xB7, 2), // ·
+			FST::RELATION(0xB8, 2), // ё
+			FST::RELATION(0xB9, 2), // №
+			FST::RELATION(0xBA, 2), // є
+			FST::RELATION(0xBB, 2), // »
+			FST::RELATION(0xBC, 2), // ј
+			FST::RELATION(0xBD, 2), // Ѕ
+			FST::RELATION(0xBE, 2), // ѕ
+			FST::RELATION(0xBF, 2), // ї
+			FST::RELATION(0xC0, 2), // А
+			FST::RELATION(0xC1, 2), // Б
+			FST::RELATION(0xC2, 2), // В
+			FST::RELATION(0xC3, 2), // Г
+			FST::RELATION(0xC4, 2), // Д
+			FST::RELATION(0xC5, 2), // Е
+			FST::RELATION(0xC6, 2), // Ж
+			FST::RELATION(0xC7, 2), // З
+			FST::RELATION(0xC8, 2), // И
+			FST::RELATION(0xC9, 2), // Й
+			FST::RELATION(0xCA, 2), // К
+			FST::RELATION(0xCB, 2), // Л
+			FST::RELATION(0xCC, 2), // М
+			FST::RELATION(0xCD, 2), // Н
+			FST::RELATION(0xCE, 2), // О
+			FST::RELATION(0xCF, 2), // П
+			FST::RELATION(0xD0, 2), // Р
+			FST::RELATION(0xD1, 2), // С
+			FST::RELATION(0xD2, 2), // Т
+			FST::RELATION(0xD3, 2), // У
+			FST::RELATION(0xD4, 2), // Ф
+			FST::RELATION(0xD5, 2), // Х
+			FST::RELATION(0xD6, 2), // Ц
+			FST::RELATION(0xD7, 2), // Ч
+			FST::RELATION(0xD8, 2), // Ш
+			FST::RELATION(0xD9, 2), // Щ
+			FST::RELATION(0xDA, 2), // Ъ
+			FST::RELATION(0xDB, 2), // Ы
+			FST::RELATION(0xDC, 2), // Ь
+			FST::RELATION(0xDD, 2), // Э
+			FST::RELATION(0xDE, 2), // Ю
+			FST::RELATION(0xDF, 2), // Я
+			FST::RELATION(0xE0, 2), // а
+			FST::RELATION(0xE1, 2), // б
+			FST::RELATION(0xE2, 2), // в
+			FST::RELATION(0xE3, 2), // г
+			FST::RELATION(0xE4, 2), // д
+			FST::RELATION(0xE5, 2), // е
+			FST::RELATION(0xE6, 2), // ж
+			FST::RELATION(0xE7, 2), // з
+			FST::RELATION(0xE8, 2), // и
+			FST::RELATION(0xE9, 2), // й
+			FST::RELATION(0xEA, 2), // к
+			FST::RELATION(0xEB, 2), // л
+			FST::RELATION(0xEC, 2), // м
+			FST::RELATION(0xED, 2), // н
+			FST::RELATION(0xEE, 2), // о
+			FST::RELATION(0xEF, 2), // п
+			FST::RELATION(0xF0, 2), // р
+			FST::RELATION(0xF1, 2), // с
+			FST::RELATION(0xF2, 2), // т
+			FST::RELATION(0xF3, 2), // у
+			FST::RELATION(0xF4, 2), // ф
+			FST::RELATION(0xF5, 2), // х
+			FST::RELATION(0xF6, 2), // ц
+			FST::RELATION(0xF7, 2), // ч
+			FST::RELATION(0xF8, 2), // ш
+			FST::RELATION(0xF9, 2), // щ
+			FST::RELATION(0xFA, 2), // ъ
+			FST::RELATION(0xFB, 2), // ы
+			FST::RELATION(0xFC, 2), // ь
+			FST::RELATION(0xFD, 2), // э
+			FST::RELATION(0xFE, 2), // ю
+			FST::RELATION(0xFF, 2)  // я
+		),
+		FST::NODE(1, FST::RELATION('\'', 3)),     
+		FST::NODE()                              
 	);
 
 	const FST::FST STRING_LITERAL = FST::FST(
@@ -486,8 +702,11 @@ namespace Automata {
 
 
 		if (executeAutomata(IDENTIFIER, text)) return LEX_ID;
+
 		if (executeAutomata(NUMBER_LITERAL, text)) return LEX_LITERAL;
+		if (executeAutomata(CHAR_LITERAL, text)) return LEX_LITERAL;
 		if (executeAutomata(STRING_LITERAL, text)) return LEX_LITERAL;
+		if (executeAutomata(HEX_NUMBER_LITERAL, text)) return LEX_LITERAL;
 
 		if (executeAutomata(SEMICOLON, text)) return LEX_SEMICOLON;
 		if (executeAutomata(COLON, text)) return LEX_COLON;

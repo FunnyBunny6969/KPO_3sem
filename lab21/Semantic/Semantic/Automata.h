@@ -38,8 +38,8 @@ namespace Automata {
 	// Автоматы для литералов
 	extern const FST::FST NUMBER_LITERAL;    // для числовых литералов 123
 	extern const FST::FST STRING_LITERAL;    // для строковых литералов 'text'
-
-
+	extern const FST::FST CHAR_LITERAL;    
+	extern const FST::FST HEX_NUMBER_LITERAL;
 
 
     // Вспомогательные функции для работы с автоматами

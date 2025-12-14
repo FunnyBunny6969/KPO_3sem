@@ -38,12 +38,24 @@ namespace In {
         unsigned char ch;
         int pos_in_line = 1;  // Начинаем с позиции 1
         bool in_string = false;
+        bool inComment = false;
+		char next_ch = '\0';
 
         while (file.read(reinterpret_cast<char*>(&ch), 1)) {
             // Проверка на переполнение буфера
             if (result.size >= IN_MAX_LEN_TEXT - 1) {
                 break;
             }
+
+			// Конец строки
+			if (ch == IN_CODE_ENDL) {
+				int symbol_code = result.code[static_cast<unsigned char>(ch)];
+				result.text[result.size++] = static_cast<unsigned char>(symbol_code);
+				result.lines++;
+				pos_in_line = 1; 
+				inComment = false;
+				continue;
+			}
 
             // Обработка кавычек для входа/выхода из строкового режима
             if (ch == '\'') {
@@ -53,18 +65,21 @@ namespace In {
                 continue;
             }
 
+            if (ch == '/' && !in_string) {
+                if (file.peek() != EOF) {
+                    char next_ch = file.peek();
+                    if (next_ch == '/') inComment = true;
+                }
+            }
+
+            if (inComment) {
+                continue;
+            }
+
             if (in_string) {
                 result.text[result.size++] = ch;
             }
             else {
-				// Конец строки
-				if (ch == IN_CODE_ENDL) {
-					int symbol_code = result.code[static_cast<unsigned char>(ch)];
-					result.text[result.size++] = static_cast<unsigned char>(symbol_code);
-					result.lines++;
-					pos_in_line = 1; 
-					continue;
-				}
 
 				// Проверка символа по таблице
 				int symbol_code = result.code[static_cast<unsigned char>(ch)];

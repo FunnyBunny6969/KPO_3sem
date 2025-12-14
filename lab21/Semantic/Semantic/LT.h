@@ -24,18 +24,16 @@
 #define LEX_STAR        '*'   // лексема для *
 #define LEX_DIRSLASH    '/'   // лексема для /
 
-#define LEX_EQUALS      '='
-#define LEX_MAIN        'm'
-#define LEX_UNKNOWN     '?'
-
-#define LEX_SWITCH      'w'
-#define LEX_CASE        'k'
-#define LEX_DEFAULT     'j'
-#define LEX_COLON       ':'
-
-#define LEX_BIT_AND     '&'
-#define LEX_BIT_OR      '|'
-#define LEX_BIT_NOT     '~'
+#define LEX_EQUALS        '='
+#define LEX_MAIN          'm'
+#define LEX_UNKNOWN       '?'
+#define LEX_SWITCH        'w'
+#define LEX_CASE          'k'
+#define LEX_DEFAULT       'j'
+#define LEX_COLON         ':'
+#define LEX_BIT_AND       '&'
+#define LEX_BIT_OR        '|'
+#define LEX_BIT_NOT       '~'
 
 
 

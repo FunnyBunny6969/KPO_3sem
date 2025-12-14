@@ -1,8 +1,8 @@
 #pragma once
 
 #define IT_MAX_PARAMS 8
-#define ID_MAXSIZE  5              // максимальное количество символов в идентификаторе
-#define ID_REALSIZE 20
+#define ID_MAXSIZE  50              // максимальное количество символов в идентификаторе
+#define ID_REALSIZE 50
 #define TI_MAXSIZE  4096           // максимальное количество строк в таблице идентификаторов
 #define TI_INT_DEFAULT 0x00000000  // значение по умолчанию для типа integer
 #define TI_STR_DEFAULT 0x00        // значение по умолчанию для типа string
@@ -11,7 +11,7 @@
 
 namespace IT    // таблица идентификаторов
 {
-    enum IDDATATYPE {INT=1, STR=2, BOOL=3, UNDEF = 0};   // типы данных идентификаторов: integer, string
+    enum IDDATATYPE {INT=1, STR=2, CHAR=3, UNDEF = 0};  
     enum IDTYPE     {V=1, F=2, P=3, L=4};                // типы идентификаторов: переменная, функция, параметр, литерал
 
     struct Entry    // строка таблицы идентификаторов
@@ -24,6 +24,7 @@ namespace IT    // таблица идентификаторов
         union
         {
             int vint;                          // значение integer
+            char vchar;
             struct
             {
                 char len;                      // количество символов в string
