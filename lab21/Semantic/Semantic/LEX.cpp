@@ -84,7 +84,7 @@ namespace LEX {
 
 
             // ЧИСЛОВОЙ ЛИТЕРАЛ
-            if (newEntry.iddatatype == IT::INT) {
+            if (newEntry.iddatatype == IT::UINT) {
                 if (existingEntry.value.vint == newEntry.value.vint) {
                     return true; 
                 }
@@ -139,7 +139,7 @@ namespace LEX {
         // Контекст для определения типов
         std::string currentFunction = "";
         IT::IDTYPE currentIdType = IT::V;
-        IT::IDDATATYPE currentDataType = IT::INT;
+        IT::IDDATATYPE currentDataType = IT::UINT;
         bool inParams = false;
 
         // Проходим по всем строкам
@@ -162,7 +162,7 @@ namespace LEX {
 					code == LEX_STRING ||
 					code == LEX_CHAR) 
 				{
-					currentDataType = (Automata::executeAutomata(Automata::U_INTEGER, word.c_str())) ? IT::INT : IT::STR;
+					currentDataType = (Automata::executeAutomata(Automata::U_INTEGER, word.c_str())) ? IT::UINT : IT::STR;
 					currentDataType = (Automata::executeAutomata(Automata::CHAR, word.c_str())) ? IT::CHAR : IT::STR;
 					if (inParams) {
 						currentIdType = IT::P;  // в параметрах - следующий ID будет параметром
@@ -260,12 +260,12 @@ namespace LEX {
 
 							// Числовой литерал
 							if (Automata::executeAutomata(Automata::NUMBER_LITERAL, word.c_str())) {
-								idEntry.iddatatype = IT::INT;
+								idEntry.iddatatype = IT::UINT;
 								idEntry.value.vint = std::stoi(word);
 							}
 							// Числовой литерал HEX
 							else if (Automata::executeAutomata(Automata::HEX_NUMBER_LITERAL, word.c_str())) {
-								idEntry.iddatatype = IT::INT;
+								idEntry.iddatatype = IT::UINT;
 								try { idEntry.value.vint = HexToDemical(word); }
 								catch (const Error::ERROR& e) { throw e; }
 							}

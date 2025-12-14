@@ -217,7 +217,7 @@ namespace TestLT {
 				}
 				// b) Литерал (Константа: число или строка)
 				else if (e.idtype == IT::L) {
-					if (e.iddatatype == IT::INT)
+					if (e.iddatatype == IT::UINT)
 						std::cout << e.value.vint << " ";
 					else if (e.iddatatype == IT::STR)
 						// Исправлено: Обращение к структуре StringValue, 
@@ -281,7 +281,7 @@ namespace TestIT {
 
             const char* dataTypeStr = "";
             switch (entry.iddatatype) {
-            case IT::INT:    dataTypeStr = "INT"; break;
+            case IT::UINT:   dataTypeStr = "UINT"; break;
             case IT::STR:    dataTypeStr = "STR"; break;
             case IT::CHAR:   dataTypeStr = "CHAR";break;
             case IT::UNDEF:  dataTypeStr = "UNDEF";break;
@@ -298,7 +298,7 @@ namespace TestIT {
             // Формируем значение для вывода
             std::string valueStr = "";
             if (entry.idtype == IT::L) {
-                if (entry.iddatatype == IT::INT) {
+                if (entry.iddatatype == IT::UINT) {
                     valueStr = std::to_string(entry.value.vint);
                 }
                 else if (entry.iddatatype == IT::CHAR) {
@@ -328,16 +328,16 @@ namespace TestIT {
 
         IT::IdTable it = IT::Create(10);
 
-        IT::Add(it, CreateEntry("main", 0, IT::INT, IT::F));    // функция
-        IT::Add(it, CreateEntry("x", 2, IT::INT, IT::P));       // параметр
-        IT::Add(it, CreateEntry("y", 3, IT::INT, IT::P));       // параметр
-        IT::Add(it, CreateEntry("z", 4, IT::INT, IT::V));       // переменная
+        IT::Add(it, CreateEntry("main", 0, IT::UINT, IT::F));    // функция
+        IT::Add(it, CreateEntry("x", 2, IT::UINT, IT::P));       // параметр
+        IT::Add(it, CreateEntry("y", 3, IT::UINT, IT::P));       // параметр
+        IT::Add(it, CreateEntry("z", 4, IT::UINT, IT::V));       // переменная
 
         // Добавим тестовые литералы
         IT::Entry litEntry;
         strcpy_s(litEntry.id, ID_MAXSIZE, "L1");
         litEntry.idxfirstLE = 5;
-        litEntry.iddatatype = IT::INT;
+        litEntry.iddatatype = IT::UINT;
         litEntry.idtype = IT::L;
         litEntry.value.vint = 123;
         IT::Add(it, litEntry);
@@ -599,7 +599,7 @@ namespace TestLexer {
                     const char* typeStr = "UNKNOWN";
 
                     // Конвертируем тип в строку (вам нужно будет адаптировать эти константы)
-                    if (type == IT::INT) {       typeStr = "INT"; }
+                    if (type == IT::UINT) {       typeStr = "INT"; }
                     else if (type == IT::STR) {  typeStr = "STRING"; }
                     else if (type == IT::CHAR) { typeStr = "CHAR"; } 
 

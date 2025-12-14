@@ -33,34 +33,23 @@ void run(int argc, _TCHAR* argv[]) {
 
         // Выводим результаты
         TestLT::PrintLexTable(tables.lexTable);
+		//TestLexer::TestSplitter(in);
+
+
+		//==================================
+		//MFST_RUN
+		//==================================
+
+
+		//==================================
+		PN::FindExpressions(tables.lexTable, tables.idTable);
+		//==================================
+
+
+		TestLexer::PrintFunctionParameters(tables.idTable);
         TestIT::PrintTable(tables.idTable);
-		TestLexer::TestSplitter(in);
-		for (int i = 0; i < tables.lexTable.size; i++) {
-			cout << tables.lexTable.table[i].lexema[0];
-		}
-		cout << endl;
-
-
-		MFST_TRACE_START                              // отладка
-			MFST::Mfst mfst(tables, GRB::getGreibach());  // автомат
-
-		mfst.start();                                 // старт синтаксического анализа
-
-
-		mfst.savededucation();									// сохранить правила вывода
-		mfst.printrules();                         // отладка: вывести правила вывода
-
-
-
-		//==================================
-		//PN::FindExpressions(tables.lexTable, tables.idTable);
-		//==================================
-
-
-		//TestLexer::PrintFunctionParameters(tables.idTable);
-        //TestLT::PrintLexTable(tables.lexTable);
-        //TestIT::PrintTable(tables.idTable);
-		//TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
+        TestLT::PrintLexTable(tables.lexTable);
+		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 
 
@@ -95,12 +84,6 @@ void run(int argc, _TCHAR* argv[]) {
 		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
-
-
-
-
-	
-
 }
 
 
@@ -108,17 +91,6 @@ void run(int argc, _TCHAR* argv[]) {
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_CTYPE, "Russian");
-
-
-
-
 	run(argc, argv);
-	//TestIT::TestIT();
-	//TestLT::TestLT();
-	//TestAutomata::RunAllTests();
-
-
-
-
 	return 0;
 }

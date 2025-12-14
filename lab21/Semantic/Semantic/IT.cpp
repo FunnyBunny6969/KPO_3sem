@@ -20,7 +20,7 @@ namespace IT {
         for (int i = 0; i < size; i++) {
             idtable.table[i].idxfirstLE = -1;
             idtable.table[i].id[0] = '\0';
-            idtable.table[i].iddatatype = INT;
+            idtable.table[i].iddatatype = UINT;
             idtable.table[i].idtype = V;
 
             // Инициализируем значения по умолчанию
@@ -53,7 +53,7 @@ namespace IT {
         idtable.table[idtable.size].idtype = entry.idtype;
 
         // Копируем значение в зависимости от типа данных
-        if (entry.iddatatype == INT) {
+        if (entry.iddatatype == UINT) {
             idtable.table[idtable.size].value.vint = entry.value.vint;
         }
         else if (entry.iddatatype == CHAR) {
@@ -81,7 +81,7 @@ namespace IT {
             Entry emptyEntry;
             emptyEntry.idxfirstLE = -1;
             emptyEntry.id[0] = '\0';
-            emptyEntry.iddatatype = INT;
+            emptyEntry.iddatatype = UINT;
             emptyEntry.idtype = V;
             emptyEntry.value.vint = TI_INT_DEFAULT;
             return emptyEntry;
@@ -111,26 +111,34 @@ namespace IT {
     }
 
     void InitBuiltins(IdTable& idTable) {
+        IT::Entry powEntry;
+        strncpy_s(powEntry.id, ID_REALSIZE, "pow", _TRUNCATE);
+        powEntry.id[ID_REALSIZE - 1] = '\0';
+        powEntry.idtype = IT::F;  
+        powEntry.iddatatype = IT::UINT;   
+        powEntry.idxfirstLE = -1;     
+        powEntry.func_meta.n_params = 2;
+        powEntry.func_meta.params_types[0] = IT::UINT;
+        powEntry.func_meta.params_types[1] = IT::UINT;
+        IT::Add(idTable, powEntry);
+
+        IT::Entry randEntry;
+        strncpy_s(randEntry.id, ID_REALSIZE, "rand", _TRUNCATE);
+        randEntry.id[ID_REALSIZE - 1] = '\0';
+        randEntry.idtype = IT::F; 
+        randEntry.iddatatype = IT::UINT; 
+        randEntry.idxfirstLE = -1;     
+        randEntry.func_meta.n_params = 0;  
+        IT::Add(idTable, randEntry);
+
         IT::Entry strlenEntry;
         strncpy_s(strlenEntry.id, ID_REALSIZE, "strlen", _TRUNCATE);
         strlenEntry.id[ID_REALSIZE - 1] = '\0';
-        strlenEntry.idtype = IT::F;           // Тип: Функция
-        strlenEntry.iddatatype = IT::INT;     // Возвращаемый тип: integer
-        strlenEntry.idxfirstLE = -1;          // Индекс лексемы: -1 (встроенная функция)
-        strlenEntry.func_meta.n_params = 1;                           // Арность: 1
-        strlenEntry.func_meta.params_types[0] = IT::STR;              // Тип первого параметра: string
+        strlenEntry.idtype = IT::F;  
+        strlenEntry.iddatatype = IT::UINT;     
+        strlenEntry.idxfirstLE = -1;          
+        strlenEntry.func_meta.n_params = 1;  
+        strlenEntry.func_meta.params_types[0] = IT::STR; 
         IT::Add(idTable, strlenEntry);
-
-        IT::Entry substrEntry;
-        strncpy_s(substrEntry.id, ID_REALSIZE, "substr", _TRUNCATE);
-        substrEntry.id[ID_REALSIZE - 1] = '\0';
-        substrEntry.idtype = IT::F;           
-        substrEntry.iddatatype = IT::STR;    
-        substrEntry.idxfirstLE = -1;        
-        substrEntry.func_meta.n_params = 3;                           
-        substrEntry.func_meta.params_types[0] = IT::STR;             
-        substrEntry.func_meta.params_types[1] = IT::INT;            
-        substrEntry.func_meta.params_types[2] = IT::INT;           
-        IT::Add(idTable, substrEntry);
     }
 }

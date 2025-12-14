@@ -36,6 +36,14 @@
 					     << setw(20) << left << rule.getCRule(rbuf, state.nrulechain) << endl;
 
 
+#define MFST_RUN          \
+		MFST_TRACE_START\
+		MFST::Mfst mfst(tables, GRB::getGreibach()); \
+		mfst.start(); \
+		mfst.savededucation(); \
+		mfst.printrules();                 
+
+
 
 #define MFST_DIAGN_MAXSIZE		2*ERROR_MAXSIZE_MESSAGE
 #define MFST_DIAGN_NUMBER 3

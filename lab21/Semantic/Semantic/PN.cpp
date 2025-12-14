@@ -11,12 +11,15 @@ namespace PN {
     int GetPriority(LT::Entry entry, bool isFunc = false)
     {
         // Функции имеют самый высокий приоритет, чтобы оставаться в стеке
-        if (isFunc) return 6;
+        if (isFunc) return 7;
 
         char lex = entry.lexema[0];
-
         switch (lex)
         {
+            // Унарная инверсия (~) — Приоритет 6 (Очень высокий)
+        case LEX_BIT_NOT:
+            return 6;
+
             // Высший приоритет для мат. операторов (5)
         case LEX_STAR:
         case LEX_DIRSLASH:
@@ -27,16 +30,20 @@ namespace PN {
         case LEX_MINUS:
             return 4;
 
-            // Приоритеты для специальных и управляющих лексем
-        case LEX_COMMA:
-            return 1; // Разделитель аргументов
+        case LEX_BIT_AND: 
+            return 3;
 
         case LEX_EQUALS:
         case LEX_PRINT:
         case LEX_RETURN:
+        case LEX_BIT_OR:  
         //case LEX_IF:
         //case LEX_ELSE:
             return 2; // Самый низкий приоритет (должны выходить последними)
+
+        case LEX_COMMA:
+            return 1; // Разделитель аргументов
+
 
 			// Скобки и неизвестные лексемы
         case LEX_LEFTHESIS:
@@ -49,21 +56,66 @@ namespace PN {
     }
 
 
+    int FindClosingParenthesisIndex(const LT::LexTable& lexTable, int start_pos)
+    {
+        int balance = 1;
+        int currentIndex = start_pos + 1; 
+
+        while (currentIndex < lexTable.size)
+        {
+            const LT::Entry& currentLexeme = lexTable.table[currentIndex];
+            char lexChar = currentLexeme.lexema[0];
+
+            if (lexChar == '(') {
+                balance++;
+            }
+            else if (lexChar == ')') {
+                balance--;
+            }
+
+            if (balance == 0) {
+                return currentIndex; 
+            }
+            currentIndex++;
+        }
+        return 0;
+    }
+
+
     bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable)
     {
         stack<pair<LT::Entry, int>> stack;
         vector<pair<LT::Entry, int>> out_buffer;
 
-        // 1. Находим конец выражения (точка с запятой)
-        int end_pos = lextable_pos;
-        while (end_pos < lextable.size && lextable.table[end_pos].lexema[0] != LEX_SEMICOLON)
-        {
-            end_pos++;
-        }
+        bool switchExp = false;
+		if (lextable_pos - 2 >= 0)
+			if (lextable.table[lextable_pos - 2].lexema[0] == LEX_SWITCH)
+				switchExp = true;
 
+
+        // Находим конец выражения
+        int end_pos;
+        if (!switchExp) {
+			end_pos = lextable_pos;
+			while (end_pos < lextable.size && lextable.table[end_pos].lexema[0] != LEX_SEMICOLON)
+			{
+				end_pos++;
+			}
+        }
+        else {
+            end_pos = FindClosingParenthesisIndex(lextable, lextable_pos-1);
+            if (end_pos == 0) return false;
+        }
         if (end_pos == lextable.size) return false;
 
-        // 2. Алгоритм Shunting-yard
+
+		cout << "ВХОДНАЯ СТРОКА: ";
+		for (int i = lextable_pos; i < end_pos; i++)
+			cout << lextable.table[i].lexema[0];
+		cout << endl;
+
+
+        //Алгоритм Shunting-yard
         for (int i = lextable_pos; i < end_pos; ++i)
         {
             LT::Entry curr = lextable.table[i];
@@ -144,6 +196,9 @@ namespace PN {
             case LEX_EQUALS:
             case LEX_PRINT:
             case LEX_RETURN:
+            case LEX_BIT_AND:
+            case LEX_BIT_OR:
+            case LEX_BIT_NOT:
             //case LEX_IF:
             //case LEX_ELSE:
             {
@@ -173,7 +228,7 @@ namespace PN {
             }
         }
 
-        // 3. Очистка стека
+        // Очистка стека
         while (!stack.empty())
         {
             // Если в стеке осталась скобка, это ошибка
@@ -182,7 +237,7 @@ namespace PN {
             stack.pop();
         }
 
-        // 4. Запись результатов в ТЛ и заполнение '#'
+        // Запись результатов в ТЛ и заполнение '#'
         int out_idx = 0;
         for (int i = lextable_pos; i < end_pos; ++i)
         {
@@ -198,8 +253,7 @@ namespace PN {
             }
         }
 
-        // 5. Вывод ОПЗ (оставлен без изменений)
-        // ... (блок cout для печати ОПЗ)
+        // блок cout для печати ОПЗ
         cout << "Польская запись (строка " << lextable.table[lextable_pos].sn << "): ";
         for (const auto& item : out_buffer)
         {
@@ -234,34 +288,32 @@ namespace PN {
 
     void FindExpressions(LT::LexTable& lextable, IT::IdTable& idtable) {
         std::cout << "\n=== ПРЕОБРАЗОВАНИЕ В ПОЛИЗ ===\n";
+        bool switchExp = false;
 
         for (int i = 0; i < lextable.size; ++i) {
             char lexema = lextable.table[i].lexema[0];
-
             if (lexema == FILLER_CHAR) continue;
+
+            if (i - 2 >= 0)
+                if (lextable.table[i - 2].lexema[0] == LEX_SWITCH)
+                    switchExp = true;
 
             if ((lexema == LEX_ID && 
                 i + 1 < lextable.size && 
                 lextable.table[i + 1].lexema[0] == LEX_EQUALS) ||
+
                 lexema == LEX_RETURN || 
-                lexema == LEX_PRINT) 
+                lexema == LEX_PRINT  ||
+                switchExp) 
             {
                 int expr_start = i;
 
 
-                int t = expr_start;
-				LT::Entry current_entry = lextable.table[t];
-				char lexema = current_entry.lexema[0];
-                while (lexema != ';')
-                {
-					cout << lexema;
-					current_entry = lextable.table[++t];
-					lexema = current_entry.lexema[0];
-                }
-				cout << endl;
 
                 PolishNotation(expr_start, lextable, idtable);
             }
+
+            switchExp = false;
         }
     }
 }
