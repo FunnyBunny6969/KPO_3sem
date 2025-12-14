@@ -16,6 +16,7 @@ namespace Automata {
 	extern const FST::FST SWITCH;       // для "switch"
 	extern const FST::FST CASE;         // для "case"
 	extern const FST::FST DEFAULT;      // для "default"
+	extern const FST::FST BREAK;        // для "break"
 	extern const FST::FST IDENTIFIER;   // для идентификаторов [a-z]+
 
 	// Автоматы для одиночных символов

@@ -12,11 +12,19 @@ unsigned_integer function check_permissions(unsigned_integer user_role, unsigned
     {
         case 0x01: // Десятичное 1
             access_level = access_level + 10;
+            break;
         case 0x02: // Десятичное 2
             access_level = access_level + 20;
+            break;
+        case 0x03:
+        case 0x3:
+        case 0x55:
+            access_level = access_level + 30;
+            break;
         default:
             // Побитовая инверсия: ~
             access_level = ~access_level; 
+            break;
     };
     
     return access_level;

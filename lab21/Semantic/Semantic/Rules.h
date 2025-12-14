@@ -22,7 +22,7 @@ namespace GRB
 
 		// ѕравило N - операторы  
 		Rule(NS('N'), GRB_ERROR_SERIES + 1,     // ќшибочный оператор
-			16,                                  // N->dti;|rE;|i=E;|dtfi(F);|dtiN|rE;N|i=E;N|dtfi(F);N
+			18,                                  // N->dti;|rE;|i=E;|dtfi(F);|dtiN|rE;N|i=E;N|dtfi(F);N
 			Rule::Chain(4, TS('d'), TS('t'), TS('i'), TS(';')),
 			Rule::Chain(3, TS('r'), NS('E'), TS(';')),
 			Rule::Chain(4, TS('i'), TS('='), NS('E'), TS(';')),
@@ -35,18 +35,20 @@ namespace GRB
 			Rule::Chain(3, TS('p'), NS('E'), TS(';')),
 			Rule::Chain(4, TS('p'), NS('E'), TS(';'), NS('N')),
 
-			// switch(E){N};  (одиночный)
+
+			// SWITCH 
 			Rule::Chain(8, TS('w'), TS('('), NS('E'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';')),
-			// switch(E){N};N (switch и продолжение кода)
 			Rule::Chain(9, TS('w'), TS('('), NS('E'), TS(')'), TS('{'), NS('N'), TS('}'), TS(';'), NS('N')),
-			// case literal : N (метка case с кодом)
+
 			Rule::Chain(4, TS('k'), TS('l'), TS(':'), NS('N')),
-			// case literal : (пустой case, проваливание)
 			Rule::Chain(3, TS('k'), TS('l'), TS(':')),
-			// default : N (метка default с кодом)
+
 			Rule::Chain(3, TS('j'), TS(':'), NS('N')),
-			// default : (пустой default)
-			Rule::Chain(2, TS('j'), TS(':'))
+			Rule::Chain(2, TS('j'), TS(':')),
+
+			Rule::Chain(3, TS('b'), TS(';'), NS('N')),
+			Rule::Chain(2, TS('b'), TS(';'))
+
 		),
 
 		// ѕравило E - выражени€
@@ -68,6 +70,7 @@ namespace GRB
 			// i()M -> func() + 10
 			Rule::Chain(4, TS('i'), TS('('), TS(')'), NS('M'))
 		),
+
 
 		Rule(NS('M'), GRB_ERROR_SERIES + 3,
 			12,  
@@ -107,6 +110,5 @@ namespace GRB
 			Rule::Chain(3, TS('i'), TS(','), NS('W')),
 			Rule::Chain(3, TS('l'), TS(','), NS('W'))
 		)
-
 	);
 }

@@ -30,6 +30,7 @@
 #define LEX_SWITCH        'w'
 #define LEX_CASE          'k'
 #define LEX_DEFAULT       'j'
+#define LEX_BREAK         'b'
 #define LEX_COLON         ':'
 #define LEX_BIT_AND       '&'
 #define LEX_BIT_OR        '|'

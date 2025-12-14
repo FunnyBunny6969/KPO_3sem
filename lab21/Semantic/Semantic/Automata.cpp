@@ -43,6 +43,16 @@ namespace Automata {
 		FST::NODE()
 	);
 
+	const FST::FST BREAK = FST::FST(
+		"", 6,
+		FST::NODE(1, FST::RELATION('b', 1)),
+		FST::NODE(1, FST::RELATION('r', 2)),
+		FST::NODE(1, FST::RELATION('e', 3)),
+		FST::NODE(1, FST::RELATION('a', 4)),
+		FST::NODE(1, FST::RELATION('k', 5)),
+		FST::NODE()
+	);
+
 	const FST::FST FUNCTION = FST::FST(
 		"", 9,
 		FST::NODE(1, FST::RELATION('f', 1)),
@@ -688,6 +698,7 @@ namespace Automata {
 
 
 	char getLexemeCode(const char* text) {
+		if (executeAutomata(BREAK, text)) return LEX_BREAK;
 		if (executeAutomata(U_INTEGER, text)) return LEX_UINT;
 		if (executeAutomata(CHAR, text)) return LEX_CHAR;
 		if (executeAutomata(STRING, text)) return LEX_STRING;
