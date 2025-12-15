@@ -37,7 +37,7 @@ namespace IT {
         }
 
         // Проверяем, нет ли уже такого идентификатора
-        int existingIndex = IsId(idtable, entry.id, entry.iddatatype);
+        int existingIndex = IsId(idtable, entry.id, entry.scope);
         if (existingIndex != TI_NULLIDX) {
             // Идентификатор уже существует - обновляем запись
             idtable.table[existingIndex] = entry;
@@ -92,12 +92,31 @@ namespace IT {
     }
 
     // Проверить наличие идентификатора в таблице
-    int IsId(IdTable& idtable, char id[ID_REALSIZE], IDDATATYPE iddatatype) {
+    int IsId(IdTable& idtable, char id[ID_REALSIZE], int scope) {
         for (int i = 0; i < idtable.size; i++) {
+            
+            //VAR
             if (strcmp(idtable.table[i].id, id) == 0 &&
-                idtable.table[i].iddatatype == iddatatype) {
-                return i; // Найден, возвращаем индекс
+                (idtable.table[i].scope == scope ||
+                    idtable.table[i].scope == GLOBAL_SCOPE) &&
+                (idtable.table[i].idtype == IT::V ||
+                idtable.table[i].idtype == IT::P)
+                ) {
+                return i; 
             }
+
+            // FUNC
+            if (strcmp(idtable.table[i].id, id) == 0 &&
+                idtable.table[i].idtype == IT::F &&
+                (idtable.table[i].scope == scope ||
+                    idtable.table[i].scope == GLOBAL_SCOPE)) {
+                return i; 
+            }
+
+            //LITERAL
+            if (idtable.table[i].id == id && 
+                idtable.table[i].idtype == IT::L)
+                return i;
         }
         return TI_NULLIDX; // Не найден
     }
@@ -126,7 +145,7 @@ namespace IT {
         IT::Add(idTable, powEntry);
 
         IT::Entry randEntry;
-        strncpy_s(randEntry.id, ID_REALSIZE, "rand", _TRUNCATE);
+        strncpy_s(randEntry.id, ID_REALSIZE, "random", _TRUNCATE);
         randEntry.id[ID_REALSIZE - 1] = '\0';
         randEntry.idtype = IT::F; 
         randEntry.iddatatype = IT::UINT; 

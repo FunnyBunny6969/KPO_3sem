@@ -118,6 +118,37 @@ namespace TestLT {
         return entry;
     }
 
+
+    IT::Entry CreateITEntry(const char* id, int lexemeIndex, IT::IDDATATYPE dataType, IT::IDTYPE type) {
+        IT::Entry entry;
+        strcpy_s(entry.id, ID_MAXSIZE, id);
+        entry.idxfirstLE = lexemeIndex;
+        entry.iddatatype = dataType;
+        entry.idtype = type;
+        entry.value.vint = TI_INT_DEFAULT;
+        return entry;
+    }
+
+	void TestLT() {
+		std::cout << "=== ТЕСТ ТАБЛИЦЫ ЛЕКСЕМ ===" << std::endl;
+
+		LT::LexTable lt = LT::Create(10);
+
+		LT::Add(lt, CreateLTEntry('t', 1, LT_TI_NULLIDX)); // integer
+		LT::Add(lt, CreateLTEntry('i', 1, 0));             // идентификатор
+		LT::Add(lt, CreateLTEntry('f', 1, LT_TI_NULLIDX)); // function
+		LT::Add(lt, CreateLTEntry('(', 1, LT_TI_NULLIDX)); // (
+		LT::Add(lt, CreateLTEntry(')', 1, LT_TI_NULLIDX)); // )
+		LT::Add(lt, CreateLTEntry('{', 2, LT_TI_NULLIDX)); // {
+
+		std::cout << "Размер таблицы: " << lt.size << std::endl;
+
+		PrintLexTable(lt);
+
+		LT::Delete(lt);
+	}
+
+
     void PrintLexTable(LT::LexTable& lextable) {
         if (lextable.size == 0) {
             cout << "Таблица лексем пуста" << std::endl;
@@ -149,35 +180,6 @@ namespace TestLT {
         std::cout << std::endl;
     }
 
-    IT::Entry CreateITEntry(const char* id, int lexemeIndex, IT::IDDATATYPE dataType, IT::IDTYPE type) {
-        IT::Entry entry;
-        strcpy_s(entry.id, ID_MAXSIZE, id);
-        entry.idxfirstLE = lexemeIndex;
-        entry.iddatatype = dataType;
-        entry.idtype = type;
-        entry.value.vint = TI_INT_DEFAULT;
-        return entry;
-    }
-
-	void TestLT() {
-		std::cout << "=== ТЕСТ ТАБЛИЦЫ ЛЕКСЕМ ===" << std::endl;
-
-		LT::LexTable lt = LT::Create(10);
-
-		LT::Add(lt, CreateLTEntry('t', 1, LT_TI_NULLIDX)); // integer
-		LT::Add(lt, CreateLTEntry('i', 1, 0));             // идентификатор
-		LT::Add(lt, CreateLTEntry('f', 1, LT_TI_NULLIDX)); // function
-		LT::Add(lt, CreateLTEntry('(', 1, LT_TI_NULLIDX)); // (
-		LT::Add(lt, CreateLTEntry(')', 1, LT_TI_NULLIDX)); // )
-		LT::Add(lt, CreateLTEntry('{', 2, LT_TI_NULLIDX)); // {
-
-		std::cout << "Размер таблицы: " << lt.size << std::endl;
-
-		PrintLexTable(lt);
-
-		LT::Delete(lt);
-	}
-
 	void PrintLexTableWithSubstit(LT::LexTable& lextable, IT::IdTable& idtable)
 	{
 		std::cout << "\n----- ТАБЛИЦА ЛЕКСЕМ (с именами) -----\n";
@@ -188,14 +190,12 @@ namespace TestLT {
 		for (int i = 0; i < lextable.size; i++) {
 			LT::Entry entry = lextable.table[i];
 
-			// 1. Обработка новой строки
 			if (entry.sn != currentLine) {
 				std::cout << std::endl;
 				currentLine = entry.sn;
 				firstOnLine = true;
 			}
 
-			// 2. Вывод номера строки
 			if (firstOnLine) {
 				if (currentLine < 10) std::cout << "0";
 				std::cout << currentLine << " ";
@@ -203,46 +203,38 @@ namespace TestLT {
 			}
 
 
-			// 3. Вывод лексемы (с подстановкой из ТИ, если есть)
 
-			// Если есть привязка к Таблице Идентификаторов
-			if (entry.idxTI != LT_TI_NULLIDX) {
+			if (entry.lexema[0] == LEX_ID) {
 				IT::Entry e = idtable.table[entry.idxTI];
 
-				// a) Функция (ID типа F)
 				if (e.idtype == IT::F) {
-					// Выводим имя функции и число аргументов
 					std::cout << e.id
 						<< "@" << e.func_meta.n_params << " ";
 				}
-				// b) Литерал (Константа: число или строка)
-				else if (e.idtype == IT::L) {
-					if (e.iddatatype == IT::UINT)
-						std::cout << e.value.vint << " ";
-					else if (e.iddatatype == IT::STR)
-						// Исправлено: Обращение к структуре StringValue, 
-						// предполагая, что e.value.vstr - это указатель.
-						// Если e.value.vstr - это структура, то использовать e.value.vstr.str
-						// В текущем коде было 'vstr->str', я использую его:
-						std::cout << "'" << e.value.vstr->str << "' ";
-					else {
-						// Обработка других типов литералов, если есть
-						std::cout << "LITERAL_UNKNOWN_TYPE ";
-					}
-				}
-				// c) Переменная (ID типа V)
+
 				else if (e.idtype == IT::V || e.idtype == IT::P) {
-					// Выводим имя переменной/ID
-					std::cout << e.id << " ";
+					std::cout << entry.lexema[0] << e.id << " ";
 				}
-				// d) Неизвестный ID
+
 				else {
 					std::cout << "ID_UNKNOWN_TYPE ";
 				}
 			}
-			// Если нет привязки к ТИ (операторы, скобки, ключевые слова)
+
+			else if (entry.lexema[0] == LEX_LITERAL) {
+				IT::Entry e = idtable.table[entry.idxTI];
+				if (e.iddatatype == IT::UINT)
+					std::cout << e.value.vint << " ";
+				else if (e.iddatatype == IT::CHAR)
+					std::cout << "'" << e.value.vchar << "' ";
+				else if (e.iddatatype == IT::STR)
+					std::cout << "'" << e.value.vstr->str << "' ";
+				else {
+					std::cout << "LITERAL_UNKNOWN_TYPE ";
+				}
+			}
+
 			else {
-				// Выводим сам символ лексемы (например, '+', ':', '{', 'd', 't', ';', '#')
 				std::cout << entry.lexema[0] << " ";
 			}
 		}

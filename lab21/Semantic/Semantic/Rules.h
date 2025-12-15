@@ -11,13 +11,13 @@ namespace GRB
 		// Правило S - программа
 		Rule(NS('S'), GRB_ERROR_SERIES + 0,     // Неверная структура программы
 			4,                                  // S->m{NrE;}; | tfi(F){NrE;};S | m{NrE;};S | tfi(F){NrE;}
-			Rule::Chain(7, TS('m'), TS('{'), /*NS('N'),*/ TS('r'), NS('E'), TS(';'), TS('}'), TS(';')),
+			Rule::Chain(8, TS('m'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';')),
 			Rule::Chain(14, TS('t'), TS('f'), TS('i'), TS('('), NS('F'), TS(')'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), NS('S')),
-			Rule::Chain(8, TS('m'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), /*,NS('S')*/
+			Rule::Chain(9, TS('m'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), NS('S')),
 
 			// Объявление функции БЕЗ параметров ---
 			// tfi(){NrE;};S
-			Rule::Chain(13, TS('t'), TS('f'), TS('i'), TS('('), TS(')'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), NS('S')))
+			Rule::Chain(13, TS('t'), TS('f'), TS('i'), TS('('), TS(')'), TS('{'), NS('N'), TS('r'), NS('E'), TS(';'), TS('}'), TS(';'), NS('S'))
 		),
 
 		// Правило N - операторы  

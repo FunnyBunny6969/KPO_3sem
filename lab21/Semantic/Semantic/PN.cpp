@@ -123,7 +123,6 @@ namespace PN {
 
             switch (lex)
             {
-                // A. Операнды: ID (переменная) и LITERAL
             case LEX_ID:
             case LEX_LITERAL:
             {
@@ -307,9 +306,6 @@ namespace PN {
                 switchExp) 
             {
                 int expr_start = i;
-
-
-
                 PolishNotation(expr_start, lextable, idtable);
             }
 

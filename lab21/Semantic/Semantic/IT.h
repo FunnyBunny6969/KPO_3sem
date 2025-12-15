@@ -68,7 +68,7 @@ namespace IT    // таблица идентификаторов
     int IsId(                    // возврат: номер строки (если есть), TI_NULLIDX(если нет)
 			IdTable& idtable,    // экземпляр таблицы идентификаторов
 			char id[ID_MAXSIZE], // идентификатор
-            IDDATATYPE 
+            int 
 			);
 
     void Delete(IdTable& idtable);    // удалить таблицу идентификаторов (освободить память)

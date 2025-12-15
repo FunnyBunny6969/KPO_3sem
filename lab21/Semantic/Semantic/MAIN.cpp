@@ -16,11 +16,15 @@ using namespace std;
 
 void run(int argc, _TCHAR* argv[]) {
 	Log::LOG log = Log::INITLOG;
+	Out::OUT out = Out::INITOUT;
 	In::IN in;
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		in = In::getin(parm.in);
 		log = Log::getlog(parm.log);
+		out = Out::getout(parm.out);
+
+		Out::WriteInOut(out, in);
 		Log::WriteLog(log);
 		Log::WriteParm(log, parm);
 		Log::WriteIn(log, in);
@@ -42,14 +46,14 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 		//==================================
-		//PN::FindExpressions(tables.lexTable, tables.idTable);
+		PN::FindExpressions(tables.lexTable, tables.idTable);
 		//==================================
 
 
 		TestLexer::PrintFunctionParameters(tables.idTable);
         TestIT::PrintTable(tables.idTable);
-        //TestLT::PrintLexTable(tables.lexTable);
-		//TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
+        TestLT::PrintLexTable(tables.lexTable);
+		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 
 
@@ -57,21 +61,22 @@ void run(int argc, _TCHAR* argv[]) {
         LT::Delete(tables.lexTable);
         IT::Delete(tables.idTable);
         Log::Close(log);
+		Out::Close(out);
     }
 	catch (const Error::ERROR& e) {
 		std::cout << "Ошибка " << e.id << " : " << e.message 
 			<< " LINE " << e.inext.line 
 			<< " COL "  << e.inext.col << std::endl << std::endl;
-		Log::WriteError(log, e);
 
-		if (e.id != 111) {
-			TestLexer::TestSplitter(in);
-		}
+		Log::WriteError(log, e);
+		Out::WriteErrorOut(out, e);
+        Log::Close(log);
+		Out::Close(out);
 	}
 
 
 
-	Out::OUT out = Out::INITOUT;
+	/*
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		out = Out::getout(parm.out);
@@ -84,6 +89,7 @@ void run(int argc, _TCHAR* argv[]) {
 		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
 	};
+	*/
 }
 
 

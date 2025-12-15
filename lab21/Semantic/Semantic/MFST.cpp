@@ -100,6 +100,7 @@ namespace MFST
 	Mfst::RC_STEP Mfst::step()
 	{
 		RC_STEP rc = SURPRISE;
+
 		if (lenta_position < lenta_size)
 		{
 			if (ISNS(st.top()))
@@ -121,7 +122,6 @@ namespace MFST
 					{
 						MFST_TRACE4("TNS_NORULECHAIN/NS_NORULE")
 							savediagnosis(NS_NORULECHAIN);
-
 						rc = reststate() ? NS_NORULECHAIN : NS_NORULE;
 					}
 				}
@@ -148,6 +148,7 @@ namespace MFST
 			MFST_TRACE4("LENTA_END", rl)
 		}
 		return rc;
+
 	}
 
 
@@ -210,6 +211,7 @@ namespace MFST
 		rc_step = step();
 		while (rc_step == NS_OK || rc_step == NS_NORULECHAIN || rc_step == TS_OK || rc_step == TS_NOK)
 			rc_step = step();
+
 		switch (rc_step)
 		{
 		case NS_NORULE:
@@ -235,6 +237,7 @@ namespace MFST
 			MFST_TRACE4("------> SURPRISE")
 				break;
 		}
+
 		return rc;
 	}
 

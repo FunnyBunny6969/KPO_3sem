@@ -1,8 +1,4 @@
-unsigned_integer function check_permissions
-(
-    unsigned_integer user_role, 
-    unsigned_integer required_mask
-)
+unsigned_integer function check_permissions(   unsigned_integer user_role,     unsigned_integer required_mask)
 {
     declare unsigned_integer access_level;
 	
@@ -43,10 +39,9 @@ string function create_id(string name_part, char delimiter)
     
     declare unsigned_integer random_seed;
    
-    random_seed = pow(3, initial_len); 
+    random_seed = pow(3, 2); 
 
-   
-    return substr(name_part, 0x01, 4) + delimiter; 
+    return 'LITERAL12345135';
 };
 
 

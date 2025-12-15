@@ -1,4 +1,4 @@
-﻿  LEX.cpp
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Semantic\LEX.cpp(119,30): warning C4101: e: неиспользованная локальная переменная
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Semantic\LEX.cpp(257,46): warning C4244: =: преобразование "__int64" в "int", возможна потеря данных
+﻿  Tests.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Semantic\Tests.cpp(566,21): warning C4018: <: несоответствие типов со знаком и без знака
+K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Semantic\Tests.cpp(569,22): warning C4018: <: несоответствие типов со знаком и без знака
   Semantic.vcxproj -> K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Debug\Semantic.exe
