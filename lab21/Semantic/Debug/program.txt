@@ -35,8 +35,6 @@ unsigned_integer function check_permissions
 string function create_id(string name_part, char delimiter)
 {
     declare char role_mask;
-   
-    declare string function substr(string a, unsigned_integer p, unsigned_integer n);
     
     declare unsigned_integer initial_len;
     
@@ -45,7 +43,7 @@ string function create_id(string name_part, char delimiter)
     
     declare unsigned_integer random_seed;
    
-    random_seed = power(3, initial_len); 
+    random_seed = pow(3, initial_len); 
 
    
     return substr(name_part, 0x01, 4) + delimiter; 

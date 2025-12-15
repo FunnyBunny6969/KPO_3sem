@@ -132,8 +132,10 @@ namespace LEX {
         int wordNumber = 1;
         int literalCount = 1;
 
-        // Контекст для определения типов
-        int scope = GLOBAL_SCOPE;
+        std::vector<int> scope;
+        scope.push_back(GLOBAL_SCOPE);
+        int reserve = 0;
+
         IT::IDTYPE currentIdType = IT::V;
         IT::IDDATATYPE currentDataType = IT::UNDEF;
 		LT::Entry lexEntry;
@@ -142,15 +144,20 @@ namespace LEX {
         for (const auto& line : lines) {
             for (const auto& word : line) {
                 char code = Automata::getLexemeCode(word.c_str());
+				// Создаем запись для таблицы лексем
+				lexEntry.lexema[0] = code;
+				lexEntry.lexema[1] = IN_CODE_ENDS;
+				lexEntry.sn = lineNumber;
 
                 if (code == LEX_UNKNOWN) { throw ERROR_THROW_IN(200, lineNumber, wordNumber); }
+
+                else if (code == LEX_MAIN) {
+                    scope.push_back(MAIN_SCOPE);
+                }
 
 
                 else if (code == LEX_FUNCTION) { 
                     currentIdType = IT::F;
-                }
-                else if (code == LEX_DECLARE) { 
-                    currentIdType = IT::V;
                 }
 
 
@@ -162,6 +169,17 @@ namespace LEX {
 				}
 
 
+                else if (code == LEX_SWITCH) {
+                    reserve++;
+                }
+                else if (code == LEX_RIGHTBRACE) {
+                    if (reserve != 0) reserve--;
+                    else {
+                        scope.pop_back();
+                    }
+                }
+
+
 				else if (code == LEX_UINT) // int/char/string
 				{
                     if (Automata::executeAutomata(Automata::U_INTEGER, word.c_str())) currentDataType = IT::UINT;
@@ -171,14 +189,7 @@ namespace LEX {
 				}
 
 
-
-				// Создаем запись для таблицы лексем
-				lexEntry.lexema[0] = code;
-				lexEntry.lexema[1] = IN_CODE_ENDS;
-				lexEntry.sn = lineNumber;
-
-				// Обрабатываем идентификаторы
-				if (code == LEX_ID) {
+				else if (code == LEX_ID) {
 					bool found = false;
 					int idIndex = TI_NULLIDX;
 
@@ -199,10 +210,19 @@ namespace LEX {
 						idEntry.idtype = currentIdType;
 						idEntry.iddatatype = currentDataType;
 						idEntry.value.vint = TI_INT_DEFAULT;
-
 						idEntry.idxfirstLE = lexTable.size;
+                        idEntry.scope = scope.back();
+
+
 						IT::Add(idTable, idEntry);
 						idIndex = idTable.size - 1;
+                        if(idEntry.idtype == IT::F) scope.push_back(idIndex);
+
+                        if (idEntry.idtype == IT::P) {
+                            int num = idTable.table[scope.back()].func_meta.n_params;
+                            idTable.table[scope.back()].func_meta.params_types[num] = idEntry.iddatatype;
+                            idTable.table[scope.back()].func_meta.n_params++;
+                        }
 					}
 
 					lexEntry.idxTI = idIndex;
@@ -242,8 +262,6 @@ namespace LEX {
 
 						idEntry.iddatatype = IT::CHAR;
 						idEntry.value.vchar = word[1];
-						std::cout << word[1] << std::endl;
-						std::cout << idEntry.value.vchar << std::endl;
 					}
 					// Строковый литерал
 					else if (Automata::executeAutomata(Automata::STRING_LITERAL, word.c_str())) {
@@ -271,6 +289,7 @@ namespace LEX {
 					lexEntry.idxTI = idIndex;
                 }
 
+
 				else {
 					lexEntry.idxTI = LT_TI_NULLIDX;
 				}
@@ -281,106 +300,6 @@ namespace LEX {
 
             lineNumber++;
             wordNumber = 1;
-        }
-
-        CollectFunctionMetadata(lexTable, idTable);
-    }
-
-
-    void CollectFunctionMetadata(LT::LexTable& lexTable, IT::IdTable& idTable)
-    {
-        // Итерация по Таблице Идентификаторов (ТИ)
-        for (int i = 0; i < idTable.size; i++) {
-            IT::Entry& currentId = idTable.table[i];
-
-            // 1. Ищем только записи функций
-            if (currentId.idtype == IT::F) {
-
-
-                // Индекс первой лексемы, относящейся к функции
-                int lexIndex = currentId.idxfirstLE;
-                if (lexIndex == LT_TI_NULLIDX) continue;
-                if (lexIndex < 0 || lexIndex >= lexTable.size) continue;
-
-                // Инициализация метаданных для текущей функции
-                currentId.func_meta.n_params = 0;
-                bool inFunctionParams = false;
-                bool functionBodyFound = false;
-
-                // 2. Сканируем Таблицу Лексем от начала функции
-                for (int j = lexIndex; j < lexTable.size; j++) {
-                    char code = lexTable.table[j].lexema[0];
-
-                    if (code == LEX_LEFTHESIS) {
-                        inFunctionParams = true; // Начались параметры
-                        continue;
-                    }
-
-                    if (code == LEX_RIGHTHESIS) {
-                        inFunctionParams = false; // Закончились параметры
-                        continue;
-                    }
-
-                    if (code == LEX_LEFTBRACE) {
-                        // Начало тела функции
-                        inFunctionParams = false; // Убеждаемся, что флаг сброшен
-                        functionBodyFound = true;
-
-                        int braceDepth = 1;
-                        // Новый цикл для поиска конца тела функции
-                        for (int k = j + 1; k < lexTable.size; k++) {
-                            if (lexTable.table[k].lexema[0] == LEX_LEFTBRACE) {
-                                braceDepth++;
-                            }
-                            else if (lexTable.table[k].lexema[0] == LEX_RIGHTBRACE) {
-                                braceDepth--;
-                                if (braceDepth == 0) {
-                                    // Найдена закрывающая скобка функции. 
-                                    // Устанавливаем j на позицию '{' (чтобы внешний цикл 
-                                    // сразу вышел на следующей итерации или был пропущен,
-                                    // но поскольку мы прерываем внешний цикл, это не так важно,
-                                    // просто прерываем оба цикла).
-                                    j = lexTable.size; // Чтобы выйти из внешнего цикла
-                                    break; // Выход из внутреннего цикла
-                                }
-                            }
-                        }
-                        // Если мы нашли тело функции, то после внутреннего цикла
-                        // мы должны выйти и из внешнего, чтобы перейти к следующей функции.
-                        // Если `j` было установлено в `lexTable.size`, внешний цикл завершится.
-                        break;
-                    }
-
-                    // 3. Собираем параметры внутри скобок
-                    if (inFunctionParams && code == LEX_ID) {
-                        int idIndex = lexTable.table[j].idxTI;
-
-                        // Проверяем, является ли этот ID параметром (IT::P)
-                        if (idIndex != LT_TI_NULLIDX && idTable.table[idIndex].idtype == IT::P) {
-
-                            if (currentId.func_meta.n_params < IT_MAX_PARAMS) {
-
-                                // Сохраняем тип параметра в метаданных функции
-                                IT::IDDATATYPE paramType = idTable.table[idIndex].iddatatype;
-
-                                currentId.func_meta.params_types[currentId.func_meta.n_params] = paramType;
-                                currentId.func_meta.n_params++;
-                            }
-                            else {
-                                std::cout << "ERR: TOO MUCH PARMS in func"
-                                    << currentId.value.vstr << std::endl;
-                            }
-                        }
-                    }
-
-                    // Обработка функций-объявлений (без тела)
-                    if (!functionBodyFound && code == LEX_SEMICOLON) {
-                        // Если мы нашли ';' после параметров, это объявление функции.
-                        // Мы можем завершить сканирование для этой функции.
-                        break;
-                    }
-                }
-            }
         }
     }
 }

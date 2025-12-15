@@ -272,8 +272,8 @@ namespace TestIT {
         }
 
         std::cout << "IT (Identifier Table): size=" << idtable.size << std::endl;
-        printf("%-6s %-15s %-8s %-8s %-12s %s\n",
-            "Index", "Identifier", "Type", "DataType", "FirstLT", "Value");
+        printf("%-6s %-15s %-8s %-8s %-12s %-15s %s\n",
+            "Index", "Identifier", "Type", "DataType", "FirstLT", "Scope", "Value");
         std::cout << "--------------------------------------------------------------------" << std::endl;
 
         for (int i = 0; i < idtable.size; i++) {
@@ -318,8 +318,24 @@ namespace TestIT {
                 valueStr = "-"; // для не-литералов
             }
 
-            printf("%-6d %-15s %-8s %-8s %-12d %s\n",
-                i, entry.id, typeStr, dataTypeStr, entry.idxfirstLE, valueStr.c_str());
+
+
+            std::string SCOPE = "=EmptY=";
+            if (entry.scope == GLOBAL_SCOPE) {
+				SCOPE = "GLOBAL";
+            }
+            else if (entry.scope == MAIN_SCOPE) {
+				SCOPE = "MAIN";
+            }
+            else if (entry.scope == EMPTY_SCOPE) {
+				SCOPE = "=EmptY=";
+            }
+            else {
+                SCOPE = idtable.table[entry.scope].id;
+            }
+
+            printf("%-6d %-15s %-8s %-8s %-12d %-15s %s\n",
+                i, entry.id, typeStr, dataTypeStr, entry.idxfirstLE, SCOPE.c_str(), valueStr.c_str());
         }
     }
 

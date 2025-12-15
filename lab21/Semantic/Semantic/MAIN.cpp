@@ -33,7 +33,7 @@ void run(int argc, _TCHAR* argv[]) {
 
         // Выводим результаты
         TestLT::PrintLexTable(tables.lexTable);
-		TestLexer::TestSplitter(in);
+		//TestLexer::TestSplitter(in);
 
 
 		//==================================
@@ -42,14 +42,14 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 		//==================================
-		PN::FindExpressions(tables.lexTable, tables.idTable);
+		//PN::FindExpressions(tables.lexTable, tables.idTable);
 		//==================================
 
 
 		TestLexer::PrintFunctionParameters(tables.idTable);
         TestIT::PrintTable(tables.idTable);
-        TestLT::PrintLexTable(tables.lexTable);
-		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
+        //TestLT::PrintLexTable(tables.lexTable);
+		//TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 
 

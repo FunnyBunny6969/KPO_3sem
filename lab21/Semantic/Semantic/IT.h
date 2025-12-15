@@ -11,6 +11,7 @@
 
 #define GLOBAL_SCOPE   -2
 #define MAIN_SCOPE     -1
+#define EMPTY_SCOPE     0
 
 namespace IT    // таблица идентификаторов
 {
@@ -23,7 +24,7 @@ namespace IT    // таблица идентификаторов
         char       id[ID_REALSIZE];    // идентификатор (автоматически усекается до ID_MAXSIZE)
         IDDATATYPE iddatatype;        // тип данных
         IDTYPE     idtype;            // тип идентификатора
-        int        scope;             // область видимости
+        int        scope = EMPTY_SCOPE;         // область видимости
 
         union
         {

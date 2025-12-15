@@ -71,6 +71,7 @@ namespace IT {
         if (entry.idtype == IT::F) {
             idtable.table[idtable.size].func_meta = entry.func_meta;
         }
+        idtable.table[idtable.size].scope = entry.scope;
 
         idtable.size++;
     }
@@ -118,6 +119,7 @@ namespace IT {
         powEntry.idtype = IT::F;  
         powEntry.iddatatype = IT::UINT;   
         powEntry.idxfirstLE = -1;     
+        powEntry.scope = GLOBAL_SCOPE;
         powEntry.func_meta.n_params = 2;
         powEntry.func_meta.params_types[0] = IT::UINT;
         powEntry.func_meta.params_types[1] = IT::UINT;
@@ -129,6 +131,7 @@ namespace IT {
         randEntry.idtype = IT::F; 
         randEntry.iddatatype = IT::UINT; 
         randEntry.idxfirstLE = -1;     
+        randEntry.scope = GLOBAL_SCOPE;
         randEntry.func_meta.n_params = 0;  
         IT::Add(idTable, randEntry);
 
@@ -138,6 +141,7 @@ namespace IT {
         strlenEntry.idtype = IT::F;  
         strlenEntry.iddatatype = IT::UINT;     
         strlenEntry.idxfirstLE = -1;          
+        strlenEntry.scope = GLOBAL_SCOPE;
         strlenEntry.func_meta.n_params = 1;  
         strlenEntry.func_meta.params_types[0] = IT::STR; 
         IT::Add(idTable, strlenEntry);
