@@ -63,10 +63,9 @@ namespace LEX {
     }
 
 
-
-    bool CheckLiteralByValue(const IT::IdTable& idTable, const IT::Entry& newEntry) {
+    int CheckLiteralByValue(const IT::IdTable& idTable, const IT::Entry& newEntry) {
         if (newEntry.idtype != IT::L) {
-            return false; 
+            return TI_NULLIDX;
         }
 
         for (int i = 0; i < idTable.size; i++) {
@@ -86,13 +85,13 @@ namespace LEX {
             // ЧИСЛОВОЙ ЛИТЕРАЛ
             if (newEntry.iddatatype == IT::UINT) {
                 if (existingEntry.value.vint == newEntry.value.vint) {
-                    return true; 
+                    return i; 
                 }
             }
 
             else if (newEntry.iddatatype == IT::CHAR) {
                 if ((int)existingEntry.value.vchar == (int)newEntry.value.vchar) {
-                    return true; 
+                    return i; 
                 }
             }
 
@@ -103,13 +102,13 @@ namespace LEX {
                         newEntry.value.vstr[0].str,
                         newEntry.value.vstr[0].len) == 0)
                     {
-                        return true; 
+                        return i; 
                     }
                 }
             }
         }
 
-        return false;
+        return TI_NULLIDX;
     }
 
 
@@ -124,10 +123,7 @@ namespace LEX {
 
 
 
-    void Analyze(
-        const char* sourceCode,
-        LT::LexTable& lexTable,
-        IT::IdTable& idTable) {
+    void Analyze(const char* sourceCode, LT::LexTable& lexTable, IT::IdTable& idTable) {
 
         std::vector<std::vector<std::string>> lines;
         SplitIntoWords(sourceCode, lines);
@@ -137,176 +133,148 @@ namespace LEX {
         int literalCount = 1;
 
         // Контекст для определения типов
-        std::string currentFunction = "";
+        int scope = GLOBAL_SCOPE;
         IT::IDTYPE currentIdType = IT::V;
-        IT::IDDATATYPE currentDataType = IT::UINT;
-        bool inParams = false;
+        IT::IDDATATYPE currentDataType = IT::UNDEF;
+		LT::Entry lexEntry;
+		bool isDeclaration = false;
 
-        // Проходим по всем строкам
         for (const auto& line : lines) {
-            // Проходим по всем словам в строке
             for (const auto& word : line) {
-                // Пропускаем слово через все автоматы
                 char code = Automata::getLexemeCode(word.c_str());
 
-                // Обработка ошибок
-                if (code == LEX_UNKNOWN) {
-                    throw ERROR_THROW_IN(200, lineNumber, wordNumber);
+                if (code == LEX_UNKNOWN) { throw ERROR_THROW_IN(200, lineNumber, wordNumber); }
+
+
+                else if (code == LEX_FUNCTION) { 
+                    currentIdType = IT::F;
+                }
+                else if (code == LEX_DECLARE) { 
+                    currentIdType = IT::V;
                 }
 
-				if (code == LEX_FUNCTION) {
-					currentIdType = IT::F;  // следующий ID будет функцией
+
+				else if (code == LEX_LEFTHESIS && currentIdType == IT::F) {
+                    currentIdType = IT::P;
 				}
-				else if (
-					code == LEX_UINT || 
-					code == LEX_STRING ||
-					code == LEX_CHAR) 
-				{
-					currentDataType = (Automata::executeAutomata(Automata::U_INTEGER, word.c_str())) ? IT::UINT : IT::STR;
-					currentDataType = (Automata::executeAutomata(Automata::CHAR, word.c_str())) ? IT::CHAR : IT::STR;
-					if (inParams) {
-						currentIdType = IT::P;  // в параметрах - следующий ID будет параметром
-					}
-				}
-				else if (code == LEX_LEFTHESIS) {
-					inParams = true;  // начались параметры
-				}
-				else if (code == LEX_RIGHTHESIS) {
-					inParams = false; // закончились параметры
-					currentIdType = IT::V;
-				}
-				else if (code == LEX_LEFTBRACE) {
-					// Начало тела функции
-					currentIdType = IT::V;
-					inParams = false;
-				}
-				else if (code == LEX_RIGHTBRACE) {
-					// Конец функции
-					currentFunction = "";
+				else if (code == LEX_RIGHTHESIS && currentIdType == IT::P) {
 					currentIdType = IT::V;
 				}
 
+
+				else if (code == LEX_UINT) // int/char/string
+				{
+                    if (Automata::executeAutomata(Automata::U_INTEGER, word.c_str())) currentDataType = IT::UINT;
+                    else if (Automata::executeAutomata(Automata::CHAR, word.c_str())) currentDataType = IT::CHAR;
+                    else currentDataType = IT::STR;
+                    isDeclaration = true;
+				}
+
+
+
 				// Создаем запись для таблицы лексем
-				LT::Entry lexEntry;
 				lexEntry.lexema[0] = code;
 				lexEntry.lexema[1] = IN_CODE_ENDS;
 				lexEntry.sn = lineNumber;
 
-				// Обрабатываем идентификаторы и литералы
-				if (code == LEX_ID || code == LEX_LITERAL) {
+				// Обрабатываем идентификаторы
+				if (code == LEX_ID) {
 					bool found = false;
 					int idIndex = TI_NULLIDX;
 
-					// Для литералов всегда создаем новую запись
-					if (code == LEX_LITERAL) {
-						found = false;
-					}
-					else {
-						// Для идентификаторов проверяем существование
-						for (int i = 0; i < idTable.size; i++) {
-							if (strcmp(idTable.table[i].id, word.c_str()) == 0) {
-								found = true;
-								idIndex = i;
-								break;
-							}
-						}
-					}
-
-					// Если не найден - добавляем в таблицу идентификаторов
-					if (!found) {
+					if (isDeclaration) {
 						IT::Entry idEntry;
 
-						if (code == LEX_ID) {
-
-
-
-							// ИДЕНТИФИКАТОР - обрезаем до MAXSIZE символов
-							int copyLen = word.length();
-							if (copyLen >= ID_MAXSIZE)
-								copyLen = ID_MAXSIZE - 1;
-
-							for (int i = 0; i < copyLen; i++) {
-								idEntry.id[i] = word[i];
-							}
-							idEntry.id[copyLen] = IN_CODE_ENDS;
-
-							// ИСПОЛЬЗУЕМ КОНТЕКСТ ДЛЯ ОПРЕДЕЛЕНИЯ ТИПОВ
-							idEntry.idtype = currentIdType;
-							idEntry.iddatatype = currentDataType;
-							idEntry.value.vint = TI_INT_DEFAULT;
-
-							// После использования сбрасываем контекстные типы
-							if (currentIdType == IT::F) {
-								currentFunction = word; // запоминаем имя функции
-								currentIdType = IT::V;
-							}
-							else if (currentIdType == IT::P) {
-								currentIdType = IT::V;
-							}
+						int copyLen = word.length();
+						if (copyLen >= ID_MAXSIZE) {
+							copyLen = ID_MAXSIZE - 1;
+							throw ERROR_THROW(201);
 						}
-						else {
-							// ЛИТЕРАЛ - генерируем имя L1, L2, L3...
-							std::string litName = "L" + std::to_string(literalCount++);
-							int copyLen = litName.length();
-							if (copyLen >= ID_MAXSIZE)
-								copyLen = ID_MAXSIZE - 1;
-
-							for (int i = 0; i < copyLen; i++) {
-								idEntry.id[i] = litName[i];
-							}
-							idEntry.id[copyLen] = IN_CODE_ENDS;
-
-							idEntry.idtype = IT::L;
-
-							// Числовой литерал
-							if (Automata::executeAutomata(Automata::NUMBER_LITERAL, word.c_str())) {
-								idEntry.iddatatype = IT::UINT;
-								idEntry.value.vint = std::stoi(word);
-							}
-							// Числовой литерал HEX
-							else if (Automata::executeAutomata(Automata::HEX_NUMBER_LITERAL, word.c_str())) {
-								idEntry.iddatatype = IT::UINT;
-								try { idEntry.value.vint = HexToDemical(word); }
-								catch (const Error::ERROR& e) { throw e; }
-							}
-                            else if (Automata::executeAutomata(Automata::CHAR_LITERAL, word.c_str())) {
-
-                                idEntry.iddatatype = IT::CHAR;
-                                idEntry.value.vchar = word[1];
-                                std::cout << word[1] << std::endl;
-                                std::cout << idEntry.value.vchar << std::endl;
-                            }
-							// Строковый литерал
-							else if (Automata::executeAutomata(Automata::STRING_LITERAL, word.c_str())) {
-								idEntry.iddatatype = IT::STR;
-								// Убираем кавычки и копируем содержимое
-								std::string content = word.substr(1, word.length() - 2);
-								int strLen = content.length();
-								if (strLen >= TI_STR_MAXSIZE - 1)
-									strLen = TI_STR_MAXSIZE - 2;
-
-								idEntry.value.vstr[0].len = strLen;
-								for (int i = 0; i < strLen; i++) {
-									idEntry.value.vstr[0].str[i] = content[i];
-								}
-								idEntry.value.vstr[0].str[strLen] = '\0';
-							}
+						for (int i = 0; i < copyLen; i++) {
+							idEntry.id[i] = word[i];
 						}
+						idEntry.id[copyLen] = IN_CODE_ENDS;
+
+
+						idEntry.idtype = currentIdType;
+						idEntry.iddatatype = currentDataType;
+						idEntry.value.vint = TI_INT_DEFAULT;
 
 						idEntry.idxfirstLE = lexTable.size;
-						if (!CheckLiteralByValue(idTable, idEntry)) {
-							IT::Add(idTable, idEntry);
-							idIndex = idTable.size - 1;
-						}
+						IT::Add(idTable, idEntry);
+						idIndex = idTable.size - 1;
 					}
 
 					lexEntry.idxTI = idIndex;
+                    isDeclaration = false;
 				}
+
+
+                else if (code == LEX_LITERAL) {
+					int idIndex = TI_NULLIDX;
+
+					IT::Entry idEntry;
+					std::string litName = "L" + std::to_string(literalCount++);
+					int copyLen = litName.length();
+					if (copyLen >= ID_MAXSIZE)
+						copyLen = ID_MAXSIZE - 1;
+
+					for (int i = 0; i < copyLen; i++) {
+						idEntry.id[i] = litName[i];
+					}
+					idEntry.id[copyLen] = IN_CODE_ENDS;
+
+					idEntry.idtype = IT::L;
+
+					// Числовой литерал
+					if (Automata::executeAutomata(Automata::NUMBER_LITERAL, word.c_str())) {
+						idEntry.iddatatype = IT::UINT;
+						idEntry.value.vint = std::stoi(word);
+					}
+					// Числовой литерал HEX
+					else if (Automata::executeAutomata(Automata::HEX_NUMBER_LITERAL, word.c_str())) {
+						idEntry.iddatatype = IT::UINT;
+						try { idEntry.value.vint = HexToDemical(word); }
+						catch (const Error::ERROR& e) { throw e; }
+					}
+                    // Символьный литерал
+					else if (Automata::executeAutomata(Automata::CHAR_LITERAL, word.c_str())) {
+
+						idEntry.iddatatype = IT::CHAR;
+						idEntry.value.vchar = word[1];
+						std::cout << word[1] << std::endl;
+						std::cout << idEntry.value.vchar << std::endl;
+					}
+					// Строковый литерал
+					else if (Automata::executeAutomata(Automata::STRING_LITERAL, word.c_str())) {
+						idEntry.iddatatype = IT::STR;
+						// Убираем кавычки и копируем содержимое
+						std::string content = word.substr(1, word.length() - 2);
+						int strLen = content.length();
+						if (strLen >= TI_STR_MAXSIZE - 1)
+							strLen = TI_STR_MAXSIZE - 2;
+
+						idEntry.value.vstr[0].len = strLen;
+						for (int i = 0; i < strLen; i++) {
+							idEntry.value.vstr[0].str[i] = content[i];
+						}
+						idEntry.value.vstr[0].str[strLen] = '\0';
+					}
+
+
+					idEntry.idxfirstLE = lexTable.size;
+                    idIndex = CheckLiteralByValue(idTable, idEntry);
+					if (idIndex == TI_NULLIDX) {
+						IT::Add(idTable, idEntry);
+						idIndex = idTable.size - 1;
+                    }
+					lexEntry.idxTI = idIndex;
+                }
+
 				else {
 					lexEntry.idxTI = LT_TI_NULLIDX;
 				}
 
-				// Добавляем запись в таблицу лексем
 				LT::Add(lexTable, lexEntry);
                 wordNumber++;
             }
@@ -317,7 +285,6 @@ namespace LEX {
 
         CollectFunctionMetadata(lexTable, idTable);
     }
-
 
 
     void CollectFunctionMetadata(LT::LexTable& lexTable, IT::IdTable& idTable)

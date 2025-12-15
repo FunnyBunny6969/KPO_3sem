@@ -9,6 +9,9 @@
 #define TI_NULLIDX  0xffffffff     // нет элемента таблицы идентификаторов
 #define TI_STR_MAXSIZE 255
 
+#define GLOBAL_SCOPE   -2
+#define MAIN_SCOPE     -1
+
 namespace IT    // таблица идентификаторов
 {
     enum IDDATATYPE {UINT=1, STR=2, CHAR=3, UNDEF = 0};  
@@ -20,6 +23,7 @@ namespace IT    // таблица идентификаторов
         char       id[ID_REALSIZE];    // идентификатор (автоматически усекается до ID_MAXSIZE)
         IDDATATYPE iddatatype;        // тип данных
         IDTYPE     idtype;            // тип идентификатора
+        int        scope;             // область видимости
 
         union
         {
@@ -62,7 +66,8 @@ namespace IT    // таблица идентификаторов
 
     int IsId(                    // возврат: номер строки (если есть), TI_NULLIDX(если нет)
 			IdTable& idtable,    // экземпляр таблицы идентификаторов
-			char id[ID_MAXSIZE]  // идентификатор
+			char id[ID_MAXSIZE], // идентификатор
+            IDDATATYPE 
 			);
 
     void Delete(IdTable& idtable);    // удалить таблицу идентификаторов (освободить память)

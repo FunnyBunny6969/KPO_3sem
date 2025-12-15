@@ -353,10 +353,6 @@ namespace TestIT {
 
         std::cout << "Размер таблицы: " << it.size << std::endl;
 
-        char mainId[] = "main";
-        int index = IT::IsId(it, mainId);
-        std::cout << "Идентификатор 'main' найден по индексу: " << index << std::endl;
-
         PrintTable(it);
 
         IT::Delete(it);

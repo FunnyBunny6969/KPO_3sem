@@ -33,7 +33,7 @@ void run(int argc, _TCHAR* argv[]) {
 
         // Выводим результаты
         TestLT::PrintLexTable(tables.lexTable);
-		//TestLexer::TestSplitter(in);
+		TestLexer::TestSplitter(in);
 
 
 		//==================================

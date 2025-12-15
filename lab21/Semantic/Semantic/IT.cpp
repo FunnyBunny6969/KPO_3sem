@@ -37,7 +37,7 @@ namespace IT {
         }
 
         // Проверяем, нет ли уже такого идентификатора
-        int existingIndex = IsId(idtable, entry.id);
+        int existingIndex = IsId(idtable, entry.id, entry.iddatatype);
         if (existingIndex != TI_NULLIDX) {
             // Идентификатор уже существует - обновляем запись
             idtable.table[existingIndex] = entry;
@@ -91,9 +91,10 @@ namespace IT {
     }
 
     // Проверить наличие идентификатора в таблице
-    int IsId(IdTable& idtable, char id[ID_REALSIZE]) {
+    int IsId(IdTable& idtable, char id[ID_REALSIZE], IDDATATYPE iddatatype) {
         for (int i = 0; i < idtable.size; i++) {
-            if (strcmp(idtable.table[i].id, id) == 0) {
+            if (strcmp(idtable.table[i].id, id) == 0 &&
+                idtable.table[i].iddatatype == iddatatype) {
                 return i; // Найден, возвращаем индекс
             }
         }
