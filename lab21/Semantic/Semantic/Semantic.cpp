@@ -11,16 +11,20 @@ namespace SemanticAnalyzer
 		int num = 0;
 		char lexema;
 
+
 		for (int i = ++start; i < lextable.size; i++) {
 			lexema = lextable.table[i].lexema[0];
 
 			if (lexema == LEX_ID || lexema == LEX_LITERAL) {
+				num += 1;
+
 				if (num > funcInfo.func_meta.n_params) 
 					throw ERROR_THROW_LINE(717, lextable.table[i].sn);
+
 				if (idtable.table[lextable.table[i].idxTI].iddatatype !=
-					funcInfo.func_meta.params_types[num])
+					funcInfo.func_meta.params_types[num-1])
 					throw ERROR_THROW_LINE(716, lextable.table[i].sn);
-				num++;
+
 			}
 
 			if (lexema == LEX_RIGHTHESIS) {
@@ -29,6 +33,7 @@ namespace SemanticAnalyzer
 			}
 		}
 	}
+
 
 	bool checkExpression(
 		LT::LexTable& lextable,
@@ -107,6 +112,8 @@ namespace SemanticAnalyzer
 		}
 		return true;
 	}
+
+
 
 
 	int RunSemanter(LT::LexTable& lextable, IT::IdTable& idtable)

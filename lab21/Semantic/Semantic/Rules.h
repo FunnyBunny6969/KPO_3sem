@@ -21,6 +21,7 @@ namespace GRB
 		// Правило N - операторы  
 		Rule(NS('N'), GRB_ERROR_SERIES + 1,     // Ошибочный оператор
 			16,                                  // N->dti;|rE;|i=E;|dtfi(F);|dtiN|rE;N|i=E;N|dtfi(F);N
+
 			Rule::Chain(4, TS('d'), TS('t'), TS('i'), TS(';')),
 			Rule::Chain(5, TS('d'), TS('t'), TS('i'), TS(';'), NS('N')),
 
@@ -54,14 +55,17 @@ namespace GRB
 		// Правило E - выражения
 		Rule(NS('E'), GRB_ERROR_SERIES + 2,      // Ошибка в выражении
 			11,                                   // E->i|l|(E)|i(W)|iM|lM|i(W)M
+			Rule::Chain(4, TS('i'), TS('('), NS('W'), TS(')')),
+			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M')),
+
 			Rule::Chain(1, TS('i')),
 			Rule::Chain(1, TS('l')),
-			Rule::Chain(3, TS('('), NS('E'), TS(')')),
-			Rule::Chain(4, TS('i'), TS('('), NS('W'), TS(')')),
+
 			Rule::Chain(2, TS('i'), NS('M')),
 			Rule::Chain(2, TS('l'), NS('M')),
+
+			Rule::Chain(3, TS('('), NS('E'), TS(')')),
 			Rule::Chain(4, TS('('), NS('E'), TS(')'), NS('M')),
-			Rule::Chain(5, TS('i'), TS('('), NS('W'), TS(')'), NS('M')),
 
 			// ~E (Побитовое отрицание)
 			Rule::Chain(2, TS('~'), NS('E')),
