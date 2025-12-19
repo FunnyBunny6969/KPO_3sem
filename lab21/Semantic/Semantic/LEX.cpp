@@ -215,7 +215,10 @@ namespace LEX {
 
                         IT::Add(idTable, idEntry);
                         idIndex = idTable.size - 1;
-                        if (idEntry.idtype == IT::F) scope.push_back(idIndex);
+                        if (idEntry.idtype == IT::F) {
+                            scope.push_back(idIndex);
+                            reserve = 0;
+                        }
 
                         if (idEntry.idtype == IT::P) {
                             int num = idTable.table[scope.back()].func_meta.n_params;
@@ -241,7 +244,7 @@ namespace LEX {
 
                         idIndex = IT::IsId(idTable, idEntry.id, idEntry.scope);
                         if (idIndex == TI_NULLIDX) {
-                            throw ERROR_THROW(703);
+                            throw ERROR_THROW_LINE(703, lexEntry.sn);
                         }
                     }
 

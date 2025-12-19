@@ -275,6 +275,7 @@ namespace MFST
 			Error::ERROR err = Error::geterror(errid);
 			sprintf_s(buf, MFST_DIAGN_MAXSIZE, "%d: строка %d, %s", err.id, lex.lexTable.table[lpos].sn, err.message);
 			rc = buf;
+			throw ERROR_THROW_LINE(err.id, lex.lexTable.table[lpos].sn);
 		}
 		return rc;
 	}

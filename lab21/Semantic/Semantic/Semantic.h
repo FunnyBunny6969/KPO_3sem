@@ -7,5 +7,5 @@
 
 namespace SemanticAnalyzer
 {
-    void RunSemanter(LT::LexTable& lextable, IT::IdTable& idtable);
+    int RunSemanter(LT::LexTable&, IT::IdTable&);
 }

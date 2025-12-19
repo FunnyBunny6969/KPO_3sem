@@ -1,6 +1,7 @@
 #pragma once
 #define ERROR_THROW(id) Error::geterror(id);
 #define ERROR_THROW_IN(id, l, c) Error::geterrorin(id, l, c );
+#define ERROR_THROW_LINE(id, l) Error::geterrorin(id, l);
 #define ERROR_ENTRY(id, m) {id, m, {-1, -1}}
 #define ERROR_MAXSIZE_MESSAGE 200
 #define ERROR_ENTRY_NODEF(id)	ERROR_ENTRY(-id, "Неопределенная ошибка") 
@@ -29,5 +30,5 @@ namespace Error {
 	};
 
 	ERROR geterror(int id);
-	ERROR geterrorin(int id, int line, int col);
+	ERROR geterrorin(int, int = -1, int = -1);
 };

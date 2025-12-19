@@ -8,15 +8,15 @@ namespace Error
     //                 110 - 119 - ошибки открытия и чтения файлов
     //                 200 - 210 - ошибки лексера
     //                 ...
-    ERROR errors[ERROR_MAX_ENTRY] = 
+    ERROR errors[ERROR_MAX_ENTRY] =
     {
-        ERROR_ENTRY(0, "Недопустимый код ошибки"), 
+        ERROR_ENTRY(0, "Недопустимый код ошибки"),
         ERROR_ENTRY(1, "Системный сбой"),
-        ERROR_ENTRY_NODEF(2), ERROR_ENTRY_NODEF(3), ERROR_ENTRY_NODEF(4), 
-        ERROR_ENTRY_NODEF(5), ERROR_ENTRY_NODEF(6), ERROR_ENTRY_NODEF(7), 
+        ERROR_ENTRY_NODEF(2), ERROR_ENTRY_NODEF(3), ERROR_ENTRY_NODEF(4),
+        ERROR_ENTRY_NODEF(5), ERROR_ENTRY_NODEF(6), ERROR_ENTRY_NODEF(7),
         ERROR_ENTRY_NODEF(8), ERROR_ENTRY_NODEF(9),
-        ERROR_ENTRY_NODEF10(10), ERROR_ENTRY_NODEF10(20), ERROR_ENTRY_NODEF10(30), 
-        ERROR_ENTRY_NODEF10(40), ERROR_ENTRY_NODEF10(50), ERROR_ENTRY_NODEF10(60), 
+        ERROR_ENTRY_NODEF10(10), ERROR_ENTRY_NODEF10(20), ERROR_ENTRY_NODEF10(30),
+        ERROR_ENTRY_NODEF10(40), ERROR_ENTRY_NODEF10(50), ERROR_ENTRY_NODEF10(60),
         ERROR_ENTRY_NODEF10(70), ERROR_ENTRY_NODEF10(80), ERROR_ENTRY_NODEF10(90),
 
         ERROR_ENTRY(100, "Параметр -in должен быть задан"),
@@ -49,40 +49,40 @@ namespace Error
 
         ERROR_ENTRY_NODEF100(300), ERROR_ENTRY_NODEF100(400), ERROR_ENTRY_NODEF100(500),
 
-        ERROR_ENTRY(600, "Неверная структура программы"), 
-		ERROR_ENTRY(601, "Ошибочный оператор"),
-		ERROR_ENTRY(602, "Ошибка в выражении"),
-		ERROR_ENTRY(603, "Ошибка в параметрах функции"),
-		ERROR_ENTRY(604, "Ошибка в параметрах вызываемой функции"),
-		ERROR_ENTRY_NODEF(605),
-		ERROR_ENTRY_NODEF(606),
-		ERROR_ENTRY_NODEF(607),
-		ERROR_ENTRY_NODEF(608),
-		ERROR_ENTRY_NODEF(609),
-		ERROR_ENTRY_NODEF10(610), ERROR_ENTRY_NODEF10(620), ERROR_ENTRY_NODEF10(630), ERROR_ENTRY_NODEF10(640),
-		ERROR_ENTRY_NODEF10(650), ERROR_ENTRY_NODEF10(660), ERROR_ENTRY_NODEF10(670), ERROR_ENTRY_NODEF10(680),
-		ERROR_ENTRY_NODEF10(690),
+        ERROR_ENTRY(600, "Неверная структура программы"),
+        ERROR_ENTRY(601, "Ошибочный оператор"),
+        ERROR_ENTRY(602, "Ошибка в выражении"),
+        ERROR_ENTRY(603, "Ошибка, неверная арифметическая операция"),
+        ERROR_ENTRY(604, "Ошибка в параметрах функции"),
+        ERROR_ENTRY(605, "Ошибка в параметрах вызываемой функции"),
+        ERROR_ENTRY_NODEF(606),
+        ERROR_ENTRY_NODEF(607),
+        ERROR_ENTRY_NODEF(608),
+        ERROR_ENTRY_NODEF(609),
+        ERROR_ENTRY_NODEF10(610), ERROR_ENTRY_NODEF10(620), ERROR_ENTRY_NODEF10(630), ERROR_ENTRY_NODEF10(640),
+        ERROR_ENTRY_NODEF10(650), ERROR_ENTRY_NODEF10(660), ERROR_ENTRY_NODEF10(670), ERROR_ENTRY_NODEF10(680),
+        ERROR_ENTRY_NODEF10(690),
 
-        ERROR_ENTRY(700, ""),           
-        ERROR_ENTRY(701, "Отсутствует точка входа main"),           
-		ERROR_ENTRY(702, "Задано более одной точки входа main"),
-		ERROR_ENTRY(703, "Необъявленный идентификатор"),           
-		ERROR_ENTRY(704, "Попытка переопределить уже существующий идентификатор"), 
-		ERROR_ENTRY(705, "Попытка реализовать уже существующую функцию"), 
-		ERROR_ENTRY(706, "Превышено допустимое число параметров функции"),
-		ERROR_ENTRY(707, "Недопустимый целочисленный литерал (выход за пределы диапазона)"), 
-		ERROR_ENTRY(708, "Использование пустого строкового/символьного литерала недопустимо"),
+        ERROR_ENTRY(700, ""),
+        ERROR_ENTRY_NODEF(701),//, "Отсутствует точка входа main"),
+        ERROR_ENTRY(702, "Задано более одной точки входа main"),
+        ERROR_ENTRY(703, "Необъявленный идентификатор"),
+        ERROR_ENTRY(704, "Попытка переопределить уже существующий идентификатор"),
+        ERROR_ENTRY(705, "Попытка реализовать уже существующую функцию"),
+        ERROR_ENTRY(706, "Превышено допустимое число параметров функции"),
+        ERROR_ENTRY_NODEF(707),    //, "Недопустимый целочисленный литерал (выход за пределы диапазона)"), 
+		ERROR_ENTRY(708, "Использование пустого строкового литерала недопустимо"),
 		ERROR_ENTRY(709, "Попытка переопределить формальный параметр функции"),
 		ERROR_ENTRY(710, "Несовпадение типов при присваивании (RHS не соответствует LHS)"),
 		ERROR_ENTRY(711, "Типы данных в выражении не совпадают (Общая ошибка совместимости)"),
 		ERROR_ENTRY(712, "Арифметические операторы не могут применяться со строковым или символьным типом"),
-		ERROR_ENTRY(713, "Логические операторы могут применяться только с целочисленными и логическими типами"),
+		ERROR_ENTRY(713, "Логические операторы могут применяться только с целочисленными типами"),
 		ERROR_ENTRY(714, "Деление на ноль"),
 		ERROR_ENTRY(715, "Тип функции и тип возвращаемого значения должны совпадать"),
 		ERROR_ENTRY(716, "Несовпадение типов передаваемых параметров при вызове функции"), 
 		ERROR_ENTRY(717, "Слишком много аргументов в вызове функции"),
 		ERROR_ENTRY(718, "Слишком мало аргументов в вызове функции"),
-        ERROR_ENTRY(719, "Управляющее выражение оператора switch имеет недопустимый тип (требуется целочисленный)"),
+        ERROR_ENTRY(719, "Константа для сравнения имеет тип не соответствующий типу проверяемого значения"),
 		ERROR_ENTRY(720, "Обнаружена вторая метка default (допускается только одна)"),
 		ERROR_ENTRY(721, "Оператор break находится вне контекста switch"),
 		ERROR_ENTRY(722, "Оператор return используется вне тела функции"),
@@ -105,7 +105,7 @@ namespace Error
         return err;
     }
 
-    ERROR geterrorin(int id, int line = -1, int col = -1) {
+    ERROR geterrorin(int id, int line, int col) {
         ERROR err = geterror(id);
         err.inext.line = line;
         err.inext.col = col;

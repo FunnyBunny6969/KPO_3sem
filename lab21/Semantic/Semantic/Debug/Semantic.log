@@ -1,4 +1,2 @@
-﻿  Tests.cpp
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Semantic\Tests.cpp(566,21): warning C4018: <: несоответствие типов со знаком и без знака
-K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Semantic\Tests.cpp(569,22): warning C4018: <: несоответствие типов со знаком и без знака
+﻿  Semantic.cpp
   Semantic.vcxproj -> K:\$MAIN$\БГТУ\02\KPO_3sem\lab21\Semantic\Debug\Semantic.exe

@@ -7,21 +7,20 @@ unsigned_integer function check_permissions(   unsigned_integer user_role,     u
   
     switch (access_level & 0x07) 
     {
-        case 0x01: 
-            access_level = access_level + 10;
-            break;
-        case 0x02: 
-            access_level = access_level + 20;
-            break;
-        case 0x03:
-        case 0x3:
-        case 0x55:
-            access_level = access_level + 30;
-            break;
-        default:
-            
-            access_level = ~access_level; 
-            break;
+    case 0x01: 
+        access_level = access_level + 10;
+        break;
+    case 0x02: 
+        access_level = access_level + 20;
+        break;
+    case 0x03:
+    case 0x3:
+    case 0x55:
+        access_level = access_level + 30;
+        break;
+    default:
+        access_level = ~access_level; 
+        break;
     };
     
     return access_level;
@@ -31,53 +30,20 @@ unsigned_integer function check_permissions(   unsigned_integer user_role,     u
 string function create_id(string name_part, char delimiter)
 {
     declare char role_mask;
+    role_mask = '';
     
     declare unsigned_integer initial_len;
     
-   
+    break;
     initial_len = strlen(name_part); 
     
     declare unsigned_integer random_seed;
    
-    random_seed = pow(3, 2); 
+    random_seed = pow(3, 2) * 3; 
+
+    break;
 
     return 'LITERAL12345135';
 };
 
 
-main
-{
-    
-    declare unsigned_integer role_mask;
-    declare unsigned_integer data_input;
-    declare string user_name;
-    declare char split_char;
-    
-    declare unsigned_integer final_access;
-    declare string final_id;
-
-    
-    role_mask = 0xAAA; 
-    data_input = 0xA0;  // Шестнадцатеричный литерал
-    user_name = 'Supervisor'; // Строковый литерал
-    split_char = '-'; // Символьный литерал
-	split_char = 'A'; // Символьный литерал
-
-    
-    final_access = check_permissions(role_mask, data_input);
-
-    final_id = create_id(user_name, split_char);
-
-    
-    print '--- Результаты Компиляции ---';
-    print 'Финальный код доступа: ';
-    print final_access; 
-    
-    print 'Случайное число (Тест random): ';
-    print random(); 
-
-    print 'Сгенерированный ID: ';
-    print final_id; 
-    
-    return 0;
-};

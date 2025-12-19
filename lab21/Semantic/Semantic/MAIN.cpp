@@ -3,6 +3,7 @@
 #include "LEX.h"
 #include "MFST.h"
 #include "PN.h"
+#include "Semantic.h"
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
@@ -35,25 +36,29 @@ void run(int argc, _TCHAR* argv[]) {
 		IT::InitBuiltins(tables.idTable);
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
 
-        // Выводим результаты
+
+		//==================================
+		MFST_RUN
+		//==================================
+
         TestLT::PrintLexTable(tables.lexTable);
-		//TestLexer::TestSplitter(in);
-
-
-		//==================================
-		//MFST_RUN
-		//==================================
-
-
-		//==================================
-		PN::FindExpressions(tables.lexTable, tables.idTable);
-		//==================================
-
-
-		TestLexer::PrintFunctionParameters(tables.idTable);
         TestIT::PrintTable(tables.idTable);
-        TestLT::PrintLexTable(tables.lexTable);
-		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
+		TestLexer::PrintFunctionParameters(tables.idTable);
+
+
+
+		if (SemanticAnalyzer::RunSemanter(tables.lexTable, tables.idTable))
+			cout << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
+
+
+
+		//==================================
+		//PN::FindExpressions(tables.lexTable, tables.idTable);
+		//==================================
+
+
+        //TestLT::PrintLexTable(tables.lexTable);
+		//TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 
 
@@ -64,14 +69,17 @@ void run(int argc, _TCHAR* argv[]) {
 		Out::Close(out);
     }
 	catch (const Error::ERROR& e) {
-		std::cout << "Ошибка " << e.id << " : " << e.message 
+		cout << "Ошибка " << e.id << " : " << e.message 
 			<< " LINE " << e.inext.line 
-			<< " COL "  << e.inext.col << std::endl << std::endl;
+			<< " COL "  << e.inext.col << endl << endl;
 
 		Log::WriteError(log, e);
 		Out::WriteErrorOut(out, e);
         Log::Close(log);
 		Out::Close(out);
+	}
+	catch (const std::exception& e) {
+		cout << "НЕИЗВЕСТНАЯ ОШИБКА, ps возможно упал сентаксический анализатор" << endl;
 	}
 
 

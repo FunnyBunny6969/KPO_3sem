@@ -3,23 +3,11 @@
 namespace Automata {
 	// ========== КЛЮЧЕВЫЕ СЛОВА ==========
 	const FST::FST U_INTEGER = FST::FST(
-		"", 17,
+		"", 5,
 		FST::NODE(1, FST::RELATION('u', 1)),
-		FST::NODE(1, FST::RELATION('n', 2)),
-		FST::NODE(1, FST::RELATION('s', 3)),
-		FST::NODE(1, FST::RELATION('i', 4)),
-		FST::NODE(1, FST::RELATION('g', 5)),
-		FST::NODE(1, FST::RELATION('n', 6)),
-		FST::NODE(1, FST::RELATION('e', 7)),
-		FST::NODE(1, FST::RELATION('d', 8)),
-		FST::NODE(1, FST::RELATION('_', 9)),
-		FST::NODE(1, FST::RELATION('i', 10)),
-		FST::NODE(1, FST::RELATION('n', 11)),
-		FST::NODE(1, FST::RELATION('t', 12)),
-		FST::NODE(1, FST::RELATION('e', 13)),
-		FST::NODE(1, FST::RELATION('g', 14)),
-		FST::NODE(1, FST::RELATION('e', 15)),
-		FST::NODE(1, FST::RELATION('r', 16)),
+		FST::NODE(1, FST::RELATION('i', 2)),
+		FST::NODE(1, FST::RELATION('n', 3)),
+		FST::NODE(1, FST::RELATION('t', 4)),
 		FST::NODE()
 	);
 

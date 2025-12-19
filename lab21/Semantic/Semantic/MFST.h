@@ -40,8 +40,8 @@
 		MFST_TRACE_START\
 		MFST::Mfst mfst(tables, GRB::getGreibach()); \
 		mfst.start(); \
-		mfst.savededucation(); \
-		mfst.printrules();                 
+		mfst.savededucation(); 
+		//mfst.printrules();                 
 
 
 
