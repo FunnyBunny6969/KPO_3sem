@@ -52,6 +52,8 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 
+
+
 		//==================================
 		//PN::FindExpressions(tables.lexTable, tables.idTable);
 		//==================================
@@ -79,7 +81,7 @@ void run(int argc, _TCHAR* argv[]) {
 		Out::Close(out);
 	}
 	catch (const std::exception& e) {
-		cout << "НЕИЗВЕСТНАЯ ОШИБКА, ps возможно упал сентаксический анализатор" << endl;
+		cout << "НЕИЗВЕСТНАЯ ОШИБКА, ps возможно упал синтаксический анализатор" << endl;
 	}
 
 

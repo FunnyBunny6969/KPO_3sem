@@ -112,11 +112,11 @@ namespace LEX {
     }
 
 
-    long long HexToDemical(const std::string& word) {
+    int HexToDemical(const std::string& word) {
         try {
             return std::stoll(word, nullptr, 0);
         }
-        catch (const Error::ERROR& e) {
+		catch (const std::exception& e) {
             throw ERROR_THROW(205);
         }
     }
@@ -128,6 +128,7 @@ namespace LEX {
         std::vector<std::vector<std::string>> lines;
         SplitIntoWords(sourceCode, lines);
 
+        const char* MAX_POSSIBLE_UINT = "2147483647";
         int lineNumber = 1;
         int wordNumber = 1;
         int literalCount = 1;
@@ -213,7 +214,7 @@ namespace LEX {
                         idEntry.scope = scope.back();
 
 
-                        IT::Add(idTable, idEntry);
+                        IT::Add(idTable, idEntry, false);
                         idIndex = idTable.size - 1;
                         if (idEntry.idtype == IT::F) {
                             scope.push_back(idIndex);
@@ -244,7 +245,7 @@ namespace LEX {
 
                         idIndex = IT::IsId(idTable, idEntry.id, idEntry.scope);
                         if (idIndex == TI_NULLIDX) {
-                            throw ERROR_THROW_LINE(703, lexEntry.sn);
+                            throw ERROR_THROW_LINE(208, lexEntry.sn);
                         }
                     }
 
@@ -272,6 +273,14 @@ namespace LEX {
                     // Числовой литерал
                     if (Automata::executeAutomata(Automata::NUMBER_LITERAL, word.c_str())) {
                         idEntry.iddatatype = IT::UINT;
+
+                        if (word.length() > 10)
+                            throw ERROR_THROW_LINE(207, lexEntry.sn);
+                        if (word.length() == 10)
+                            for (int w = 0; w < 10; w++)
+                                if (word[w] > MAX_POSSIBLE_UINT[w])
+                                    throw ERROR_THROW_LINE(207, lexEntry.sn);
+
                         idEntry.value.vint = std::stoi(word);
                     }
                     // Числовой литерал HEX

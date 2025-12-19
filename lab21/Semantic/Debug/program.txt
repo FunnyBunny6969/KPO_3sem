@@ -1,8 +1,10 @@
-unsigned_integer function check_permissions(   unsigned_integer user_role,     unsigned_integer required_mask)
+uint function check_permissions(uint user_role, uint required_mask)
 {
-    declare unsigned_integer access_level;
+    declare uint access_level;
 	
     access_level = user_role | required_mask; 
+
+    declare char access_level;
 
   
     switch (access_level & 0x07) 
@@ -30,20 +32,27 @@ unsigned_integer function check_permissions(   unsigned_integer user_role,     u
 string function create_id(string name_part, char delimiter)
 {
     declare char role_mask;
-    role_mask = '';
+    role_mask = ' ';
     
-    declare unsigned_integer initial_len;
+    declare uint initial_len;
     
     break;
     initial_len = strlen(name_part); 
     
-    declare unsigned_integer random_seed;
+    declare uint random_seed;
    
     random_seed = pow(3, 2) * 3; 
 
     break;
 
-    return 'LITERAL12345135';
+    return 'LITERAL12345135 ĞÓÑÑÊÈÅ ÑÈÌÂÎËÛ';
 };
+
+
+main {
+    declare uint initial_len;
+    print initial_len;
+    return 0;
+}
 
 

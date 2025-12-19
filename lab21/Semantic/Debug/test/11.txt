@@ -1,0 +1,5 @@
+main {
+	print '—“–Œ ¿';
+	print '';
+	return 2;
+};

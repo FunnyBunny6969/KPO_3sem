@@ -1,0 +1,10 @@
+uint function sum(uint a, uint b) {
+	declare string name;
+	return a + b;
+};
+
+main {
+	declare string name;
+	declare char name;
+	return 2;
+};

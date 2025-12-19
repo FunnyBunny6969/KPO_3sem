@@ -31,17 +31,19 @@ namespace IT {
     }
 
     // Добавить строку в таблицу идентификаторов
-    void Add(IdTable& idtable, Entry entry) {
+    void Add(IdTable& idtable, Entry entry, bool needToCheck) {
         if (idtable.size >= idtable.maxsize) {
             throw std::runtime_error("Переполнение таблицы идентификаторов");
         }
 
         // Проверяем, нет ли уже такого идентификатора
-        int existingIndex = IsId(idtable, entry.id, entry.scope);
-        if (existingIndex != TI_NULLIDX) {
-            // Идентификатор уже существует - обновляем запись
-            idtable.table[existingIndex] = entry;
-            return;
+        if (needToCheck) {
+			int existingIndex = IsId(idtable, entry.id, entry.scope);
+			if (existingIndex != TI_NULLIDX) {
+				// Идентификатор уже существует - обновляем запись
+				idtable.table[existingIndex] = entry;
+				return;
+			}
         }
 
         // Копируем идентификатор (усекаем до ID_MAXSIZE)
