@@ -1,22 +1,19 @@
 main {
-	decalere uint num;
+	declare uint num;
 	num = 5;
-	switch (access_level & 0x07) 
-    {
-    case 0x01: 
-        access_level = access_level + 10;
-        break;
-    case 0x02: 
-        access_level = access_level + 20;
-        break;
-    case 0x03:
-    case 0x3:
-    case 0x55:
-        access_level = access_level + 30;
-        break;
-    default:
-        access_level = ~access_level; 
-        break;
-    };
+	switch (0x07 | num) 
+	{
+	case 0x01: 
+        	num = num + 10;
+		switch (0x07 | num) 
+		{
+		case 0x01: break;
+		case 'C': break;
+		default: break;
+		};
+        	break;
+
+	case 0x02: break;
+	};
 	return 2;
 };

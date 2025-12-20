@@ -141,7 +141,6 @@ namespace SemanticAnalyzer
 	}
 
 
-
 	void checkFuncBody(LT::LexTable& lextable, IT::IdTable& idtable, int start) {
 
 		LT::Entry entry = lextable.table[start];
@@ -226,6 +225,60 @@ namespace SemanticAnalyzer
 
 
 
+
+	void checkSwitch(LT::LexTable& lextable, IT::IdTable& idtable, int start) {
+
+		LT::Entry entry = lextable.table[start];
+		IT::IDDATATYPE datatype = IT::UNDEF;
+		IT::Entry info;
+
+		int braceCount = 0;
+		int defCount = 0;
+		char lexema;
+		bool ExpEnd = false;
+
+
+		for (int i = start; i < lextable.size; i++) {
+			entry = lextable.table[i];
+			lexema = entry.lexema[0];
+
+			if ((lexema == LEX_ID || lexema == LEX_LITERAL) 
+				&& !ExpEnd) 
+			{
+				info = idtable.table[entry.idxTI];
+				if (datatype == IT::UNDEF) datatype = info.iddatatype;
+			}
+
+
+			if (lexema == LEX_LEFTBRACE) braceCount += 1;
+			if (lexema == LEX_RIGHTBRACE) {
+				braceCount -= 1;
+				if (braceCount == 0) {
+					return;
+				}
+			}
+
+			if (braceCount == 1) {
+				if (lexema == LEX_LITERAL &&
+					lextable.table[i - 1].lexema[0] == LEX_CASE) 
+				{
+					info = idtable.table[entry.idxTI];
+					if (info.iddatatype != datatype) throw ERROR_THROW_LINE(719, entry.sn);
+				}
+
+				if (lexema == LEX_RIGHTHESIS) ExpEnd = true;
+
+				if (lexema == LEX_DEFAULT) {
+					defCount += 1;
+					if (defCount > 1) throw ERROR_THROW_LINE(720, entry.sn);
+				}
+			}
+		}
+	}
+
+
+
+
 	int RunSemanter(LT::LexTable& lextable, IT::IdTable& idtable)
 	{
 		char lexema;
@@ -237,7 +290,6 @@ namespace SemanticAnalyzer
 
 		
 		checkIdTable(idtable);
-
 		for (int i = 0; i < lextable.size; i++)
 		{
 			entry = lextable.table[i];
@@ -294,6 +346,7 @@ namespace SemanticAnalyzer
 				reserve++;
 				if(!checkExpression(lextable, idtable, i, IT::UNDEF, true))
 					throw ERROR_THROW_LINE(711, entry.sn);
+				checkSwitch(lextable, idtable, i);
 				break;
 
 

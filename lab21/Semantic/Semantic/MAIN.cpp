@@ -55,11 +55,11 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 		//==================================
-		//PN::FindExpressions(tables.lexTable, tables.idTable);
+		PN::FindExpressions(tables.lexTable, tables.idTable);
 		//==================================
 
 
-        //TestLT::PrintLexTable(tables.lexTable);
+        TestLT::PrintLexTable(tables.lexTable);
 		//TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
 
 

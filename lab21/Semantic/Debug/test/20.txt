@@ -1,8 +1,21 @@
-uint function func(){
-	declare char c;
-	return c;
-};
-
 main {
+	declare uint num;
+	num = 5;
+	switch (0x07 | num) 
+	{
+	case 0x01: 
+        	num = num + 10;
+		switch (0x07 | num) 
+		{
+		case 0x01: break;
+		case 0xbA: break;
+		default: break;
+		};
+        	break;
+
+	case 0x02: break;
+	default: num = num + 1; break;
+	default: num = num + 2; break;
+	};
 	return 2;
 };

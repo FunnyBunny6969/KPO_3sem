@@ -4,8 +4,6 @@ uint function check_permissions(uint user_role, uint required_mask)
 	
     access_level = user_role | required_mask; 
 
-    declare char access_level;
-
   
     switch (access_level & 0x07) 
     {
@@ -36,14 +34,11 @@ string function create_id(string name_part, char delimiter)
     
     declare uint initial_len;
     
-    break;
     initial_len = strlen(name_part); 
     
     declare uint random_seed;
    
     random_seed = pow(3, 2) * 3; 
-
-    break;
 
     return 'LITERAL12345135 ĞÓÑÑÊÈÅ ÑÈÌÂÎËÛ';
 };
