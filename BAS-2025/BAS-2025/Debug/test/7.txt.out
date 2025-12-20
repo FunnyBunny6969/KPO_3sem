@@ -1,0 +1,2 @@
+main { \declare uint num ; \num = 7 ; \num = num / 0 ; \return 2 ; \} ; 
+[ОШИБКА 714 : Деление на ноль; строка 4 позиция -1]

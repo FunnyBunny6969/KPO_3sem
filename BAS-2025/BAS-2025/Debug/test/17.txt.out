@@ -1,0 +1,2 @@
+main { \declare uint num ; \switch ( num ) \{ default : break ; } ; \\break ; \return 2 ; \} ; 
+[ОШИБКА 721 : Оператор break находится вне контекста switch; строка 6 позиция -1]

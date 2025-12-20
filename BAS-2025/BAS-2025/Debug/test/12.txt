@@ -1,0 +1,12 @@
+uint function sum(uint a, uint b) {
+	return a + b;
+};
+
+char function sum() {
+	return 'a';
+};
+
+main {
+	print 'ÑÒĞÎÊÀ';
+	return 2;
+};

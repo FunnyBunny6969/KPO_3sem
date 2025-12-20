@@ -1,0 +1,2 @@
+uint function sum ( uint a , uint b ) { \return a + b ; \} ; \\main { \print sum ( 3 , 4 , 5 ) ; \return 2 ; \} ; 
+[ОШИБКА 717 : Слишком много аргументов в вызове функции; строка 6 позиция -1]

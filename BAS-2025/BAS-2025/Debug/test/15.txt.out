@@ -1,0 +1,2 @@
+uint function sum ( uint a , uint b ) { \declare uint num ; \return a + b ; \} ; \\main { \print num ; \return 2 ; \} ; 
+[ОШИБКА 208 : Необъявленный идентификатор; строка 7 позиция -1]

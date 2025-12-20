@@ -1,0 +1,2 @@
+uint function sum ( uint a , uint b ) { \declare string name ; \return a + b ; \} ; \\main { \declare string name ; \declare char name ; \return 2 ; \} ; 
+[ОШИБКА 704 : Попытка переопределить уже существующий идентификатор; строка 8 позиция -1]

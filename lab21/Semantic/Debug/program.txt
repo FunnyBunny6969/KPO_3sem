@@ -47,6 +47,8 @@ string function create_id(string name_part, char delimiter)
 main {
     declare uint initial_len;
     print initial_len;
+    declare uint num; num = 3;
+    num = check_permissions(123, num);
     return 0;
 }
 
