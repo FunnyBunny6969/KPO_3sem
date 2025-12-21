@@ -8,29 +8,12 @@ echo "# Visual Studio
 *.user
 *.userosscache
 
-# Build files
-build/
-Debug/
-Release/
-x64/
-x86/
-*.exe
-*.dll
-*.lib
 *.pdb
 *.obj
 *.ilk
-*.log
 *.idb
 *.pch
 
 # System files
 Thumbs.db
 .DS_Store
-
-# Large files
-*.zip
-*.rar
-*.7z
-*.tar
-*.gz" > .gitignore

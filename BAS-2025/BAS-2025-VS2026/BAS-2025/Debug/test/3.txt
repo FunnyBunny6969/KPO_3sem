@@ -1,0 +1,5 @@
+main {
+	declare uint a;
+	a = 'c';
+	return 2;
+};

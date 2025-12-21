@@ -1,0 +1,16 @@
+char function sum(
+uint a, 
+uint a, 
+uint a,
+uint a, 
+uint a,
+uint a, 
+uint a,
+uint a,
+uint a) 
+{return 'a';};
+
+
+main {
+	return 2;
+};

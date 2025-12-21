@@ -1,0 +1,2 @@
+uint function sum ( uint a , uint b ) { \return a + b ; \} ; \\char function sum ( ) { \return 'a' ; \} ; \\main { \print 'СТРОКА' ; \return 2 ; \} ; 
+[ОШИБКА 705 : Попытка реализовать уже существующую функцию; ]

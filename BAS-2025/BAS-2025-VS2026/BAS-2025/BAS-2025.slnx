@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="BAS-2025/BAS-2025.vcxproj" Id="2826c3c9-1bfa-40f2-89a3-6231f5e06f0f" />
+</Solution>
