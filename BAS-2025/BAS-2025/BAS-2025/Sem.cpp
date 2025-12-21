@@ -14,9 +14,10 @@ namespace SemanticAnalyzer
 		int num = 0;
 		char lexema;
 
-
+		cout << "CHECK PARMS" << endl;
 		for (int i = ++start; i < lextable.size; i++) {
 			lexema = lextable.table[i].lexema[0];
+			cout << lexema;
 
 			if (lexema == LEX_ID || lexema == LEX_LITERAL) {
 				num += 1;

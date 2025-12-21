@@ -153,18 +153,9 @@ namespace IT {
         randEntry.iddatatype = IT::UINT; 
         randEntry.idxfirstLE = -1;     
         randEntry.scope = GLOBAL_SCOPE;
-        randEntry.func_meta.n_params = 0;  
+        randEntry.func_meta.n_params = 2;
+        randEntry.func_meta.params_types[0] = IT::UINT;
+        randEntry.func_meta.params_types[1] = IT::UINT;
         IT::Add(idTable, randEntry);
-
-        IT::Entry strlenEntry;
-        strncpy_s(strlenEntry.id, ID_REALSIZE, "strlen", _TRUNCATE);
-        strlenEntry.id[ID_REALSIZE - 1] = '\0';
-        strlenEntry.idtype = IT::F;  
-        strlenEntry.iddatatype = IT::UINT;     
-        strlenEntry.idxfirstLE = -1;          
-        strlenEntry.scope = GLOBAL_SCOPE;
-        strlenEntry.func_meta.n_params = 1;  
-        strlenEntry.func_meta.params_types[0] = IT::STR; 
-        IT::Add(idTable, strlenEntry);
     }
 }

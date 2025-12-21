@@ -11,32 +11,34 @@ namespace PN {
     int GetPriority(LT::Entry entry, bool isFunc = false)
     {
         // Функции имеют самый высокий приоритет, чтобы оставаться в стеке
-        if (isFunc) return 7;
+        if (isFunc) return 8;
 
         char lex = entry.lexema[0];
         switch (lex)
         {
             // Унарная инверсия (~) — Приоритет 6 (Очень высокий)
         case LEX_BIT_NOT:
-            return 6;
+            return 7;
 
             // Высший приоритет для мат. операторов (5)
         case LEX_STAR:
         case LEX_DIRSLASH:
-            return 5;
+            return 6;
 
             // Средний приоритет для мат. операторов (4)
         case LEX_PLUS:
         case LEX_MINUS:
-            return 4;
+            return 5;
 
         case LEX_BIT_AND: 
+            return 4;
+
+        case LEX_BIT_OR:  
             return 3;
 
         case LEX_EQUALS:
         case LEX_PRINT:
         case LEX_RETURN:
-        case LEX_BIT_OR:  
         //case LEX_IF:
         //case LEX_ELSE:
             return 2; // Самый низкий приоритет (должны выходить последними)

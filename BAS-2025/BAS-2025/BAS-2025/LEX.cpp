@@ -3,6 +3,7 @@
 #include <cctype>
 #include <string>
 #include <iostream>
+using namespace std;
 
 namespace LEX {
 
@@ -70,6 +71,15 @@ namespace LEX {
 
         for (int i = 0; i < idTable.size; i++) {
             const IT::Entry& existingEntry = idTable.table[i];
+
+			if (existingEntry.value.vstr[0].str == nullptr ||
+				newEntry.value.vstr[0].str == nullptr) {
+				return TI_NULLIDX;
+			}
+			if (existingEntry.value.vstr[0].len <= 0 ||
+				newEntry.value.vstr[0].len <= 0) {
+				return TI_NULLIDX;
+			}
 
             // 1. Проверяем, что существующая запись тоже является литералом (IT::L)
             if (existingEntry.idtype != IT::L) {
@@ -144,6 +154,7 @@ namespace LEX {
 
         for (const auto& line : lines) {
             for (const auto& word : line) {
+                cout << word << endl;
                 char code = Automata::getLexemeCode(word.c_str());
                 // Создаем запись для таблицы лексем
                 lexEntry.lexema[0] = code;
@@ -201,10 +212,8 @@ namespace LEX {
                             copyLen = ID_MAXSIZE - 1;
                             throw ERROR_THROW(201);
                         }
-                        for (int i = 0; i < copyLen; i++) {
-                            idEntry.id[i] = word[i];
-                        }
-                        idEntry.id[copyLen] = IN_CODE_ENDS;
+                        strncpy_s(idEntry.id, ID_MAXSIZE, word.c_str(), copyLen);
+                        idEntry.id[ID_MAXSIZE - 1] = IN_CODE_ENDS;  
 
 
                         idEntry.idtype = currentIdType;
@@ -304,11 +313,9 @@ namespace LEX {
                         if (strLen >= TI_STR_MAXSIZE - 1)
                             strLen = TI_STR_MAXSIZE - 2;
 
-                        idEntry.value.vstr[0].len = strLen;
-                        for (int i = 0; i < strLen; i++) {
-                            idEntry.value.vstr[0].str[i] = content[i];
-                        }
                         idEntry.value.vstr[0].str[strLen] = '\0';
+                        strncpy_s(idEntry.value.vstr->str, ID_MAXSIZE, content.c_str(), strLen);
+                        idEntry.value.vstr->str[ID_MAXSIZE - 1] = IN_CODE_ENDS;  // Гарантированный null-terminator
                     }
 
 

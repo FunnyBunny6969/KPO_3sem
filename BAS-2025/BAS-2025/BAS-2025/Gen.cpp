@@ -1,4 +1,5 @@
 #include "Gen.h"
+#include "PN.h"
 
 #include <fstream>
 #include <string>
@@ -26,8 +27,8 @@ namespace JS_CodeGeneration {
             case LEX_MINUS: return "-";
             case LEX_STAR: return "*";
             case LEX_DIRSLASH: return "/";
-            case LEX_BIT_AND: return "&&";
-            case LEX_BIT_OR: return "||";
+            case LEX_BIT_AND: return "&";
+            case LEX_BIT_OR: return "|";
             case LEX_BIT_NOT: return "!";
             default: return std::string(1, op);
             }
@@ -140,37 +141,61 @@ namespace JS_CodeGeneration {
     }
 
 
-
-
-
-
-
+    IT::IDDATATYPE getExpDataType(LT::LexTable lextable, IT::IdTable idtable, int i, int end) {
+        IT::Entry info;
+        LT::Entry entry;
+        char lexema;
+        for (; i < end; i++) {
+			entry = lextable.table[i];
+            lexema = entry.lexema[0];
+            if (lexema == LEX_ID || lexema == LEX_LITERAL) {
+			    info = idtable.table[entry.idxTI];
+                return info.iddatatype;
+            }
+        }
+        return IT::UNDEF;
+    }
 
 
 
     void Generate(LT::LexTable lextable, IT::IdTable idtable, Out::OUT out) {
-
         IT::IDDATATYPE datatype;
         IT::Entry info;
         LT::Entry entry;
         char lexema;
+        int start;
+        int end;
+        string valueStr;
 
 
+        Out::WriteString(out, "function random(min, max) {");
+        Out::WriteString(out, "return Math.floor(Math.random() * (max - min + 1)) + min;}");
 
-
+        Out::WriteString(out, "function pow(a, b) {");
+        Out::WriteString(out, "return Math.pow(a, b);}");
 
 
         for (int i = 0; i < lextable.size; i++) {
+            if (i >= lextable.size) break;
+
+
+			valueStr = "";
 			entry = lextable.table[i];
             lexema = entry.lexema[0];
-            int start = 0;
-
+            start = 0;
+            end = 0;
 
 
             switch (lexema)
             {
             case LEX_FUNCTION:
+
+                i += 1;
+				entry = lextable.table[i];
+				info = idtable.table[entry.idxTI];
+                i += 1;
                 Out::WriteString(out, "function ");
+                Out::WriteString(out, info.id);
 
                 for (; i < lextable.size; i++) {
                     bool stop = false; 
@@ -187,6 +212,9 @@ namespace JS_CodeGeneration {
                     case LEX_ID:
 						info = idtable.table[entry.idxTI];
 						Out::WriteString(out, info.id);
+                        break;
+
+                    case LEX_COMMA:
 						Out::WriteString(out, ", ");
                         break;
 
@@ -202,48 +230,116 @@ namespace JS_CodeGeneration {
 
                     if (stop) break;
                 }
-                i++;
-
-				entry = lextable.table[i];
-				lexema = entry.lexema[0];
-                cout << "FUNC OPRED END" << lexema;
                 break;
 
 
 
             case LEX_ID:
-                if (lextable.table[i - 1].lexema[0] == LEX_STRING) {
+            case LEX_LITERAL:
+				info = idtable.table[entry.idxTI];
+                if (info.idtype == IT::F) {
+					Out::WriteString(out, info.id);
+                    i += 1;
+					for (; i < lextable.size; i++) {
+						bool stop = false; 
+
+						entry = lextable.table[i];
+						lexema = entry.lexema[0];
+
+						switch (lexema)
+						{
+						case LEX_LEFTHESIS:
+							Out::WriteString(out, "( ");
+							break;
+
+						case LEX_ID:
+							info = idtable.table[entry.idxTI];
+							Out::WriteString(out, info.id);
+							break;
+
+                        case LEX_LITERAL:
+                            valueStr = "";
+							if (info.iddatatype == IT::UINT) 
+								valueStr = std::to_string(info.value.vint);
+							else if (info.iddatatype == IT::CHAR) {
+								valueStr = "'";
+								valueStr += info.value.vchar;
+								valueStr += "'";
+							}
+							else {
+								valueStr = "'";
+								for (int j = 0; j < info.value.vstr[0].len; j++) {
+									valueStr += info.value.vstr[0].str[j];
+								}
+								valueStr += "'";
+							}
+							Out::WriteString(out, valueStr);
+                            break;
+
+						case LEX_COMMA:
+							Out::WriteString(out, ", ");
+							break;
+
+						case LEX_RIGHTHESIS:
+							Out::WriteString(out, ")");
+							break;
+
+						case LEX_SEMICOLON:
+							Out::WriteString(out, ";\n");
+							stop = true;
+							break;
+						}
+
+						if (stop) break;
+					}
+                }
+                else if (lextable.table[i - 1].lexema[0] == LEX_STRING) {
 					info = idtable.table[entry.idxTI];
 					Out::WriteString(out, "let ");
 					Out::WriteString(out, info.id);
+
+                    if(info.iddatatype == IT::UINT) Out::WriteString(out, " = 0");
+                    if(info.iddatatype == IT::CHAR) Out::WriteString(out, " = '$'");
+                    if(info.iddatatype == IT::STR) Out::WriteString(out, " = 'S'");
+
 					Out::WriteString(out, ";\n");
-                    i++; i++;
+                    i += 1; 
                 }
                 else {
-                    int start = i; int end;
+                    start = i;
+                    end = i;
                     for (; i < lextable.size; i++) {
 						entry = lextable.table[i];
 						lexema = entry.lexema[0];
 
-                        if (lexema == LEX_SEMICOLON) {
+                        if (lexema == LEX_SEMICOLON ||
+                            lexema == FILLER_CHAR ||
+                            lexema == LEX_PRINT ||
+                            lexema == LEX_RETURN) {
                             end = i;
                             break;
                         }
                     }
-                    i++;
 
-                    
-                    cout << "EXP: ";
-                    for (; start < end; start++) {
+                    if (lextable.table[end - 1].lexema[0] == LEX_EQUALS) {
 						entry = lextable.table[start];
-						lexema = entry.lexema[0];
-						cout << lexema;
-                    }
-                }
+						info = idtable.table[entry.idxTI];
 
-				entry = lextable.table[i];
-				lexema = entry.lexema[0];
-                cout << "ID END" << lexema;
+                        valueStr = PolishToJSExpression(lextable, idtable, start + 1, end - 1);
+						if (getExpDataType(lextable, idtable, start, start + 1) == IT::UINT) 
+							valueStr = "(" + valueStr + ") >>> 0";
+                        valueStr = string(info.id) + " = " + valueStr + ";\n";
+                    }
+                    else {
+						valueStr = PolishToJSExpression(lextable, idtable, start, end);
+						if (getExpDataType(lextable, idtable, start, end) == IT::UINT) 
+							valueStr = "(" + valueStr + ") >>> 0";
+						if (lexema == LEX_PRINT) valueStr = "console.log(" + valueStr + ")";
+						else if (lexema == LEX_RETURN) valueStr = "return " + valueStr ;
+						valueStr = valueStr + ";\n";
+                    }
+					Out::WriteString(out, valueStr);
+                }
                 break;
 
 
@@ -266,18 +362,38 @@ namespace JS_CodeGeneration {
                 i++;
 				entry = lextable.table[i];
 				info = idtable.table[entry.idxTI];
+
+				if (info.iddatatype == IT::UINT) {
+					valueStr = std::to_string(info.value.vint);
+				}
+				else if (info.iddatatype == IT::CHAR) {
+					valueStr = "'";
+					valueStr += info.value.vchar;
+					valueStr += "'";
+				}
+				else {
+					valueStr = "'";
+					for (int j = 0; j < info.value.vstr[0].len; j++) {
+						valueStr += info.value.vstr[0].str[j];
+					}
+					valueStr += "'";
+				}
+
 				Out::WriteString(out, "case ");
-				Out::WriteString(out, info.id);
+				Out::WriteString(out, valueStr);
 				Out::WriteString(out, ":\n");
                 break;
 
 
             case LEX_SWITCH:
 				Out::WriteString(out, "switch (");
-                i++;i++;
+                i += 1;
+                i += 1;
 
-				start = i; int end;
-				for (; i < lextable.size; i++) {
+                start = (int)i;
+                end = (int)i; 
+
+				for (; i < lextable.size; i += 1) {
 					entry = lextable.table[i];
 					lexema = entry.lexema[0];
 
@@ -286,26 +402,22 @@ namespace JS_CodeGeneration {
 						break;
 					}
 				}
-                i++; i++;
+                i += 1; 
 
-				cout << "EXP: ";
-                    for (; start < end; start++) {
-						entry = lextable.table[start];
-						lexema = entry.lexema[0];
-						cout << lexema;
-                    }
-
+				valueStr = PolishToJSExpression(lextable, idtable, start, end);
+				if (getExpDataType(lextable, idtable, start, end) == IT::UINT) 
+					valueStr = "(" + valueStr + ") >>> 0";
+				if (lexema == LEX_PRINT) valueStr = "console.log(" + valueStr + ")";
+				else if (lexema == LEX_RETURN) valueStr = "return " + valueStr ;
+				Out::WriteString(out, valueStr);
 				Out::WriteString(out, ") {\n");
 
-				entry = lextable.table[i];
-				lexema = entry.lexema[0];
-                cout << "SWITCH END" << lexema;
                 break;
 
 
             case LEX_MAIN:
 				Out::WriteString(out, "function main() {\n");
-                i++;i++;
+                i += 1;
                 break;
             }
         }

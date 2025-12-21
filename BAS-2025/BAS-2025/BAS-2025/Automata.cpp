@@ -710,7 +710,7 @@ namespace Automata {
 		if (executeAutomata(CHAR, text)) return LEX_CHAR;
 		if (executeAutomata(STRING, text)) return LEX_STRING;
 		if (executeAutomata(FUNCTION, text)) return LEX_FUNCTION;
-		if (executeAutomata(DECLARE, text)) return LEX_DECLARE;
+		//if (executeAutomata(DECLARE, text)) return LEX_DECLARE;
 		if (executeAutomata(RETURN, text)) return LEX_RETURN;
 		if (executeAutomata(PRINT, text)) return LEX_PRINT;
 		if (executeAutomata(MAIN, text)) return LEX_MAIN;  
