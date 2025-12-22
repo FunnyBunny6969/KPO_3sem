@@ -1,2 +1,0 @@
-uint function sum ( uint a , uint b ) { \declare uint a ; \return a + b ; \} ; \\main { \return 2 ; \} ; 
-[ОШИБКА 709 : Попытка переопределить параметр функции; строка 2 позиция -1]

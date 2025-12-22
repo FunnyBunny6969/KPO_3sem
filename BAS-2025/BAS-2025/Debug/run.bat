@@ -4,11 +4,13 @@ cls
 chcp 1251 > nul
 echo == SET Windows-1251 ==
 
-BAS-2025.exe -in:program.txt -out:program.js
+BAS-2025.exe -in:program.txt -out:program.js -log:program.log
 
-echo == OUT and LOG ==
-type program.js && type program.txt.log
+echo == LOG ==
+type program.log
 
+echo == OUT ==
+type program.js
 
 echo == RUN JS ==
 node program.js

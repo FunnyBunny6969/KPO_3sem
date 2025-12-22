@@ -27,43 +27,47 @@ int _tmain(int argc, _TCHAR* argv[])
 		log = Log::getlog(parm.log);
 		out = Out::getout(parm.out);
 
-		//Out::WriteInOut(out, in);
 		Log::WriteLog(log);
 		Log::WriteParm(log, parm);
 		Log::WriteIn(log, in);
 
 
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
+        *log.stream << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
 		LEX::LEX tables; 
 		IT::InitBuiltins(tables.idTable);
+		TestLexer::TestSplitter(in, log);
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
 
+        TestLT::PrintLexTable(tables.lexTable, log);
+        TestIT::PrintTable(tables.idTable, log);
+		TestLexer::PrintFunctionParameters(tables.idTable, log);
+
 		//==================================
-		MFST_RUN
+		MFST_RUN()
 		//==================================
 
-        TestLT::PrintLexTable(tables.lexTable);
-        TestIT::PrintTable(tables.idTable);
-		TestLexer::PrintFunctionParameters(tables.idTable);
-
-
-		if (SemanticAnalyzer::RunSemanter(tables.lexTable, tables.idTable))
+		if (SemanticAnalyzer::RunSemanter(tables.lexTable, tables.idTable)) {
 			cout << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
+			*log.stream << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
+		}
 
 
 		//==================================
-		PN::FindExpressions(tables.lexTable, tables.idTable);
+		PN::FindExpressions(tables.lexTable, tables.idTable, log);
 		//==================================
 
 
-        TestLT::PrintLexTable(tables.lexTable);
-		//TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable);
+        TestLT::PrintLexTable(tables.lexTable, log);
+		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable, log);
 
 
 		//==================================
 		JS_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
 		//==================================
 
+        cout << "\n=== GENERATION SUCCESSFUL ===" << endl;
+        *log.stream << "\n=== GENERATION SUCCESSFUL ===" << endl;
 
         LT::Delete(tables.lexTable);
         IT::Delete(tables.idTable);

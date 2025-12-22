@@ -169,10 +169,10 @@ namespace JS_CodeGeneration {
 
 
         Out::WriteString(out, "function random(min, max) {");
-        Out::WriteString(out, "return Math.floor(Math.random() * (max - min + 1)) + min;}");
+        Out::WriteString(out, "return Math.floor(Math.random() * (max - min + 1)) + min;}\n");
 
         Out::WriteString(out, "function pow(a, b) {");
-        Out::WriteString(out, "return Math.pow(a, b);}");
+        Out::WriteString(out, "return Math.pow(a, b);}\n\n");
 
 
         for (int i = 0; i < lextable.size; i++) {
@@ -237,63 +237,7 @@ namespace JS_CodeGeneration {
             case LEX_ID:
             case LEX_LITERAL:
 				info = idtable.table[entry.idxTI];
-                if (info.idtype == IT::F) {
-					Out::WriteString(out, info.id);
-                    i += 1;
-					for (; i < lextable.size; i++) {
-						bool stop = false; 
-
-						entry = lextable.table[i];
-						lexema = entry.lexema[0];
-
-						switch (lexema)
-						{
-						case LEX_LEFTHESIS:
-							Out::WriteString(out, "( ");
-							break;
-
-						case LEX_ID:
-							info = idtable.table[entry.idxTI];
-							Out::WriteString(out, info.id);
-							break;
-
-                        case LEX_LITERAL:
-                            valueStr = "";
-							if (info.iddatatype == IT::UINT) 
-								valueStr = std::to_string(info.value.vint);
-							else if (info.iddatatype == IT::CHAR) {
-								valueStr = "'";
-								valueStr += info.value.vchar;
-								valueStr += "'";
-							}
-							else {
-								valueStr = "'";
-								for (int j = 0; j < info.value.vstr[0].len; j++) {
-									valueStr += info.value.vstr[0].str[j];
-								}
-								valueStr += "'";
-							}
-							Out::WriteString(out, valueStr);
-                            break;
-
-						case LEX_COMMA:
-							Out::WriteString(out, ", ");
-							break;
-
-						case LEX_RIGHTHESIS:
-							Out::WriteString(out, ")");
-							break;
-
-						case LEX_SEMICOLON:
-							Out::WriteString(out, ";\n");
-							stop = true;
-							break;
-						}
-
-						if (stop) break;
-					}
-                }
-                else if (lextable.table[i - 1].lexema[0] == LEX_STRING) {
+                if (lextable.table[i - 1].lexema[0] == LEX_STRING) {
 					info = idtable.table[entry.idxTI];
 					Out::WriteString(out, "let ");
 					Out::WriteString(out, info.id);

@@ -1,4 +1,5 @@
-﻿#include "Tests.h"
+﻿#include "Log.h"
+#include "Tests.h"
 #include <iostream>
 using namespace std;
 
@@ -129,7 +130,7 @@ namespace TestLT {
         return entry;
     }
 
-	void TestLT() {
+	void TestLT(Log::LOG log) {
 		std::cout << "=== ТЕСТ ТАБЛИЦЫ ЛЕКСЕМ ===" << std::endl;
 
 		LT::LexTable lt = LT::Create(10);
@@ -143,19 +144,19 @@ namespace TestLT {
 
 		std::cout << "Размер таблицы: " << lt.size << std::endl;
 
-		PrintLexTable(lt);
+		PrintLexTable(lt, log);
 
 		LT::Delete(lt);
 	}
 
 
-    void PrintLexTable(LT::LexTable& lextable) {
+    void PrintLexTable(LT::LexTable& lextable, Log::LOG log) {
         if (lextable.size == 0) {
-            cout << "Таблица лексем пуста" << std::endl;
+            *log.stream << "Таблица лексем пуста" << endl;
             return;
         }
 
-        cout << "----- ТАБЛИЦА ЛЕКСЕМ -----" << std::endl;
+        *log.stream << "----- ТАБЛИЦА ЛЕКСЕМ -----" << endl;
 
         int currentLine = 1;
         bool firstOnLine = true;
@@ -164,25 +165,25 @@ namespace TestLT {
             LT::Entry entry = lextable.table[i];
 
             if (entry.sn != currentLine) {
-                std::cout << std::endl;
+                *log.stream << std::endl;
                 currentLine = entry.sn;
                 firstOnLine = true;
             }
 
             if (firstOnLine) {
-                if (currentLine < 10) std::cout << "0";
-                std::cout << currentLine << " ";
+                if (currentLine < 10) *log.stream << "0";
+                *log.stream << currentLine << " ";
                 firstOnLine = false;
             }
 
-            std::cout << entry.lexema[0];
+            *log.stream << entry.lexema[0];
         }
-        std::cout << std::endl;
+        *log.stream << std::endl;
     }
 
-	void PrintLexTableWithSubstit(LT::LexTable& lextable, IT::IdTable& idtable)
+	void PrintLexTableWithSubstit(LT::LexTable& lextable, IT::IdTable& idtable, Log::LOG log)
 	{
-		std::cout << "\n----- ТАБЛИЦА ЛЕКСЕМ (с именами) -----\n";
+		*log.stream << "\n----- ТАБЛИЦА ЛЕКСЕМ (с именами) -----\n";
 
 		int currentLine = 1;
 		bool firstOnLine = true;
@@ -191,14 +192,14 @@ namespace TestLT {
 			LT::Entry entry = lextable.table[i];
 
 			if (entry.sn != currentLine) {
-				std::cout << std::endl;
+				*log.stream << std::endl;
 				currentLine = entry.sn;
 				firstOnLine = true;
 			}
 
 			if (firstOnLine) {
-				if (currentLine < 10) std::cout << "0";
-				std::cout << currentLine << " ";
+				if (currentLine < 10) *log.stream << "0";
+				*log.stream << currentLine << " ";
 				firstOnLine = false;
 			}
 
@@ -208,37 +209,37 @@ namespace TestLT {
 				IT::Entry e = idtable.table[entry.idxTI];
 
 				if (e.idtype == IT::F) {
-					std::cout << e.id
+					*log.stream << e.id
 						<< "@" << e.func_meta.n_params << " ";
 				}
 
 				else if (e.idtype == IT::V || e.idtype == IT::P) {
-					std::cout << entry.lexema[0] << e.id << " ";
+					*log.stream << entry.lexema[0] << e.id << " ";
 				}
 
 				else {
-					std::cout << "ID_UNKNOWN_TYPE ";
+					*log.stream << "ID_UNKNOWN_TYPE ";
 				}
 			}
 
 			else if (entry.lexema[0] == LEX_LITERAL) {
 				IT::Entry e = idtable.table[entry.idxTI];
 				if (e.iddatatype == IT::UINT)
-					std::cout << e.value.vint << " ";
+					*log.stream << e.value.vint << " ";
 				else if (e.iddatatype == IT::CHAR)
-					std::cout << "'" << e.value.vchar << "' ";
+					*log.stream << "'" << e.value.vchar << "' ";
 				else if (e.iddatatype == IT::STR)
-					std::cout << "'" << e.value.vstr->str << "' ";
+					*log.stream << "'" << e.value.vstr->str << "' ";
 				else {
-					std::cout << "LITERAL_UNKNOWN_TYPE ";
+					*log.stream << "LITERAL_UNKNOWN_TYPE ";
 				}
 			}
 
 			else {
-				std::cout << entry.lexema[0] << " ";
+				*log.stream << entry.lexema[0] << " ";
 			}
 		}
-		std::cout << "\n----------------------------------------\n";
+		*log.stream << "\n----------------------------------------\n";
 	}
 
 }
@@ -257,16 +258,18 @@ namespace TestIT {
         return entry;
     }
 
-    void PrintTable(IT::IdTable& idtable) {
+    void PrintTable(IT::IdTable& idtable, Log::LOG log) {
         if (idtable.size == 0) {
-            std::cout << "Таблица идентификаторов пуста" << std::endl;
+            *log.stream << "Таблица идентификаторов пуста" << std::endl;
             return;
         }
 
-        std::cout << "IT (Identifier Table): size=" << idtable.size << std::endl;
-        printf("%-6s %-15s %-8s %-8s %-12s %-15s %s\n",
+        *log.stream << "IT (Identifier Table): size=" << idtable.size << std::endl;
+        char buffer[1024];
+        snprintf(buffer, sizeof(buffer), "%-6s %-15s %-8s %-8s %-12s %-15s %s\n",
             "Index", "Identifier", "Type", "DataType", "FirstLT", "Scope", "Value");
-        std::cout << "--------------------------------------------------------------------" << std::endl;
+        *log.stream << buffer;
+        *log.stream << "--------------------------------------------------------------------" << std::endl;
 
         for (int i = 0; i < idtable.size; i++) {
             IT::Entry entry = idtable.table[i];
@@ -288,10 +291,10 @@ namespace TestIT {
             }
 
             // Формируем значение для вывода
-            std::string valueStr = "";
+            string valueStr = "";
             if (entry.idtype == IT::L) {
                 if (entry.iddatatype == IT::UINT) {
-                    valueStr = std::to_string(entry.value.vint);
+                    valueStr = to_string(entry.value.vint);
                 }
                 else if (entry.iddatatype == IT::CHAR) {
                     valueStr = "'";
@@ -312,7 +315,7 @@ namespace TestIT {
 
 
 
-            std::string SCOPE = "=EmptY=";
+            string SCOPE = "=EmptY=";
             if (entry.scope == GLOBAL_SCOPE) {
 				SCOPE = "GLOBAL";
             }
@@ -326,12 +329,13 @@ namespace TestIT {
                 SCOPE = idtable.table[entry.scope].id;
             }
 
-            printf("%-6d %-15s %-8s %-8s %-12d %-15s %s\n",
+            snprintf(buffer, sizeof(buffer), "%-6d %-15s %-8s %-8s %-12d %-15s %s\n",
                 i, entry.id, typeStr, dataTypeStr, entry.idxfirstLE, SCOPE.c_str(), valueStr.c_str());
+			*log.stream << buffer;
         }
     }
 
-    void TestIT() {
+    void TestIT(Log::LOG log) {
         std::cout << "\n=== ТЕСТ ТАБЛИЦЫ ИДЕНТИФИКАТОРОВ ===" << std::endl;
 
         IT::IdTable it = IT::Create(10);
@@ -361,7 +365,7 @@ namespace TestIT {
 
         std::cout << "Размер таблицы: " << it.size << std::endl;
 
-        PrintTable(it);
+        PrintTable(it, log);
 
         IT::Delete(it);
     }
@@ -558,29 +562,31 @@ namespace TestAutomata {
 
 
 namespace TestLexer {
-    void TestSplitter(In::IN in) {
+    void TestSplitter(In::IN in, Log::LOG log) {
 		std::vector<std::vector<std::string>> lines;
 		LEX::SplitIntoWords((const char*)in.text, lines);
-		std::cout << "=== РЕЗУЛЬТАТ РАЗБИВКИ ===" << std::endl;
+		*log.stream << "=== РЕЗУЛЬТАТ РАЗБИВКИ ===" << std::endl;
 
 		for (int i = 0; i < lines.size(); i++) {
-			std::cout << "Строка " << (i + 1) << " (" << lines[i].size() << " слов): ";
+			*log.stream << "Строка " << (i + 1) << " (" << lines[i].size() << " слов): ";
 
 			for (int j = 0; j < lines[i].size(); j++) {
-				std::cout << "[" << lines[i][j] << "] ";
+				*log.stream << "[" << lines[i][j] << "] ";
 			}
-			std::cout << std::endl;
+			*log.stream << std::endl;
 		}
-		std::cout << "Всего строк: " << lines.size() << std::endl;
+		*log.stream << "Всего строк: " << lines.size() << std::endl;
     }
 
 
-    void PrintFunctionParameters(const IT::IdTable& idTable)
+    void PrintFunctionParameters(const IT::IdTable& idTable, Log::LOG log)
     {
         // Заголовок для вывода
-        printf("\n--- FUNCTION METADATA DUMP ---\n");
-        printf("%-32s | %s | %s\n", "FUNCTION NAME", "PARAMS COUNT", "PARAM TYPES");
-        printf("---------------------------------+--------------+----------------------------\n");
+        *log.stream << "\n--- FUNCTION METADATA DUMP ---\n";
+        char buffer[1024];
+		snprintf(buffer, sizeof(buffer), "%-32s | %s | %s\n", "FUNCTION NAME", "PARAMS COUNT", "PARAM TYPES");
+        *log.stream << buffer;
+        *log.stream << "---------------------------------+--------------+----------------------------\n";
 
         // Итерация по Таблице Идентификаторов
         for (int i = 0; i < idTable.size; i++) {
@@ -619,10 +625,12 @@ namespace TestLexer {
                 }
 
                 // Вывод строки
-                printf("%-32s | %12d | %s\n", funcName, nParams, paramTypesStr);
+                char buffer[1024];
+                snprintf(buffer, sizeof(buffer), "%-32s | %12d | %s\n", funcName, nParams, paramTypesStr);
+				*log.stream << buffer;
             }
         }
-        printf("--------------------------------+--------------+----------------------------\n");
+        *log.stream << "---------------------------------+--------------+----------------------------\n";
     }
 }
 

@@ -1,5 +1,5 @@
 main {
-	declare uint num;
+	uint num;
 	switch (num) 
 	{default: break;};
 

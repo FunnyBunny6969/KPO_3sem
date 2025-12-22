@@ -1,11 +1,175 @@
----- Протокол ------ 20.12.2025 06:04:09 ----------------------
+---- Протокол ------ 22.12.2025 04:59:03 ----------------------
 ---- Параметры ------
 -log: test\3.txt.log
 -out: test\3.txt.out
 -in: test\3.txt
 ---- Исходные данные ------
-Количество символов: 53
+Количество символов: 45
 Проигнорировано:     7
 Количество строк:    5
+
+=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===
+=== РЕЗУЛЬТАТ РАЗБИВКИ ===
+Строка 1 (2 слов): [main] [{] 
+Строка 2 (3 слов): [uint] [a] [;] 
+Строка 3 (4 слов): [a] [=] ['c'] [;] 
+Строка 4 (3 слов): [return] [2] [;] 
+Строка 5 (2 слов): [}] [;] 
+Всего строк: 5
+----- ТАБЛИЦА ЛЕКСЕМ -----
+01 m{
+02 ti;
+03 i=l;
+04 rl;
+05 };
+IT (Identifier Table): size=5
+Index  Identifier      Type     DataType FirstLT      Scope           Value
+--------------------------------------------------------------------
+0      pow             FUNC     UINT     -1           GLOBAL          -
+1      random          FUNC     UINT     -1           GLOBAL          -
+2      a               VAR      UINT     3            MAIN            -
+3      L1              LIT      CHAR     7            =EmptY=         'c'
+4      L2              LIT      UINT     10           =EmptY=         2
+
+--- FUNCTION METADATA DUMP ---
+FUNCTION NAME                    | PARAMS COUNT | PARAM TYPES
+---------------------------------+--------------+----------------------------
+pow                              |            2 | INT, INT
+random                           |            2 | INT, INT
+---------------------------------+--------------+----------------------------
+Шаг: Правило             Входная лента                 Стек               
+0   : S->m{N};            m{ti;i=l;rl;};                S$                  
+0   : SAVESTATE:          1
+0   :                     m{ti;i=l;rl;};                m{N};$              
+1   :                     {ti;i=l;rl;};                 {N};$               
+2   :                     ti;i=l;rl;};                  N};$                
+3   : N->ti;              ti;i=l;rl;};                  N};$                
+3   : SAVESTATE:          2
+3   :                     ti;i=l;rl;};                  ti;};$              
+4   :                     i;i=l;rl;};                   i;};$               
+5   :                     ;i=l;rl;};                    ;};$                
+6   :                     i=l;rl;};                     };$                 
+7   : TS_NOK/NS_NORULECHAIN
+7   : RESSTATE            
+7   :                     ti;i=l;rl;};                  N};$                
+8   : N->ti;N             ti;i=l;rl;};                  N};$                
+8   : SAVESTATE:          2
+8   :                     ti;i=l;rl;};                  ti;N};$             
+9   :                     i;i=l;rl;};                   i;N};$              
+10  :                     ;i=l;rl;};                    ;N};$               
+11  :                     i=l;rl;};                     N};$                
+12  : N->i();             i=l;rl;};                     N};$                
+12  : SAVESTATE:          3
+12  :                     i=l;rl;};                     i();};$             
+13  :                     =l;rl;};                      ();};$              
+14  : TS_NOK/NS_NORULECHAIN
+14  : RESSTATE            
+14  :                     i=l;rl;};                     N};$                
+15  : N->i();N            i=l;rl;};                     N};$                
+15  : SAVESTATE:          3
+15  :                     i=l;rl;};                     i();N};$            
+16  :                     =l;rl;};                      ();N};$             
+17  : TS_NOK/NS_NORULECHAIN
+17  : RESSTATE            
+17  :                     i=l;rl;};                     N};$                
+18  : N->i(W);            i=l;rl;};                     N};$                
+18  : SAVESTATE:          3
+18  :                     i=l;rl;};                     i(W);};$            
+19  :                     =l;rl;};                      (W);};$             
+20  : TS_NOK/NS_NORULECHAIN
+20  : RESSTATE            
+20  :                     i=l;rl;};                     N};$                
+21  : N->i(W);N           i=l;rl;};                     N};$                
+21  : SAVESTATE:          3
+21  :                     i=l;rl;};                     i(W);N};$           
+22  :                     =l;rl;};                      (W);N};$            
+23  : TS_NOK/NS_NORULECHAIN
+23  : RESSTATE            
+23  :                     i=l;rl;};                     N};$                
+24  : N->i()M;            i=l;rl;};                     N};$                
+24  : SAVESTATE:          3
+24  :                     i=l;rl;};                     i()M;};$            
+25  :                     =l;rl;};                      ()M;};$             
+26  : TS_NOK/NS_NORULECHAIN
+26  : RESSTATE            
+26  :                     i=l;rl;};                     N};$                
+27  : N->i()M;N           i=l;rl;};                     N};$                
+27  : SAVESTATE:          3
+27  :                     i=l;rl;};                     i()M;N};$           
+28  :                     =l;rl;};                      ()M;N};$            
+29  : TS_NOK/NS_NORULECHAIN
+29  : RESSTATE            
+29  :                     i=l;rl;};                     N};$                
+30  : N->i(W)M;           i=l;rl;};                     N};$                
+30  : SAVESTATE:          3
+30  :                     i=l;rl;};                     i(W)M;};$           
+31  :                     =l;rl;};                      (W)M;};$            
+32  : TS_NOK/NS_NORULECHAIN
+32  : RESSTATE            
+32  :                     i=l;rl;};                     N};$                
+33  : N->i(W)M;N          i=l;rl;};                     N};$                
+33  : SAVESTATE:          3
+33  :                     i=l;rl;};                     i(W)M;N};$          
+34  :                     =l;rl;};                      (W)M;N};$           
+35  : TS_NOK/NS_NORULECHAIN
+35  : RESSTATE            
+35  :                     i=l;rl;};                     N};$                
+36  : N->i=E;             i=l;rl;};                     N};$                
+36  : SAVESTATE:          3
+36  :                     i=l;rl;};                     i=E;};$             
+37  :                     =l;rl;};                      =E;};$              
+38  :                     l;rl;};                       E;};$               
+39  : E->l                l;rl;};                       E;};$               
+39  : SAVESTATE:          4
+39  :                     l;rl;};                       l;};$               
+40  :                     ;rl;};                        ;};$                
+41  :                     rl;};                         };$                 
+42  : TS_NOK/NS_NORULECHAIN
+42  : RESSTATE            
+42  :                     l;rl;};                       E;};$               
+43  : E->lM               l;rl;};                       E;};$               
+43  : SAVESTATE:          4
+43  :                     l;rl;};                       lM;};$              
+44  :                     ;rl;};                        M;};$               
+45  : TNS_NORULECHAIN/NS_NORULE
+45  : RESSTATE            
+45  :                     l;rl;};                       E;};$               
+46  : TNS_NORULECHAIN/NS_NORULE
+46  : RESSTATE            
+46  :                     i=l;rl;};                     N};$                
+47  : N->i=E;N            i=l;rl;};                     N};$                
+47  : SAVESTATE:          3
+47  :                     i=l;rl;};                     i=E;N};$            
+48  :                     =l;rl;};                      =E;N};$             
+49  :                     l;rl;};                       E;N};$              
+50  : E->l                l;rl;};                       E;N};$              
+50  : SAVESTATE:          4
+50  :                     l;rl;};                       l;N};$              
+51  :                     ;rl;};                        ;N};$               
+52  :                     rl;};                         N};$                
+53  : N->rE;              rl;};                         N};$                
+53  : SAVESTATE:          5
+53  :                     rl;};                         rE;};$              
+54  :                     l;};                          E;};$               
+55  : E->l                l;};                          E;};$               
+55  : SAVESTATE:          6
+55  :                     l;};                          l;};$               
+56  :                     ;};                           ;};$                
+57  :                     };                            };$                 
+58  :                     ;                             ;$                  
+59  :                                                   $                   
+60  : LENTA_END           
+61  : -------> NS_LENTA_END
+--------------------------------------------------------------
+Всего строк 14, Синтаксический анализ выполнен без ошибок
+== ДЕРЕВО РАЗБОРА ==
+
+0---: S->m{N};------------
+2---: N->ti;N-------------
+5---: N->i=E;N------------
+7---: E->l----------------
+9---: N->rE;--------------
+10--: E->l----------------
+==========================================================================================
 Ошибка 710: Несовпадение типов при присваивании (RHS не соответствует LHS), cтрока 3, позиция -1
 

@@ -1,47 +1,52 @@
 #pragma once
 #include <stack>
+#include <fstream>
 #include "GRB.h"
 #include "LT.h"
 #include "LEX.h"
+#include "Log.h"
 
 
-#define MFST_TRACE_START \
-	cout << setw(4) <<  std::setfill(' ') << left << "Ўаг:"\
+
+#define MFST_TRACE_START() \
+	if (log.stream) *log.stream << setw(4) << std::setfill(' ') << left << "Ўаг:"\
 		<< setw(20) << left << " ѕравило" \
 		<< setw(30) << left << " ¬ходна€ лента" \
 		<< setw(20) << left << " —тек" << endl;
 
-#define MFST_TRACE1	cout << setw(4) << left << ++FST_TRACE_n << ": "\
-					     << setw(20) << left << rule.getCRule(rbuf, nrulechain)\
-					     << setw(30) << left << getCLenta(lbuf, lenta_position)\
-					     << setw(20) << left << getCSt(sbuf) << endl;
+#define MFST_TRACE1() if (this->log->stream) *(this->log->stream) << setw(4) << left << ++FST_TRACE_n << ": "\
+					  << setw(20) << left << rule.getCRule(rbuf, nrulechain)\
+					  << setw(30) << left << getCLenta(lbuf, lenta_position)\
+					  << setw(20) << left << getCSt(sbuf) << endl;
 
-#define MFST_TRACE2	 cout << setw(4) << left << FST_TRACE_n << ": "\
-					     << setw(20) << left << " "\
-					     << setw(30) << left << getCLenta(lbuf, lenta_position)\
-					     << setw(20) << left << getCSt(sbuf) << endl;
+#define MFST_TRACE2() if (this->log->stream) *(this->log->stream) << setw(4) << left << FST_TRACE_n << ": "\
+					  << setw(20) << left << " "\
+					  << setw(30) << left << getCLenta(lbuf, lenta_position)\
+					  << setw(20) << left << getCSt(sbuf) << endl;
 
-#define MFST_TRACE3	cout << setw(4) << left << ++FST_TRACE_n << ": "\
-					     << setw(20) << left << " "\
-					     << setw(30) << left << getCLenta(lbuf, lenta_position)\
-					     << setw(20) << left << getCSt(sbuf) << endl;
+#define MFST_TRACE3() if (this->log->stream) *(this->log->stream) << setw(4) << left << ++FST_TRACE_n << ": "\
+					  << setw(20) << left << " "\
+					  << setw(30) << left << getCLenta(lbuf, lenta_position)\
+					  << setw(20) << left << getCSt(sbuf) << endl;
 
-#define MFST_TRACE4(c)	cout << setw(4) << left << ++FST_TRACE_n << ": " << setw(20) << left << c << endl;
+#define MFST_TRACE4(c) if (this->log->stream) *(this->log->stream) << setw(4) << left << ++FST_TRACE_n << ": " \
+					  << setw(20) << left << c << endl;
 
-#define MFST_TRACE5(c)	cout << setw(4) << left << FST_TRACE_n << ": " << setw(20) << left << c << endl;
+#define MFST_TRACE5(c) if (this->log->stream) *(this->log->stream) << setw(4) << left << FST_TRACE_n << ": " \
+					  << setw(20) << left << c << endl;
 
-#define MFST_TRACE6(c, k)	cout << setw(4) << left << FST_TRACE_n << ": " << setw(20) << left << c << k << endl;
+#define MFST_TRACE6(c, k) if (this->log->stream) *(this->log->stream) << setw(4) << left << FST_TRACE_n \
+					  << ": " << setw(20) << left << c << k << endl;
 
-#define MFST_TRACE7	cout << setw(4) << left << state.lenta_position<< ": "\
-					     << setw(20) << left << rule.getCRule(rbuf, state.nrulechain) << endl;
+#define MFST_TRACE7() if (this->log->stream) *(this->log->stream) << setw(4) << left << state.lenta_position<< ": "\
+					  << setw(20) << left << rule.getCRule(rbuf, state.nrulechain) << endl;
 
-
-#define MFST_RUN          \
-		MFST_TRACE_START\
-		MFST::Mfst mfst(tables, GRB::getGreibach()); \
+#define MFST_RUN() \
+		MFST_TRACE_START() \
+		MFST::Mfst mfst(tables, GRB::getGreibach(), &log); \
 		mfst.start(); \
-		mfst.savededucation(); 
-		//mfst.printrules();                 
+		mfst.savededucation(); \
+		mfst.printrules();
 
 
 
@@ -133,23 +138,25 @@ namespace MFST
 		LEX::LEX lex;                       // результат работы лексического анализатора
 		MFSTSTSTACK st;                     // стек автомата
 		std::stack<MfstState> storestate;   // стек дл€ сохранени€ состо€ний
+		Log::LOG* log;                      // указатель на структуру лога
 
 		Mfst();
 		Mfst(
 			LEX::LEX plex,                  // результат работы лексического анализатора
-			GRB::Greibach pgrebach         // грамматика √рейбах
+			GRB::Greibach pgrebach,         // грамматика √рейбах
+			Log::LOG *plog
 		);
 
 		char* getCSt(char* buf);                           // получить содержимое стека
 		char* getCLenta(char* buf, short pos, short n = 25); // лента: n символов с pos
 		char* getDiagnosis(short n, char* buf);           // получить n-ую строку диагностики или 8x80
-		bool savestate();                                 // сохранить состо€ние автомата
-		bool reststate();                                 // восстановить состо€ние автомата
+		bool savestate();                 // сохранить состо€ние автомата
+		bool reststate();                 // восстановить состо€ние автомата
 		bool push_chain(                                  // поместить цепочку правила в стек
 			GRB::Rule::Chain chain                        // цепочка правила
 		);
-		RC_STEP step();                                   // выполнить шаг автомата
-		bool start();                                     // запустить автомат
+		RC_STEP step();                   // выполнить шаг автомата
+		bool start();                     // запустить автомат
 		bool savediagnosis(
 			RC_STEP pprc_step                             // код завершени€ шага
 		);

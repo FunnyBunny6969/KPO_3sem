@@ -1,0 +1,143 @@
+---- Протокол ------ 22.12.2025 05:06:26 ----------------------
+---- Параметры ------
+-log: test\LOG1.txt
+-out: test\1.txt.out
+-in: test\1.txt
+---- Исходные данные ------
+Количество символов: 59
+Проигнорировано:     8
+Количество строк:    7
+
+=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===
+=== РЕЗУЛЬТАТ РАЗБИВКИ ===
+Строка 1 (2 слов): [main] [{] 
+Строка 2 (3 слов): [return] [1111111111] [;] 
+Строка 3 (2 слов): [}] [;] 
+Строка 4 (0 слов): 
+Строка 5 (2 слов): [main] [{] 
+Строка 6 (3 слов): [return] [2] [;] 
+Строка 7 (2 слов): [}] [;] 
+Всего строк: 7
+----- ТАБЛИЦА ЛЕКСЕМ -----
+01 m{
+02 rl;
+03 };
+05 m{
+06 rl;
+07 };
+IT (Identifier Table): size=4
+Index  Identifier      Type     DataType FirstLT      Scope           Value
+--------------------------------------------------------------------
+0      pow             FUNC     UINT     -1           GLOBAL          -
+1      random          FUNC     UINT     -1           GLOBAL          -
+2      L1              LIT      UINT     3            =EmptY=         1111111111
+3      L2              LIT      UINT     10           =EmptY=         2
+
+--- FUNCTION METADATA DUMP ---
+FUNCTION NAME                    | PARAMS COUNT | PARAM TYPES
+---------------------------------+--------------+----------------------------
+pow                              |            2 | INT, INT
+random                           |            2 | INT, INT
+---------------------------------+--------------+----------------------------
+Шаг: Правило             Входная лента                 Стек               
+0   : S->m{N};            m{rl;};m{rl;};                S$                  
+0   : SAVESTATE:          1
+0   :                     m{rl;};m{rl;};                m{N};$              
+1   :                     {rl;};m{rl;};                 {N};$               
+2   :                     rl;};m{rl;};                  N};$                
+3   : N->rE;              rl;};m{rl;};                  N};$                
+3   : SAVESTATE:          2
+3   :                     rl;};m{rl;};                  rE;};$              
+4   :                     l;};m{rl;};                   E;};$               
+5   : E->l                l;};m{rl;};                   E;};$               
+5   : SAVESTATE:          3
+5   :                     l;};m{rl;};                   l;};$               
+6   :                     ;};m{rl;};                    ;};$                
+7   :                     };m{rl;};                     };$                 
+8   :                     ;m{rl;};                      ;$                  
+9   :                     m{rl;};                       $                   
+10  : TS_NOK/NS_NORULECHAIN
+10  : RESSTATE            
+10  :                     l;};m{rl;};                   E;};$               
+11  : E->lM               l;};m{rl;};                   E;};$               
+11  : SAVESTATE:          3
+11  :                     l;};m{rl;};                   lM;};$              
+12  :                     ;};m{rl;};                    M;};$               
+13  : TNS_NORULECHAIN/NS_NORULE
+13  : RESSTATE            
+13  :                     l;};m{rl;};                   E;};$               
+14  : TNS_NORULECHAIN/NS_NORULE
+14  : RESSTATE            
+14  :                     rl;};m{rl;};                  N};$                
+15  : N->rE;N             rl;};m{rl;};                  N};$                
+15  : SAVESTATE:          2
+15  :                     rl;};m{rl;};                  rE;N};$             
+16  :                     l;};m{rl;};                   E;N};$              
+17  : E->l                l;};m{rl;};                   E;N};$              
+17  : SAVESTATE:          3
+17  :                     l;};m{rl;};                   l;N};$              
+18  :                     ;};m{rl;};                    ;N};$               
+19  :                     };m{rl;};                     N};$                
+20  : TNS_NORULECHAIN/NS_NORULE
+20  : RESSTATE            
+20  :                     l;};m{rl;};                   E;N};$              
+21  : E->lM               l;};m{rl;};                   E;N};$              
+21  : SAVESTATE:          3
+21  :                     l;};m{rl;};                   lM;N};$             
+22  :                     ;};m{rl;};                    M;N};$              
+23  : TNS_NORULECHAIN/NS_NORULE
+23  : RESSTATE            
+23  :                     l;};m{rl;};                   E;N};$              
+24  : TNS_NORULECHAIN/NS_NORULE
+24  : RESSTATE            
+24  :                     rl;};m{rl;};                  N};$                
+25  : TNS_NORULECHAIN/NS_NORULE
+25  : RESSTATE            
+25  :                     m{rl;};m{rl;};                S$                  
+26  : S->m{N};S           m{rl;};m{rl;};                S$                  
+26  : SAVESTATE:          1
+26  :                     m{rl;};m{rl;};                m{N};S$             
+27  :                     {rl;};m{rl;};                 {N};S$              
+28  :                     rl;};m{rl;};                  N};S$               
+29  : N->rE;              rl;};m{rl;};                  N};S$               
+29  : SAVESTATE:          2
+29  :                     rl;};m{rl;};                  rE;};S$             
+30  :                     l;};m{rl;};                   E;};S$              
+31  : E->l                l;};m{rl;};                   E;};S$              
+31  : SAVESTATE:          3
+31  :                     l;};m{rl;};                   l;};S$              
+32  :                     ;};m{rl;};                    ;};S$               
+33  :                     };m{rl;};                     };S$                
+34  :                     ;m{rl;};                      ;S$                 
+35  :                     m{rl;};                       S$                  
+36  : S->m{N};            m{rl;};                       S$                  
+36  : SAVESTATE:          4
+36  :                     m{rl;};                       m{N};$              
+37  :                     {rl;};                        {N};$               
+38  :                     rl;};                         N};$                
+39  : N->rE;              rl;};                         N};$                
+39  : SAVESTATE:          5
+39  :                     rl;};                         rE;};$              
+40  :                     l;};                          E;};$               
+41  : E->l                l;};                          E;};$               
+41  : SAVESTATE:          6
+41  :                     l;};                          l;};$               
+42  :                     ;};                           ;};$                
+43  :                     };                            };$                 
+44  :                     ;                             ;$                  
+45  :                                                   $                   
+46  : LENTA_END           
+47  : -------> NS_LENTA_END
+--------------------------------------------------------------
+Всего строк 14, Синтаксический анализ выполнен без ошибок
+== ДЕРЕВО РАЗБОРА ==
+
+0---: S->m{N};S-----------
+2---: N->rE;--------------
+3---: E->l----------------
+7---: S->m{N};------------
+9---: N->rE;--------------
+10--: E->l----------------
+==========================================================================================
+Ошибка 702: Задано более одной точки входа main, cтрока 5, позиция -1
+

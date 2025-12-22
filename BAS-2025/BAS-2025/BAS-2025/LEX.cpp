@@ -154,7 +154,6 @@ namespace LEX {
 
         for (const auto& line : lines) {
             for (const auto& word : line) {
-                cout << word << endl;
                 char code = Automata::getLexemeCode(word.c_str());
                 // Создаем запись для таблицы лексем
                 lexEntry.lexema[0] = code;

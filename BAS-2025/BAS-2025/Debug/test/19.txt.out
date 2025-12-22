@@ -1,2 +1,0 @@
-main { \declare uint num ; \num = 5 ; \switch ( 0x07 | num ) \{ \case 0x01 : \num = num + 10 ; \switch ( 0x07 | num ) \{ \case 0x01 : break ; \case 'C' : break ; \default : break ; \} ; \break ; \\case 0x02 : break ; \} ; \return 2 ; \} ; 
-[ОШИБКА 719 : Константа для сравнения имеет тип не соответствующий типу проверяемого значения; строка 11 позиция -1]

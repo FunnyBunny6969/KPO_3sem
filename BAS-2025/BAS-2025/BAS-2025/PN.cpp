@@ -84,7 +84,7 @@ namespace PN {
     }
 
 
-    bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable)
+    bool PolishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtable, Log::LOG log)
     {
         stack<pair<LT::Entry, int>> stack;
         vector<pair<LT::Entry, int>> out_buffer;
@@ -111,11 +111,10 @@ namespace PN {
         if (end_pos == lextable.size) return false;
 
 
-		cout << "ВХОДНАЯ СТРОКА: ";
-		for (int i = lextable_pos; i < end_pos; i++)
-			cout << lextable.table[i].lexema[0];
-		cout << endl;
-
+        *log.stream << "ВХОДНАЯ СТРОКА: ";
+        for (int i = lextable_pos; i < end_pos; i++)
+            *log.stream << lextable.table[i].lexema[0];
+        *log.stream << endl;
 
         //Алгоритм Shunting-yard
         for (int i = lextable_pos; i < end_pos; ++i)
@@ -254,8 +253,8 @@ namespace PN {
             }
         }
 
-        // блок cout для печати ОПЗ
-        cout << "Польская запись (строка " << lextable.table[lextable_pos].sn << "): ";
+        
+        *log.stream << "Польская запись (строка " << lextable.table[lextable_pos].sn << "): ";
         for (const auto& item : out_buffer)
         {
             LT::Entry entry = item.first;
@@ -266,29 +265,30 @@ namespace PN {
                 IT::Entry itEntry = IT::GetEntry(idtable, entry.idxTI);
                 if (itEntry.idtype == IT::L)
                 {
-                    if (itEntry.iddatatype == IT::STR) cout << "'" << itEntry.value.vstr->str << "' ";
-                    else cout << itEntry.value.vint << " ";
+                    if (itEntry.iddatatype == IT::STR) *log.stream << "'" << itEntry.value.vstr->str << "' ";
+                    else *log.stream << itEntry.value.vint << " ";
                 }
                 else
                 {
-                    cout << itEntry.id;
-                    if (itEntry.idtype == IT::F && pCount != -1) cout << "@" << pCount;
-                    cout << " ";
+                    *log.stream << itEntry.id;
+                    if (itEntry.idtype == IT::F && pCount != -1) *log.stream << "@" << pCount;
+                    *log.stream << " ";
                 }
             }
             else
             {
-                cout << entry.lexema[0] << " ";
+                *log.stream << entry.lexema[0] << " ";
             }
         }
-        cout << endl;
+        *log.stream << endl;
 
         return true;
     }
 
 
-    void FindExpressions(LT::LexTable& lextable, IT::IdTable& idtable) {
-        std::cout << "\n=== ПРЕОБРАЗОВАНИЕ В ПОЛИЗ ===\n";
+    void FindExpressions(LT::LexTable& lextable, IT::IdTable& idtable, Log::LOG log) {
+        cout << "\n=== ПРЕОБРАЗОВАНИЕ В ПОЛИЗ ===\n";
+        *log.stream << "\n=== ПРЕОБРАЗОВАНИЕ В ПОЛИЗ ===\n";
         bool switchExp = false;
 
         for (int i = 0; i < lextable.size; ++i) {
@@ -300,15 +300,18 @@ namespace PN {
                     switchExp = true;
 
             if ((lexema == LEX_ID && 
-                i + 1 < lextable.size && 
                 lextable.table[i + 1].lexema[0] == LEX_EQUALS) ||
 
                 lexema == LEX_RETURN || 
                 lexema == LEX_PRINT  ||
+
+                (lexema == LEX_ID &&
+                    idtable.table[lextable.table[i].idxTI].idtype == IT::F &&
+                    lextable.table[i - 1].lexema[0] != LEX_FUNCTION) ||
                 switchExp) 
             {
                 int expr_start = i;
-                PolishNotation(expr_start, lextable, idtable);
+                PolishNotation(expr_start, lextable, idtable, log);
             }
 
             switchExp = false;

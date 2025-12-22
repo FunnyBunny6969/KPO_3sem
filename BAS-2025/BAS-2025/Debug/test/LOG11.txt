@@ -1,0 +1,133 @@
+---- Протокол ------ 22.12.2025 05:06:27 ----------------------
+---- Параметры ------
+-log: test\LOG11.txt
+-out: test\11.txt.out
+-in: test\11.txt
+---- Исходные данные ------
+Количество символов: 54
+Проигнорировано:     7
+Количество строк:    5
+
+=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===
+=== РЕЗУЛЬТАТ РАЗБИВКИ ===
+Строка 1 (2 слов): [main] [{] 
+Строка 2 (3 слов): [print] ['СТРОКА'] [;] 
+Строка 3 (3 слов): [print] [''] [;] 
+Строка 4 (3 слов): [return] [2] [;] 
+Строка 5 (2 слов): [}] [;] 
+Всего строк: 5
+----- ТАБЛИЦА ЛЕКСЕМ -----
+01 m{
+02 pl;
+03 pl;
+04 rl;
+05 };
+IT (Identifier Table): size=5
+Index  Identifier      Type     DataType FirstLT      Scope           Value
+--------------------------------------------------------------------
+0      pow             FUNC     UINT     -1           GLOBAL          -
+1      random          FUNC     UINT     -1           GLOBAL          -
+2      L1              LIT      STR      3            =EmptY=         ''
+3      L2              LIT      STR      6            =EmptY=         ''
+4      L3              LIT      UINT     9            =EmptY=         2
+
+--- FUNCTION METADATA DUMP ---
+FUNCTION NAME                    | PARAMS COUNT | PARAM TYPES
+---------------------------------+--------------+----------------------------
+pow                              |            2 | INT, INT
+random                           |            2 | INT, INT
+---------------------------------+--------------+----------------------------
+Шаг: Правило             Входная лента                 Стек               
+0   : S->m{N};            m{pl;pl;rl;};                 S$                  
+0   : SAVESTATE:          1
+0   :                     m{pl;pl;rl;};                 m{N};$              
+1   :                     {pl;pl;rl;};                  {N};$               
+2   :                     pl;pl;rl;};                   N};$                
+3   : N->pE;              pl;pl;rl;};                   N};$                
+3   : SAVESTATE:          2
+3   :                     pl;pl;rl;};                   pE;};$              
+4   :                     l;pl;rl;};                    E;};$               
+5   : E->l                l;pl;rl;};                    E;};$               
+5   : SAVESTATE:          3
+5   :                     l;pl;rl;};                    l;};$               
+6   :                     ;pl;rl;};                     ;};$                
+7   :                     pl;rl;};                      };$                 
+8   : TS_NOK/NS_NORULECHAIN
+8   : RESSTATE            
+8   :                     l;pl;rl;};                    E;};$               
+9   : E->lM               l;pl;rl;};                    E;};$               
+9   : SAVESTATE:          3
+9   :                     l;pl;rl;};                    lM;};$              
+10  :                     ;pl;rl;};                     M;};$               
+11  : TNS_NORULECHAIN/NS_NORULE
+11  : RESSTATE            
+11  :                     l;pl;rl;};                    E;};$               
+12  : TNS_NORULECHAIN/NS_NORULE
+12  : RESSTATE            
+12  :                     pl;pl;rl;};                   N};$                
+13  : N->pE;N             pl;pl;rl;};                   N};$                
+13  : SAVESTATE:          2
+13  :                     pl;pl;rl;};                   pE;N};$             
+14  :                     l;pl;rl;};                    E;N};$              
+15  : E->l                l;pl;rl;};                    E;N};$              
+15  : SAVESTATE:          3
+15  :                     l;pl;rl;};                    l;N};$              
+16  :                     ;pl;rl;};                     ;N};$               
+17  :                     pl;rl;};                      N};$                
+18  : N->pE;              pl;rl;};                      N};$                
+18  : SAVESTATE:          4
+18  :                     pl;rl;};                      pE;};$              
+19  :                     l;rl;};                       E;};$               
+20  : E->l                l;rl;};                       E;};$               
+20  : SAVESTATE:          5
+20  :                     l;rl;};                       l;};$               
+21  :                     ;rl;};                        ;};$                
+22  :                     rl;};                         };$                 
+23  : TS_NOK/NS_NORULECHAIN
+23  : RESSTATE            
+23  :                     l;rl;};                       E;};$               
+24  : E->lM               l;rl;};                       E;};$               
+24  : SAVESTATE:          5
+24  :                     l;rl;};                       lM;};$              
+25  :                     ;rl;};                        M;};$               
+26  : TNS_NORULECHAIN/NS_NORULE
+26  : RESSTATE            
+26  :                     l;rl;};                       E;};$               
+27  : TNS_NORULECHAIN/NS_NORULE
+27  : RESSTATE            
+27  :                     pl;rl;};                      N};$                
+28  : N->pE;N             pl;rl;};                      N};$                
+28  : SAVESTATE:          4
+28  :                     pl;rl;};                      pE;N};$             
+29  :                     l;rl;};                       E;N};$              
+30  : E->l                l;rl;};                       E;N};$              
+30  : SAVESTATE:          5
+30  :                     l;rl;};                       l;N};$              
+31  :                     ;rl;};                        ;N};$               
+32  :                     rl;};                         N};$                
+33  : N->rE;              rl;};                         N};$                
+33  : SAVESTATE:          6
+33  :                     rl;};                         rE;};$              
+34  :                     l;};                          E;};$               
+35  : E->l                l;};                          E;};$               
+35  : SAVESTATE:          7
+35  :                     l;};                          l;};$               
+36  :                     ;};                           ;};$                
+37  :                     };                            };$                 
+38  :                     ;                             ;$                  
+39  :                                                   $                   
+40  : LENTA_END           
+41  : -------> NS_LENTA_END
+--------------------------------------------------------------
+Всего строк 13, Синтаксический анализ выполнен без ошибок
+== ДЕРЕВО РАЗБОРА ==
+
+0---: S->m{N};------------
+2---: N->pE;N-------------
+3---: E->l----------------
+5---: N->pE;N-------------
+6---: E->l----------------
+8---: N->rE;--------------
+9---: E->l----------------
+==========================================================================================
+Ошибка 708: Использование пустого строкового литерала недопустимо, 

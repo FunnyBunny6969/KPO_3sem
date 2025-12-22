@@ -1,5 +1,5 @@
 main {
-	declare uint num;
+	uint num;
 	num = 7;
 	num = num / 0;
 	return 2;

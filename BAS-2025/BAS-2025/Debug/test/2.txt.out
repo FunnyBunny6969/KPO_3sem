@@ -1,2 +1,0 @@
-char function sum ( \uint a , \uint a , \uint a , \uint a , \uint a , \uint a , \uint a , \uint a , \uint a ) \{ return 'a' ; } ; \\\main { \return 2 ; \} ; 
-[ОШИБКА 706 : Превышено допустимое число параметров функции; строка 1 позиция -1]

@@ -1,4 +1,7 @@
-function random(min, max) {return Math.floor(Math.random() * (max - min + 1)) + min;}function pow(a, b) {return Math.pow(a, b);}function demonstrate_underflow( ) {
+function random(min, max) {return Math.floor(Math.random() * (max - min + 1)) + min;}
+function pow(a, b) {return Math.pow(a, b);}
+
+function demonstrate_underflow( ) {
 console.log("äåìîíñòðàöèè ïåðåïîëíåíèÿ");
 let a = 0;
 let b = 0;
@@ -62,8 +65,8 @@ console.log("test_string = ");
 console.log(test_string);
 console.log("test_char = ");
 console.log(test_char);
-demonstrate_underflow( );
-use_standard_library( );
+(demonstrate_underflow()) >>> 0;
+(use_standard_library()) >>> 0;
 console.log("=== ÒÅÑÒ ÁÈÒÎÂÛÕ ÎÏÅÐÀÖÈÉ ===");
 console.log("bitwise_ops(0x12, 0x00) = ");
 console.log((bitwise_ops(18, 0)) >>> 0);

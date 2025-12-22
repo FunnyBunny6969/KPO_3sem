@@ -27,16 +27,16 @@ void outTEST(int, _TCHAR*[]);
 
 namespace TestLT {
     LT::Entry CreateLTEntry(char, int, int);
-	void PrintLexTable(LT::LexTable&);
+	void PrintLexTable(LT::LexTable&, Log::LOG);
 	IT::Entry CreateITEntry(const char*, int, IT::IDDATATYPE, IT::IDTYPE);
 	void TestLT();
-    void PrintLexTableWithSubstit(LT::LexTable& , IT::IdTable& );
+    void PrintLexTableWithSubstit(LT::LexTable& , IT::IdTable&, Log::LOG);
 }
 
 namespace TestIT {
 	IT::Entry CreateEntry(const char*, int, IT::IDDATATYPE, IT::IDTYPE );
-	void PrintTable(IT::IdTable&);
-	void TestIT();
+	void PrintTable(IT::IdTable&, Log::LOG);
+	void TestIT(Log::LOG log);
 }
 
 
@@ -55,8 +55,8 @@ namespace TestAutomata {
 }
 
 namespace TestLexer {
-    void TestSplitter(In::IN);
-    void PrintFunctionParameters(const IT::IdTable& idTable);
+    void TestSplitter(In::IN, Log::LOG);
+    void PrintFunctionParameters(const IT::IdTable& idTable, Log::LOG);
 }
 
 

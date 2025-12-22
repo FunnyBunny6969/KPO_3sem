@@ -1,5 +1,5 @@
 uint function sum(uint a, uint b) {
-	declare uint num;
+	uint num;
 	return a + b;
 };
 
