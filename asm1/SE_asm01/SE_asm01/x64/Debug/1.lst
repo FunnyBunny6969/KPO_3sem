@@ -1,0 +1,80 @@
+Microsoft (R) Macro Assembler (x64) Version 14.44.35222.0   12/23/25 05:41:57
+1.asm							     Page 1 - 1
+
+
+				.586P                       ; система команд(процессор Pentium)
+1.asm(1) : error A2008:syntax error : .
+				.MODEL FLAT, STDCALL        ; модель памяти, соглашение о вызовах
+1.asm(2) : error A2008:syntax error : .
+				includelib kernel32.lib     ; компановщику: компоновать с kernel32
+
+				ExitProcess PROTO : DWORD                             ; прототип Функции для завершения процесса Windows
+				MessageBoxA PROTO : DWORD, : DWORD, : DWORD, : DWORD  ; прототип API-функции MessageBoxA
+
+				.STACK 4096                              ; выделение стека
+1.asm(8) : error A2008:syntax error : .
+
+				CONST                                    ; сегмент констант
+1.asm(10) : error A2008:syntax error : CONST
+
+ 00000000			.DATA                                    ; сегмент данных
+ = 00000000			MB_OK    EQU 0                           ; EQU определяет константу
+ 00000000 CC EE FF 20 EF	STR1     DB "Моя первая программа", 0    ; строка, первый элемент данные + нулевой бит
+	   E5 F0 E2 E0 FF
+	   20 EF F0 EE E3
+	   F0 E0 EC EC E0
+	   00
+ 00000015 CF F0 E8 E2 E5	STR2     DB "Привет всем!", 0            ; строка, первый элемент данные + нулевой бит
+	   F2 20 E2 F1 E5
+	   EC 21 00
+ 00000022 00000000		HW       DD ?                            ; двойное слово длиной 4 байта, неинициалицировано
+
+ 00000000			.CODE                                    ; сегмент кода
+
+ 00000000			main PROC                                ; точка входа main
+ 00000000			START :                                  ; метка
+
+						INVOKE MessageBoxA, HW, OFFSET STR2, OFSET STR1, MB_OK
+1.asm(23) : error A2008:syntax error : MessageBoxA
+
+ 00000000  6A 00				PUSH     MB_OK
+						PUSH     OFFSET STR1
+1.asm(26) : error A2070:invalid instruction operands
+						PUSH     OFFSET STR2
+1.asm(27) : error A2070:invalid instruction operands
+						PUSH     HW
+1.asm(28) : error A2070:invalid instruction operands
+ 00000002  E8 00000000 E			CALL     MessageBoxA             ; вызов функции
+
+ 00000007  6A FF		push - 1           ; код возврата процесса Windows(параметр ExitProcess)
+ 00000009  E8 00000000 E	call ExitProcess   ; так завершается любой процесс Windows
+ 0000000E			main ENDP          ; конец процедуры
+
+				end main           ; конец модуля main
+Microsoft (R) Macro Assembler (x64) Version 14.44.35222.0   12/23/25 05:41:57
+1.asm							     Symbols 2 - 1
+
+
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P 	 00000000 Length= 00000000 External
+MessageBoxA  . . . . . . . . . .	P 	 00000000 Length= 00000000 External
+main . . . . . . . . . . . . . .	P 	 00000000 _TEXT	Length= 0000000E Public
+  START  . . . . . . . . . . . .	L 	 00000000 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+HW . . . . . . . . . . . . . . .	DWord	 00000022 _DATA	
+MB_OK  . . . . . . . . . . . . .	Number	 00000000h   
+STR1 . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+STR2 . . . . . . . . . . . . . .	Byte	 00000015 _DATA	
+
+	   0 Warnings
+	   10 Errors

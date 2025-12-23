@@ -1,8 +1,0 @@
-uint function func(){
-	declare char c;
-	return c;
-};
-
-main {
-	return 2;
-};

@@ -1,0 +1,12 @@
+﻿  Assembling 1.asm...
+1.asm(1): error A2008: syntax error : .
+1.asm(2): error A2008: syntax error : .
+1.asm(8): error A2008: syntax error : .
+1.asm(10): error A2008: syntax error : CONST
+1.asm(23): error A2008: syntax error : MessageBoxA
+1.asm(26): error A2070: invalid instruction operands
+1.asm(27): error A2070: invalid instruction operands
+1.asm(28): error A2070: invalid instruction operands
+1.asm(35): error A2008: syntax error : main
+1.asm(35): error A2088: END directive required at end of file
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: выход из команды "ml64.exe /c /nologo /Zi /Fo"x64\Debug\1.obj" /Fl"x64\Debug\\" /W3 /errorReport:prompt  /Ta1.asm" с кодом "1".

@@ -1,6 +1,0 @@
-main {
-	declare uint a;
-	a = 2 + 4*0xAa;
-	print 2 + 'string';
-	return 2;
-};

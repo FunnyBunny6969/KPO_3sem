@@ -1,8 +1,0 @@
-main {
-	declare uint num;
-	switch (num) 
-	{default: break;};
-
-	break;
-	return 2;
-};

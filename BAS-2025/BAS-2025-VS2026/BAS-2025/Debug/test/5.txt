@@ -1,9 +1,0 @@
-main {
-	declare char bukva;
-	bukva = 'A';
-
-	switch(bukva | 'b'){
-		break;
-	};
-	return 2;
-};

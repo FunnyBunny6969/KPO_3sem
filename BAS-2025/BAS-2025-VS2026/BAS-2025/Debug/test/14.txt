@@ -1,8 +1,0 @@
-uint function sum(uint a, uint b) {
-	declare uint a;
-	return a + b;
-};
-
-main {
-	return 2;
-};

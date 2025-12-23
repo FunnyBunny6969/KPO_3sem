@@ -1,8 +1,0 @@
-uint function sum(uint a, uint b){
-	return a + b;
-};
-
-main {
-	print sum(3, 'СТРОКА');
-	return 2;
-};

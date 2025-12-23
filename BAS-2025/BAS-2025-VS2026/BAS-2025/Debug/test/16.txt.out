@@ -1,2 +1,0 @@
-uint function sum ( uint a , uint b ) { \declare uint num ; \a = a + b ; \} ; \\main { \return 2 ; \} ; 
-[ОШИБКА 723 : Отсутствует оператор return в непустой функции; строка 4 позиция -1]
