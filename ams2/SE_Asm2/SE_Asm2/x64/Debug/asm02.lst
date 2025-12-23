@@ -1,0 +1,69 @@
+Microsoft (R) Macro Assembler (x64) Version 14.44.35222.0   12/23/25 07:39:43
+asm02.asm						     Page 1 - 1
+
+
+				.586
+asm02.asm(1) : error A2008:syntax error : .
+				.model flat, stdcall
+asm02.asm(2) : error A2008:syntax error : .
+
+				includelib kernel32.lib
+				includelib user32.lib
+
+				ExitProcess PROTO, dwExitCode:DWORD
+asm02.asm(7) : error A2008:syntax error : ,
+				MessageBoxA PROTO, hWnd:DWORD, lpText:DWORD, lpCaption:DWORD, uType:DWORD
+asm02.asm(8) : error A2008:syntax error : ,
+				wsprintfA PROTO C, :DWORD, :DWORD, :VARARG
+asm02.asm(9) : error A2008:syntax error : ,
+
+ 00000000			.data
+ 00000000 D0 E5 E7 F3 EB	    szCaption   db 'Результат сложения',0
+	   FC F2 E0 F2 20
+	   F1 EB EE E6 E5
+	   ED E8 FF 00
+ 00000013 35 20 2B 20 33	    szFormat    db '5 + 3 = %d',0
+	   20 3D 20 25 64
+	   00
+ 0000001E  00000100 [		    szBuffer    db 256 dup(0)
+	    00
+	   ]
+				    
+ 0000011E 00000005		    num1        dd 5
+ 00000122 00000003		    num2        dd 3
+ 00000126 00000000		    result      dd ?
+
+ 00000000			.code
+ 00000000			start:
+ 00000000  8B 05 0000011E R	    mov eax, [num1]     ; EAX = 5
+ 00000006  03 05 00000122 R	    add eax, [num2]     ; EAX = 5 + 3 = 8
+ 0000000C  89 05 00000126 R	    mov [result], eax   ; сохраняем результат
+				    
+				    invoke wsprintfA, offset szBuffer, offset szFormat, [result]
+asm02.asm(26) : error A2008:syntax error : wsprintfA
+				    invoke MessageBoxA, 0, offset szBuffer, offset szCaption, 0
+asm02.asm(27) : error A2008:syntax error : MessageBoxA
+
+				    invoke ExitProcess, 0
+asm02.asm(29) : error A2008:syntax error : invoke
+				end start
+Microsoft (R) Macro Assembler (x64) Version 14.44.35222.0   12/23/25 07:39:43
+asm02.asm						     Symbols 2 - 1
+
+
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+num1 . . . . . . . . . . . . . .	DWord	 0000011E _DATA	
+num2 . . . . . . . . . . . . . .	DWord	 00000122 _DATA	
+result . . . . . . . . . . . . .	DWord	 00000126 _DATA	
+start  . . . . . . . . . . . . .	L 	 00000000 _TEXT	
+szBuffer . . . . . . . . . . . .	Byte	 0000001E _DATA	
+szCaption  . . . . . . . . . . .	Byte	 00000000 _DATA	
+szFormat . . . . . . . . . . . .	Byte	 00000013 _DATA	
+
+	   0 Warnings
+	   10 Errors

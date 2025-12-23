@@ -1,0 +1,88 @@
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/23/25 09:17:53
+asm02.asm						     Page 1 - 1
+
+
+				.586
+				.model flat, stdcall
+
+				includelib kernel32.lib
+				includelib user32.lib
+
+				ExitProcess PROTO, dwExitCode:DWORD
+				MessageBoxA PROTO, hWnd:DWORD, lpText:DWORD, lpCaption:DWORD, uType:DWORD
+				wsprintfA PROTO C, :DWORD, :DWORD, :VARARG
+
+ 00000000			.data
+ 00000000 D0 E5 E7 F3 EB	    szCaption   db 'Результат сложения',0
+	   FC F2 E0 F2 20
+	   F1 EB EE E6 E5
+	   ED E8 FF 00
+ 00000013 35 20 2B 20 33	    szFormat    db '5 + 3 = %d',0
+	   20 3D 20 25 64
+	   00
+ 0000001E  00000100 [		    szBuffer    db 256 dup(0)
+	    00
+	   ]
+				    
+ 0000011E 00000005		    num1        dd 5
+ 00000122 00000003		    num2        dd 3
+ 00000126 00000000		    result      dd ?
+
+ 00000000			.code
+ 00000000			start:
+ 00000000  A1 0000011E R	    mov eax, [num1]     ; EAX = 5
+ 00000005  03 05 00000122 R	    add eax, [num2]     ; EAX = 5 + 3 = 8
+ 0000000B  A3 00000126 R	    mov [result], eax   ; сохраняем результат
+				    
+				    invoke wsprintfA, offset szBuffer, offset szFormat, [result]
+				    invoke MessageBoxA, 0, offset szBuffer, offset szCaption, 0
+
+				    invoke ExitProcess, 0
+				end start
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/23/25 09:17:53
+asm02.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000012A Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000042 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+num1 . . . . . . . . . . . . . .	DWord	 0000011E _DATA	
+num2 . . . . . . . . . . . . . .	DWord	 00000122 _DATA	
+result . . . . . . . . . . . . .	DWord	 00000126 _DATA	
+start  . . . . . . . . . . . . .	L Near	 00000000 _TEXT	Public STDCALL
+szBuffer . . . . . . . . . . . .	Byte	 0000001E _DATA	
+szCaption  . . . . . . . . . . .	Byte	 00000000 _DATA	
+szFormat . . . . . . . . . . . .	Byte	 00000013 _DATA	
+
+	   0 Warnings
+	   0 Errors
