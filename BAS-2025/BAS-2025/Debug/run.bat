@@ -12,5 +12,14 @@ type program.log
 echo == OUT ==
 type program.js
 
-echo == RUN JS ==
+echo: 
+echo: 
+echo:
+echo =============== RUN JS =============== 
+echo:
+echo:
+echo:
 node program.js
+
+
+

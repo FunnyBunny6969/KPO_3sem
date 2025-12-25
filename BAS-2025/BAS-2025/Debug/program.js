@@ -1,8 +1,8 @@
-function random(min, max) {return Math.floor(Math.random() * (max - min + 1)) + min;}
+ï»¿function random(min, max) {return Math.floor(Math.random() * (max - min + 1)) + min;}
 function pow(a, b) {return Math.pow(a, b);}
 
 function demonstrate_underflow( ) {
-console.log("äåìîíñòðàöèè ïåðåïîëíåíèÿ");
+console.log("Ð´ÐµÐ¼Ð¾Ð½ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸ Ð¿ÐµÑ€ÐµÐ¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ñ");
 let a = 0;
 let b = 0;
 let c = 0;
@@ -18,7 +18,7 @@ console.log((c) >>> 0);
 return (0) >>> 0;
 };
 function use_standard_library( ) {
-console.log("Âûçîâ áèáëèîòå÷íûõ ôóíêöèé");
+console.log("Ð’Ñ‹Ð·Ð¾Ð² Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÑ‡Ð½Ñ‹Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹");
 console.log("pow(uint, uint)");
 console.log((pow(2, 2)) >>> 0);
 console.log((pow(3, 3)) >>> 0);
@@ -48,7 +48,7 @@ function main() {
 let test_uint = 0;
 let test_string = 'S';
 let test_char = '$';
-console.log("ÄÎ");
+console.log("Ð”Ðž");
 console.log("test_uint = ");
 console.log((test_uint) >>> 0);
 console.log("test_string = ");
@@ -56,9 +56,9 @@ console.log(test_string);
 console.log("test_char = ");
 console.log(test_char);
 test_uint = (5) >>> 0;
-test_string = "ÒÅÑÒÎÂÀß ÑÒÐÎÊÀ";
+test_string = "Ð¢Ð•Ð¡Ð¢ÐžÐ’ÐÐ¯ Ð¡Ð¢Ð ÐžÐšÐ";
 test_char = '@';
-console.log("ÏÎÑËÅ");
+console.log("ÐŸÐžÐ¡Ð›Ð•");
 console.log("test_uint = ");
 console.log((test_uint) >>> 0);
 console.log("test_string = ");
@@ -67,7 +67,7 @@ console.log("test_char = ");
 console.log(test_char);
 (demonstrate_underflow()) >>> 0;
 (use_standard_library()) >>> 0;
-console.log("=== ÒÅÑÒ ÁÈÒÎÂÛÕ ÎÏÅÐÀÖÈÉ ===");
+console.log("=== Ð¢Ð•Ð¡Ð¢ Ð‘Ð˜Ð¢ÐžÐ’Ð«Ð¥ ÐžÐŸÐ•Ð ÐÐ¦Ð˜Ð™ ===");
 console.log("bitwise_ops(0x12, 0x00) = ");
 console.log((bitwise_ops(18, 0)) >>> 0);
 console.log("bitwise_ops(0x12, 0x01) = ");
