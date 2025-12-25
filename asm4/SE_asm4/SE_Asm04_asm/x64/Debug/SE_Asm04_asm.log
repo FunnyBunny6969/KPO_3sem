@@ -1,0 +1,40 @@
+﻿Сборка начата 04.12.2024 13:59:31.
+Уровень детализации журнала: Normal.     1>Проект "C:\лабы\Наркевич\КПО\KPO-3sem\KPO\asm4\SE_Asm04_asm\SE_Asm04_asm\SE_Asm04_asm.vcxproj" в узле 2 (целевые объекты Build).
+     1>PrepareForBuild:
+         Структурированный вывод включен. Форматирование диагностики компилятора будет отражать иерархию ошибок. Подробнее см. https://aka.ms/cpp/structured-output.
+       InitializeBuildStatus:
+         Создание "x64\Debug\SE_Asm04_asm.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+         Обращение к "x64\Debug\SE_Asm04_asm.tlog\unsuccessfulbuild".
+       _MASM:
+         Assembling data.asm...
+         cmd.exe /C "C:\Users\Даниил\AppData\Local\Temp\tmpde79cfced6e54061933c1d6b056520bb.cmd"
+         ml64.exe /c /nologo /Zi /Fo"x64\Debug\data.obj" /W3 /errorReport:prompt  /Tadata.asm
+     1>data.asm(1): error A2008: syntax error : .
+     1>data.asm(2): error A2008: syntax error : .
+     1>data.asm(6): error A2008: syntax error : .
+     1>data.asm(21): error A2008: syntax error : main
+     1>data.asm(21): error A2088: END directive required at end of file
+     1>data.asm(9): error A2206: missing operator in expression
+     1>data.asm(11): error A2206: missing operator in expression
+     1>data.asm(13): error A2206: missing operator in expression
+     1>C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: выход из команды "ml64.exe /c /nologo /Zi /Fo"x64\Debug\data.obj" /W3 /errorReport:prompt  /Tadata.asm" с кодом "1".
+     1>Сборка проекта "C:\лабы\Наркевич\КПО\KPO-3sem\KPO\asm4\SE_Asm04_asm\SE_Asm04_asm\SE_Asm04_asm.vcxproj" завершена (целевые объекты Build) с ошибкой.
+
+Ошибка сборки.
+
+       "C:\лабы\Наркевич\КПО\KPO-3sem\KPO\asm4\SE_Asm04_asm\SE_Asm04_asm\SE_Asm04_asm.vcxproj" (целевой объект Build ) (1) ->
+       (Целевой объект _MASM) -> 
+         data.asm(1): error A2008: syntax error : .
+         data.asm(2): error A2008: syntax error : .
+         data.asm(6): error A2008: syntax error : .
+         data.asm(21): error A2008: syntax error : main
+         data.asm(21): error A2088: END directive required at end of file
+         data.asm(9): error A2206: missing operator in expression
+         data.asm(11): error A2206: missing operator in expression
+         data.asm(13): error A2206: missing operator in expression
+         C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: выход из команды "ml64.exe /c /nologo /Zi /Fo"x64\Debug\data.obj" /W3 /errorReport:prompt  /Tadata.asm" с кодом "1".
+
+    Предупреждений: 0
+    Ошибок: 9
+
+Прошло времени 00:00:00.34

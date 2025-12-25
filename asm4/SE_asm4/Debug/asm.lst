@@ -1,0 +1,106 @@
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 22:39:49
+asm.asm							     Page 1 - 1
+
+
+				.586
+				.model flat, stdcall
+				ExitProcess PROTO :DWORD
+				includelib kernel32.lib
+
+ 00000000			.data
+
+				; Element 0
+ 00000000 03			data0_type db 03h      ; TYPE_BOOL
+ 00000001 01			data0_value db 1
+
+				; Element 1
+ 00000002 03			data1_type db 03h      ; TYPE_BOOL
+ 00000003 00			data1_value db 0
+
+				; Element 2
+ 00000004 04			data2_type db 04h      ; TYPE_SHORT
+ 00000005 CFC7			data2_value dw -12345
+
+				; Element 3
+ 00000007 04			data3_type db 04h      ; TYPE_SHORT
+ 00000008 000C			data3_value dw 12
+
+				; Element 4
+ 0000000A 01			data4_type db 01h      ; TYPE_INT
+ 0000000B 00000000		data4_value dd 0
+
+				; Element 5
+ 0000000F 01			data5_type db 01h      ; TYPE_INT
+ 00000010 0000FA00		data5_value dd 64000
+
+				; Element 6
+ 00000014 02			data6_type db 02h      ; TYPE_STRING
+ 00000015 00000005		data6_length dd 5
+ 00000019 48 65 6C 6C 6F	data6_value db 'Hello'
+
+				; Element 7
+ 0000001E 02			data7_type db 02h      ; TYPE_STRING
+ 0000001F 00000001		data7_length dd 1
+ 00000023 57			data7_value db 'W'
+
+ 00000000			.code
+ 00000000			start:
+ 00000000  E8 00000000 E	call ExitProcess
+				end start
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 22:39:49
+asm.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000024 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000005 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+data0_type . . . . . . . . . . .	Byte	 00000000 _DATA	
+data0_value  . . . . . . . . . .	Byte	 00000001 _DATA	
+data1_type . . . . . . . . . . .	Byte	 00000002 _DATA	
+data1_value  . . . . . . . . . .	Byte	 00000003 _DATA	
+data2_type . . . . . . . . . . .	Byte	 00000004 _DATA	
+data2_value  . . . . . . . . . .	Word	 00000005 _DATA	
+data3_type . . . . . . . . . . .	Byte	 00000007 _DATA	
+data3_value  . . . . . . . . . .	Word	 00000008 _DATA	
+data4_type . . . . . . . . . . .	Byte	 0000000A _DATA	
+data4_value  . . . . . . . . . .	DWord	 0000000B _DATA	
+data5_type . . . . . . . . . . .	Byte	 0000000F _DATA	
+data5_value  . . . . . . . . . .	DWord	 00000010 _DATA	
+data6_length . . . . . . . . . .	DWord	 00000015 _DATA	
+data6_type . . . . . . . . . . .	Byte	 00000014 _DATA	
+data6_value  . . . . . . . . . .	Byte	 00000019 _DATA	
+data7_length . . . . . . . . . .	DWord	 0000001F _DATA	
+data7_type . . . . . . . . . . .	Byte	 0000001E _DATA	
+data7_value  . . . . . . . . . .	Byte	 00000023 _DATA	
+start  . . . . . . . . . . . . .	L Near	 00000000 _TEXT	Public STDCALL
+
+	   0 Warnings
+	   0 Errors
