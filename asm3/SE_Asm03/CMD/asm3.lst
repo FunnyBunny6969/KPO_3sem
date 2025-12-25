@@ -1,0 +1,98 @@
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 12:09:18
+asm3.asm						     Page 1 - 1
+
+
+				.586
+				.model flat, stdcall
+
+				ExitProcess PROTO :DWORD
+				MessageBoxA PROTO :DWORD,:DWORD,:DWORD,:DWORD
+
+				includelib user32.lib
+				includelib kernel32.lib
+
+ 00000000			.data
+ 00000000 10 20 30 40		myBytes    BYTE    10h, 20h, 30h, 40h
+ 00000004 008A 0038 0044	myWords    WORD    8Ah, 38h, 44h, 5Fh, 99h
+	   005F 0099
+ 0000000E 00000001		myDoubles  DWORD   1, 2, 3, 4, 5, 6
+	   00000002
+	   00000003
+	   00000004
+	   00000005
+	   00000006
+ 00000026 0000000E R		myPointer  DWORD   myDoubles
+
+ 0000002A C1 F3 F0 F1 EA	caption    BYTE    "Бурский Алексей Сергеевич", 0
+	   E8 E9 20 C0 EB
+	   E5 EA F1 E5 E9
+	   20 D1 E5 F0 E3
+	   E5 E5 E2 E8 F7
+	   00
+ 00000044 CE EA ED EE 20	message    BYTE    "Окно с кнопкой OK", 0
+	   F1 20 EA ED EE
+	   EF EA EE E9 20
+	   4F 4B 00
+
+ 00000000			.code
+ 00000000			main:
+ 00000000  BE 00000004 R	    mov ESI, OFFSET myWords
+ 00000005  66| 8B 46 04		    mov AX, [ESI + 4]
+ 00000009  66| 8B 5E 02		    mov BX, [ESI + 2]
+
+ 0000000D  6A 00			push 0                  ; uType = MB_OK
+ 0000000F  68 0000002A R	    push OFFSET caption     ; заголовок
+ 00000014  68 00000044 R	    push OFFSET message     ; текст
+ 00000019  6A 00		    push 0                  ; hWnd = NULL
+ 0000001B  E8 00000000 E	    call MessageBoxA
+ 00000020  6A 00		    push 0
+				    
+ 00000022  E8 00000000 E	    call ExitProcess
+
+				end main
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 12:09:18
+asm3.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000056 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000027 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+caption  . . . . . . . . . . . .	Byte	 0000002A _DATA	
+main . . . . . . . . . . . . . .	L Near	 00000000 _TEXT	Public STDCALL
+message  . . . . . . . . . . . .	Byte	 00000044 _DATA	
+myBytes  . . . . . . . . . . . .	Byte	 00000000 _DATA	
+myDoubles  . . . . . . . . . . .	DWord	 0000000E _DATA	
+myPointer  . . . . . . . . . . .	DWord	 00000026 _DATA	
+myWords  . . . . . . . . . . . .	Word	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors

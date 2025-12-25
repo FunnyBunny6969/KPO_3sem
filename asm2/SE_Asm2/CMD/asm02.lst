@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/23/25 09:17:53
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 11:36:07
 asm02.asm						     Page 1 - 1
 
 
@@ -39,7 +39,7 @@ asm02.asm						     Page 1 - 1
 
 				    invoke ExitProcess, 0
 				end start
-Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/23/25 09:17:53
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 11:36:07
 asm02.asm						     Symbols 2 - 1
 
 
