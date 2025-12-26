@@ -733,12 +733,14 @@ namespace ASM_CodeGeneration {
 
 
 
-    /*
     string processSWITCH(LT::LexTable lextable, IT::IdTable idtable, int start, int level) {
         int local_level = level;
         int caseNum = 0;
         string res = "";
-        for (int i = 0; i < lextable.size; i++) {
+        IT::Entry info;
+        bool run = true;
+        for (int i = start; i < lextable.size; i++) {
+            if (!run) break;
             LT::Entry entry = lextable.table[i];
             char lexema = entry.lexema[0];
 
@@ -756,36 +758,35 @@ namespace ASM_CodeGeneration {
                 case LEX_CASE:
                     caseNum += 1;
                     i++;
-					LT::Entry entry = lextable.table[i];
-					IT::Entry info = idtable.table[entry.idxTI];
-                    res += "cmp eax, ";
-                    res += info.
+					entry = lextable.table[i];
+					info = idtable.table[entry.idxTI];
 
+                    res += "cmp eax, [";
+					res += info.id;
+                    res += "]\n";
 
+                    res += "je ";
+                    res += to_string(level);
+                    res += "_case_";
+                    res += to_string(caseNum);
+                    res += "\n\n";
+                    break;  
 
-                    cmp eax, 0
-                        jne case0
+				case LEX_DEFAULT:
+                    res += "jmp ";
+                    res += to_string(level);
+                    res += "_default";
+                    res += "\n\n";
+
+                    run = false;
                     break;  
                 }
-
             }
-
-
-
-
-
-
         }
-
-
-
-
-
-        return "";
+        return res;
     }
 
 
-    */
 
 
     void Generate(LT::LexTable lextable, IT::IdTable idtable, Out::OUT out) {
@@ -799,9 +800,13 @@ namespace ASM_CodeGeneration {
         scope.push_back(GLOBAL_SCOPE);
         scope.push_back(0);
         int reserve = 0;
+        int start = 0, end = 0;
+        string valueStr = "";
+        IT::Entry info;
 
 
         for (int i = 0; i < lextable.size; i++) {
+			valueStr = "";
             LT::Entry entry = lextable.table[i];
             char lexema = entry.lexema[0];
 
@@ -870,12 +875,44 @@ namespace ASM_CodeGeneration {
             }
             */
 
+
+                             
+            case LEX_ID:
+            case LEX_LITERAL:
+                if (lextable.table[i - 1].lexema[0] == LEX_STRING) break;
+
+				info = idtable.table[entry.idxTI];
+				start = i;
+				end = i;
+
+				for (; i < lextable.size; i++) {
+					entry = lextable.table[i];
+					lexema = entry.lexema[0];
+
+					if (lexema == LEX_SEMICOLON ||
+						lexema == FILLER_CHAR ||
+						lexema == LEX_PRINT ||
+						lexema == LEX_RETURN) {
+						end = i;
+						break;
+					}
+				}
+
+                valueStr = "\t\t;EXP\n";
+				valueStr += PolishToASMExpression(lextable, idtable, start + 1, end - 1);
+
+                /*
+				if (lexema == LEX_PRINT) valueStr = "console.log(" + valueStr + ")";
+				else if (lexema == LEX_RETURN) valueStr = "return " + valueStr ;
+                */
+				Out::WriteString(out, valueStr);
+                break;
+
             case LEX_SWITCH: {
                 reserve += 1;
                 caseNum.push_back(0);
 
                 i += 2;
-
                 int start = i;
                 int end = start;
                 while (end < lextable.size && lextable.table[end].lexema[0] != LEX_RIGHTHESIS) {
@@ -887,55 +924,70 @@ namespace ASM_CodeGeneration {
                 Out::WriteString(out, switchExpr.c_str());
                 Out::WriteString(out, "\n");
 
-
-
-                i = end + 1; 
+                i = end + 1;
+                string res = processSWITCH(lextable, idtable, i, reserve);
+                Out::WriteString(out, res);
                 break;
             }
 
             case LEX_CASE: {
-                i++; 
-                entry = lextable.table[i];
-                IT::Entry caseInfo = idtable.table[entry.idxTI];
+                caseNum.back() += 1;
 
-                string caseLabel = "case_" + to_string(caseInfo.value.vint);
-                Out::WriteString(out, caseLabel.c_str());
+                Out::WriteString(out, to_string(reserve));
+                Out::WriteString(out, "_case_");
+                Out::WriteString(out, to_string(caseNum.back()));
                 Out::WriteString(out, ":\n");
 
-                i++; // Пропускаем значение case
+                i++; i++; 
                 break;
             }
 
             case LEX_DEFAULT: {
-                Out::WriteString(out, "default_case:\n");
+                Out::WriteString(out, to_string(reserve));
+                Out::WriteString(out, "_default:\n");
                 break;
             }
 
             case LEX_BREAK: {
-                Out::WriteString(out, "\tjmp end_switch\n");
+				Out::WriteString(out, "jmp ");
+				Out::WriteString(out, to_string(reserve));
+				Out::WriteString(out, "_end_switch:\n\n");
                 break;
             }
 
             case LEX_RIGHTBRACE: {
-                if(reserve > 0) Out::WriteString(out, "end_switch:\n");
-                reserve -= 1;
-                caseNum.pop_back();
+                if (reserve > 0) {
+                    Out::WriteString(out, to_string(reserve));
+                    Out::WriteString(out, "_end_switch:\n");
+					caseNum.pop_back();
+					reserve -= 1;
+                }
+                else {
+                    if (scope.back() != MAIN_SCOPE) {
+						Out::WriteString(out, idtable.table[scope.back()].id);
+						Out::WriteString(out, " endp\n\n\n");
+                    }
+                    else {
+						Out::WriteString(out, "\tinvoke ExitProcess, 0\n");
+						Out::WriteString(out, "main endp\n\n");
+                    }
+                    scope.pop_back();
+                }
+
                 break;
             }
 
             case LEX_MAIN: {
                 scope.push_back(MAIN_SCOPE);
+                i++; 
 
                 Out::WriteString(out, "main proc\n");
-                i++; // Пропускаем MAIN
-                Out::WriteString(out, "    invoke GetStdHandle, STD_OUTPUT_HANDLE\n");
-                Out::WriteString(out, "    mov console_handle, eax\n\n");
+                Out::WriteString(out, "invoke GetStdHandle, STD_OUTPUT_HANDLE\n");
+                Out::WriteString(out, "mov console_handle, eax\n\n");
                 break;
             }
             }
         }
 
-        Out::WriteString(out, "\tinvoke ExitProcess, 0\n");
-        Out::WriteString(out, "main endp\n\n");
     }
 }

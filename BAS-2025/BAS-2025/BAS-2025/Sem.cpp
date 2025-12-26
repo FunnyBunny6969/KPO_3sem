@@ -83,8 +83,10 @@ namespace SemanticAnalyzer
 				hesisBalance -= 1;
 
 				if (switchExp && hesisBalance == 0) {
-					if (lextable.table[i+1].lexema[0] == LEX_LEFTBRACE)
+					if (lextable.table[i + 1].lexema[0] == LEX_LEFTBRACE) {
+						if (type == IT::STR) throw ERROR_THROW(707);
 						return true;
+					}
 				}
 			}
 
