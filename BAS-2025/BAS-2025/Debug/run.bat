@@ -7,7 +7,7 @@ echo == SET Windows-1251 ==
 BAS-2025.exe -in:program.txt -out:program.js -log:program.log
 
 echo == LOG ==
-type program.log
+::type program.log
 
 echo == OUT ==
 type program.js

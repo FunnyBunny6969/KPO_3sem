@@ -205,30 +205,24 @@ demonstrate_underflow proc
 
 		;EXP
 		;EXP
-    push 5
-    pop eax
 		;EXP
 		;EXP
 		;EXP
-    push 10
-    pop eax
 		;EXP
 		;EXP
 		;EXP
-    push dword ptr [a]
-    push dword ptr [b]
-    pop ebx
-    pop eax
+    mov ebx, [b_demonstrate_underflow]
+    mov eax, [a_demonstrate_underflow]
     sub eax, ebx
-    push eax
-    pop eax
 		;EXP
 		;EXP
-    push dword ptr [b]
-    pop eax
+    mov ebx, [b_demonstrate_underflow]
+    mov eax, [a_demonstrate_underflow]
+    sub eax, ebx
 		;EXP
-    push 5
-    pop eax
+    mov ebx, 5
+    mov eax, 0
+    add eax, ebx
 demonstrate_underflow endp
 
 
@@ -237,18 +231,14 @@ use_standard_library proc
 		;EXP
 		;EXP
 		;EXP
-    push 2
-    pop eax
+    call pow
 		;EXP
-    push 3
-    pop eax
+    call pow
 		;EXP
 		;EXP
-    push 100
-    pop eax
+    call random
 		;EXP
-    push 9
-    pop eax
+    call random
 		;EXP
 use_standard_library endp
 
@@ -269,44 +259,29 @@ jmp 1_default
 
 1_case_1:
 		;EXP
-    push dword ptr [result]
-    push 15
-    pop ebx
-    pop eax
+    mov ebx, 15
+    mov eax, [result_bitwise_ops]
     and eax, ebx
-    push eax
-    pop eax
 jmp 1_end_switch:
 
 1_case_2:
 		;EXP
-    push dword ptr [result]
-    push 240
-    pop ebx
-    pop eax
+    mov ebx, 240
+    mov eax, [result_bitwise_ops]
     or eax, ebx
-    push eax
-    pop eax
 jmp 1_end_switch:
 
 1_case_3:
 		;EXP
-    push dword ptr [result]
-    pop eax
+    mov eax, [result_bitwise_ops]
     not eax
-    push eax
-    pop eax
 jmp 1_end_switch:
 
 1_default:
 		;EXP
-    push dword ptr [result]
-    push 2
-    pop ebx
-    pop eax
+    mov ebx, 2
+    mov eax, [result_bitwise_ops]
     imul eax, ebx
-    push eax
-    pop eax
     mov eax, 
 cmp eax, [L27]
 je 2_case_1
@@ -315,14 +290,10 @@ jmp 2_default
 
 2_case_1:
 		;EXP
-    push 95
-    pop eax
 jmp 2_end_switch:
 
 2_default:
 		;EXP
-    push 55
-    pop eax
 2_end_switch:
 jmp 1_end_switch:
 
@@ -343,14 +314,6 @@ mov console_handle, eax
 		;EXP
 		;EXP
 		;EXP
-    push 5
-    pop eax
-		;EXP
-    push offset L35
-    pop eax
-		;EXP
-    push 64
-    pop eax
 		;EXP
 		;EXP
 		;EXP
@@ -363,20 +326,34 @@ mov console_handle, eax
 		;EXP
 		;EXP
 		;EXP
-    push 0
-    pop eax
 		;EXP
 		;EXP
-    push 1
-    pop eax
+    mov eax, 18
+    mov [result_bitwise_ops], eax
+    mov eax, 0
+    mov [result_bitwise_ops], eax
+    call bitwise_ops
 		;EXP
 		;EXP
-    push 2
-    pop eax
+    mov eax, 18
+    mov [result_bitwise_ops], eax
+    mov eax, 1
+    mov [result_bitwise_ops], eax
+    call bitwise_ops
 		;EXP
 		;EXP
-    push 3
-    pop eax
+    mov eax, 18
+    mov [result_bitwise_ops], eax
+    mov eax, 2
+    mov [result_bitwise_ops], eax
+    call bitwise_ops
+		;EXP
+		;EXP
+    mov eax, 18
+    mov [result_bitwise_ops], eax
+    mov eax, 3
+    mov [result_bitwise_ops], eax
+    call bitwise_ops
 		;EXP
 	invoke ExitProcess, 0
 main endp

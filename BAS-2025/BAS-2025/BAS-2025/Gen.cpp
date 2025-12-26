@@ -382,56 +382,97 @@ namespace ASM_CodeGeneration {
         LT::LexTable& lextable,
         IT::IdTable& idtable,
         int start,
-        int end)
+        int end,
+        bool isPrintOrReturn = false)
     {
         std::stack<std::string> exprStack;
         std::string asmCode;
 
-        auto getAsmOperator = [](char op) -> std::string {
-            switch (op) {
-            case LEX_PLUS: return "add";
-            case LEX_MINUS: return "sub";
-            case LEX_STAR: return "imul";
-            case LEX_DIRSLASH: return "idiv";
-            case LEX_BIT_AND: return "and";
-            case LEX_BIT_OR: return "or";
-            case LEX_BIT_NOT: return "not";
-            case LEX_EQUALS: return "mov";
-            default: return "";
+        // Вспомогательная функция для получения имени переменной с суффиксом
+        auto getFullVarName = [&](int idxTI) -> std::string {
+            IT::Entry& entry = idtable.table[idxTI];
+            std::string varName;
+
+            if (entry.idtype == IT::L) {  
+                return entry.id;
+            }
+
+            if (entry.scope == -1) {
+                varName = std::string(entry.id) + "_main";
+            }
+            else {
+                std::string funcName;
+                if (entry.scope < idtable.size) {
+                    funcName = idtable.table[entry.scope].id;
+                }
+                else {
+                    funcName = "unknown";
+                }
+                varName = std::string(entry.id) + "_" + funcName;
+            }
+
+            return varName;
+            };
+
+        // Вспомогательная функция для получения значения операнда
+        auto getOperandValue = [&](const std::string& operand, bool isAddress = false) -> std::string {
+            // Если это литерал (начинается с str или число)
+            if (operand.find("str") == 0) {
+                return "offset " + operand;
+            }
+
+            // Проверяем, является ли числом
+            bool isNumber = true;
+            for (char c : operand) {
+                if (!isdigit(c) && c != '-') {
+                    isNumber = false;
+                    break;
+                }
+            }
+
+            if (isNumber) {
+                return operand;
+            }
+            else {
+                if (isAddress) {
+                    return operand;  // Уже адрес
+                }
+                return "[" + operand + "]";  // Значение переменной
             }
             };
 
+        // Обрабатываем лексемы
         for (int i = start; i < end; i++) {
             LT::Entry& lex = lextable.table[i];
-            if (lex.lexema[0] == '#') continue;
+            char lexema = lex.lexema[0];
 
-            if (lex.lexema[0] == LEX_LITERAL) {
+            // Литерал
+            if (lexema == LEX_LITERAL) {
                 IT::Entry& entry = idtable.table[lex.idxTI];
-                if (entry.idtype == IT::L) {
-                    std::string operand;
+                std::string operand;
 
-                    if (entry.iddatatype == IT::STR) {
-                        operand = "offset " + std::string(entry.id);  // Адрес строки
-                    }
-                    else if (entry.iddatatype == IT::UINT) {
-                        operand = std::to_string(entry.value.vint);
-                    }
-                    else if (entry.iddatatype == IT::CHAR) {
-                        operand = std::to_string(static_cast<int>(entry.value.vchar));
-                    }
-
-                    exprStack.push(operand);
-                    asmCode += "    push " + operand + "\n";
+                if (entry.iddatatype == IT::STR) {
+                    operand = "str" + std::to_string(lex.idxTI);
                 }
+                else if (entry.iddatatype == IT::UINT) {
+                    operand = std::to_string(entry.value.vint);
+                }
+                else if (entry.iddatatype == IT::CHAR) {
+                    operand = std::to_string(static_cast<int>(entry.value.vchar));
+                }
+
+                exprStack.push(operand);
             }
-            else if (lex.lexema[0] == LEX_ID) {
+            // Идентификатор (переменная)
+            else if (lexema == LEX_ID) {
                 IT::Entry& entry = idtable.table[lex.idxTI];
 
                 if (entry.idtype == IT::F) {
+                    // Вызов функции
                     int paramCount = entry.func_meta.n_params;
                     std::vector<std::string> args;
 
-                    // Забираем аргументы из стека
+                    // Получаем аргументы из стека
                     for (int j = 0; j < paramCount; j++) {
                         if (!exprStack.empty()) {
                             args.insert(args.begin(), exprStack.top());
@@ -439,81 +480,175 @@ namespace ASM_CodeGeneration {
                         }
                     }
 
-                    // Генерируем call функции
-                    std::string callCode = "    call " + std::string(entry.id) + "\n";
-                    asmCode += callCode;
-                    asmCode += "    push eax\n";  // Результат функции в стек
-                    exprStack.push("eax");  // Помещаем результат в стек выражений
+                    // Присваиваем аргументы параметрам функции
+                    for (int j = 0; j < paramCount; j++) {
+                        std::string paramName;
+                        // Ищем параметры функции
+                        for (int k = 0; k < idtable.size; k++) {
+                            IT::Entry& param = idtable.table[k];
+                            if (param.idtype == IT::P && param.scope == lex.idxTI) {
+                                paramName = getFullVarName(k);
+
+                                // Загружаем аргумент в EAX
+                                std::string argValue = getOperandValue(args[j]);
+                                if (argValue.find("[") == 0) {
+                                    // Значение переменной
+                                    asmCode += "    mov eax, " + argValue + "\n";
+                                }
+                                else if (argValue.find("offset") == 0) {
+                                    // Адрес строки
+                                    asmCode += "    mov eax, " + argValue + "\n";
+                                }
+                                else {
+                                    // Число
+                                    asmCode += "    mov eax, " + argValue + "\n";
+                                }
+
+                                // Сохраняем в параметр
+                                asmCode += "    mov [" + paramName + "], eax\n";
+                                break;
+                            }
+                        }
+                    }
+
+                    // Вызов функции
+                    asmCode += "    call " + std::string(entry.id) + "\n";
+
+                    // Результат функции
+                    exprStack.push("eax");
                 }
                 else {
                     // Переменная или параметр
-                    std::string varName = entry.id;
+                    std::string varName = getFullVarName(lex.idxTI);
                     exprStack.push(varName);
-                    asmCode += "    push dword ptr [" + varName + "]\n";
                 }
             }
+            // Операторы
             else {
-                char op = lex.lexema[0];
-                std::string asmOp = getAsmOperator(op);
-
-                bool isUnary = (op == LEX_BIT_NOT);
-                bool isBinary = (op == LEX_PLUS || op == LEX_MINUS ||
-                    op == LEX_STAR || op == LEX_DIRSLASH ||
-                    op == LEX_EQUALS || op == LEX_BIT_AND ||
-                    op == LEX_BIT_OR);
-
-                if (isUnary) {
+                // Унарные операторы
+                if (lexema == LEX_BIT_NOT) {
                     if (!exprStack.empty()) {
                         std::string operand = exprStack.top();
                         exprStack.pop();
 
-                        asmCode += "    pop eax\n";
-                        asmCode += "    " + asmOp + " eax\n";
-                        asmCode += "    push eax\n";
+                        // Загружаем операнд в EAX
+                        std::string operandValue = getOperandValue(operand);
+                        if (operandValue.find("[") == 0) {
+                            asmCode += "    mov eax, " + operandValue + "\n";
+                        }
+                        else {
+                            asmCode += "    mov eax, " + operandValue + "\n";
+                        }
 
+                        // NOT операция
+                        asmCode += "    not eax\n";
+
+                        // Результат в EAX
                         exprStack.push("eax");
                     }
                 }
-                else if (isBinary) {
+                // Бинарные операторы (+, -, *, /, &, |)
+                else if (lexema == LEX_PLUS || lexema == LEX_MINUS ||
+                    lexema == LEX_STAR || lexema == LEX_DIRSLASH ||
+                    lexema == LEX_BIT_AND || lexema == LEX_BIT_OR) {
+
                     if (exprStack.size() >= 2) {
                         std::string right = exprStack.top();
                         exprStack.pop();
                         std::string left = exprStack.top();
                         exprStack.pop();
 
-                        if (op == LEX_EQUALS) {
-                            // Присваивание: left = right
-                            asmCode += "    pop eax\n";        // Правая часть
-                            asmCode += "    pop ebx\n";        // Левая часть (адрес)
-                            asmCode += "    mov [ebx], eax\n"; // Присваивание
-                            asmCode += "    push eax\n";       // Результат
+                        // Загружаем правый операнд в EBX
+                        std::string rightValue = getOperandValue(right);
+                        if (rightValue.find("[") == 0) {
+                            asmCode += "    mov ebx, " + rightValue + "\n";
                         }
-                        else if (op == LEX_DIRSLASH) {
-                            // Деление
-                            asmCode += "    pop ebx\n";    // Делитель
-                            asmCode += "    pop eax\n";    // Делимое
-                            asmCode += "    cdq\n";        // Расширяем eax до edx:eax
-                            asmCode += "    idiv ebx\n";   // Деление
-                            asmCode += "    push eax\n";   // Результат (частное)
+                        else if (rightValue.find("offset") == 0) {
+                            asmCode += "    mov ebx, " + rightValue + "\n";
                         }
                         else {
-                            // Другие бинарные операции
-                            asmCode += "    pop ebx\n";
-                            asmCode += "    pop eax\n";
-                            asmCode += "    " + asmOp + " eax, ebx\n";
-                            asmCode += "    push eax\n";
+                            asmCode += "    mov ebx, " + rightValue + "\n";
                         }
 
+                        // Загружаем левый операнд в EAX
+                        std::string leftValue = getOperandValue(left);
+                        if (leftValue.find("[") == 0) {
+                            asmCode += "    mov eax, " + leftValue + "\n";
+                        }
+                        else if (leftValue.find("offset") == 0) {
+                            asmCode += "    mov eax, " + leftValue + "\n";
+                        }
+                        else {
+                            asmCode += "    mov eax, " + leftValue + "\n";
+                        }
+
+                        // Выполняем операцию
+                        switch (lexema) {
+                        case LEX_PLUS:
+                            asmCode += "    add eax, ebx\n";
+                            break;
+                        case LEX_MINUS:
+                            asmCode += "    sub eax, ebx\n";
+                            break;
+                        case LEX_STAR:
+                            asmCode += "    imul eax, ebx\n";
+                            break;
+                        case LEX_DIRSLASH:
+                            asmCode += "    cdq\n";
+                            asmCode += "    idiv ebx\n";
+                            break;
+                        case LEX_BIT_AND:
+                            asmCode += "    and eax, ebx\n";
+                            break;
+                        case LEX_BIT_OR:
+                            asmCode += "    or eax, ebx\n";
+                            break;
+                        }
+
+                        // Результат в EAX
+                        exprStack.push("eax");
+                    }
+                }
+                // Присваивание =
+                else if (lexema == LEX_EQUALS) {
+                    if (exprStack.size() >= 2) {
+                        std::string right = exprStack.top();  // Значение или "eax"
+                        exprStack.pop();
+                        std::string left = exprStack.top();   // Имя переменной
+                        exprStack.pop();
+
+                        // Если правое значение в EAX (результат предыдущей операции)
+                        if (right == "eax") {
+                            // EAX уже содержит значение
+                            asmCode += "    mov [" + left + "], eax\n";
+                        }
+                        else {
+                            // Загружаем правое значение в EAX
+                            std::string rightValue = getOperandValue(right);
+                            if (rightValue.find("[") == 0) {
+                                asmCode += "    mov eax, " + rightValue + "\n";
+                            }
+                            else if (rightValue.find("offset") == 0) {
+                                asmCode += "    mov eax, " + rightValue + "\n";
+                            }
+                            else {
+                                asmCode += "    mov eax, " + rightValue + "\n";
+                            }
+
+                            // Сохраняем в левую переменную
+                            asmCode += "    mov [" + left + "], eax\n";
+                        }
+
+                        // Результат присваивания остается в EAX
                         exprStack.push("eax");
                     }
                 }
             }
         }
 
-        // Если в стеке что-то осталось - это результат
-        if (!exprStack.empty()) {
-            asmCode += "    pop eax\n";  // Результат в eax
-        }
+        // Если это print или return, результат должен быть в EAX
+        // Для print: EAX будет передан в print_uint
+        // Для return: EAX будет возвращаемым значением
 
         return asmCode;
     }
@@ -879,27 +1014,40 @@ namespace ASM_CodeGeneration {
                              
             case LEX_ID:
             case LEX_LITERAL:
-                if (lextable.table[i - 1].lexema[0] == LEX_STRING) break;
+                if (lextable.table[i - 1].lexema[0] == LEX_STRING) {
+                    cout << "ОБЪЯВЛЕНИЕ НА ХУЙ НЕ НАДО" << endl;
+                    break;
+                }
 
 				info = idtable.table[entry.idxTI];
 				start = i;
 				end = i;
+
 
 				for (; i < lextable.size; i++) {
 					entry = lextable.table[i];
 					lexema = entry.lexema[0];
 
 					if (lexema == LEX_SEMICOLON ||
-						lexema == FILLER_CHAR ||
-						lexema == LEX_PRINT ||
-						lexema == LEX_RETURN) {
-						end = i;
+						lexema == FILLER_CHAR) {
+                        end = i;
 						break;
 					}
 				}
+                
+                i = start;
+				for (; i < end; i++) {
+					entry = lextable.table[i];
+					lexema = entry.lexema[0];
+                    cout << lexema;
+				}
+                cout << endl;
 
+
+                //valueStr = "";
                 valueStr = "\t\t;EXP\n";
-				valueStr += PolishToASMExpression(lextable, idtable, start + 1, end - 1);
+                cout << "HUI" << endl;
+				valueStr += PolishToASMExpression(lextable, idtable, start, end - 1);
 
                 /*
 				if (lexema == LEX_PRINT) valueStr = "console.log(" + valueStr + ")";
