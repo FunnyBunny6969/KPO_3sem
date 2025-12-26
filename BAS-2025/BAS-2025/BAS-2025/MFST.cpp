@@ -285,7 +285,7 @@ namespace MFST
 	void Mfst::printrules()
 	{
 		*log->stream << "== ÄÅĞÅÂÎ ĞÀÇÁÎĞÀ ==" << endl;
-		*log->stream << setfill('-') << endl;
+		*log->stream << setfill(' ') << endl;
 		MfstState state;
 		GRB::Rule rule;
 		for (unsigned short i = 0; i < storestate.size(); i++)

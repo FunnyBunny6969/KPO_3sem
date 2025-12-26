@@ -55,6 +55,20 @@ uint function bitwise_ops(uint result, uint op_type)
         result = result * 2;
         break;
     };
+
+    char bukva; bukva = 'F';
+    switch (bukva)
+    {
+    case 'A': print 'A'; break;
+    case 'F': print 'F'; break;
+    };
+
+    string word; word = 'WORD';
+    switch (word)
+    {
+    case 'hhh': print 'hhh'; break;
+    case 'WORD': print 'word'; break;
+    };
     
     return result;
 };

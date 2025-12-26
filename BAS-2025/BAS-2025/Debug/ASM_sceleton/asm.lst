@@ -1,0 +1,659 @@
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/26/25 00:48:54
+asm.asm							     Page 1 - 1
+
+
+				; test_program.asm
+				; Скомпилировать: ml.exe /c /coff test_program.asm
+				; Слинковать: link test_program.obj kernel32.lib user32.lib /subsystem:console /entry:main
+
+				.586
+				.model flat, stdcall
+				option casemap:none
+
+				; Импорт функций WinAPI
+				includelib kernel32.lib
+				includelib user32.lib
+
+				GetStdHandle proto :dword
+				WriteConsoleA proto :dword, :dword, :dword, :dword, :dword
+				ExitProcess proto :dword
+				GetTickCount proto
+				GetProcessHeap proto
+				HeapAlloc proto :dword, :dword, :dword
+				HeapFree proto :dword, :dword, :dword
+
+ =-0000000B			STD_OUTPUT_HANDLE = -11
+
+ 00000000			.data
+				    ; Строки для вывода
+ 00000000 D0 B4 D0 B5 D0	    str_demo_underflow db 'демонстрации переполнения', 13, 10, 0
+	   BC D0 BE D0 BD
+	   D1 81 D1 82 D1
+	   80 D0 B0 D1 86
+	   D0 B8 D0 B8 20
+	   D0 BF D0 B5 D1
+	   80 D0 B5 D0 BF
+	   D0 BE D0 BB D0
+	   BD D0 B5 D0 BD
+	   D0 B8 D1 8F 0D
+	   0A 00
+ 00000034 61 20 3D 20 00	    str_a db 'a = ', 0
+ 00000039 62 20 3D 20 00	    str_b db 'b = ', 0
+ 0000003E 63 20 3D 20 00	    str_c db 'c = ', 0
+ 00000043 D0 92 D1 8B D0	    str_call_lib db 'Вызов библиотечных функций', 13, 10, 0
+	   B7 D0 BE D0 B2
+	   20 D0 B1 D0 B8
+	   D0 B1 D0 BB D0
+	   B8 D0 BE D1 82
+	   D0 B5 D1 87 D0
+	   BD D1 8B D1 85
+	   20 D1 84 D1 83
+	   D0 BD D0 BA D1
+	   86 D0 B8 D0 B9
+	   0D 0A 00
+ 00000078 70 6F 77 28 75	    str_pow db 'pow(uint, uint)', 13, 10, 0
+	   69 6E 74 2C 20
+	   75 69 6E 74 29
+	   0D 0A 00
+ 0000008A 72 61 6E 64 6F	    str_random db 'random(uint min, uint max)', 13, 10, 0
+	   6D 28 75 69 6E
+	   74 20 6D 69 6E
+	   2C 20 75 69 6E
+	   74 20 6D 61 78
+	   29 0D 0A 00
+ 000000A7 3D 3D 3D 20 D0	    str_bit_test db '=== ТЕСТ БИТОВЫХ ОПЕРАЦИЙ ===', 13, 10, 0
+	   A2 D0 95 D0 A1
+	   D0 A2 20 D0 91
+	   D0 98 D0 A2 D0
+	   9E D0 92 D0 AB
+	   D0 A5 20 D0 9E
+	   D0 9F D0 95 D0
+	   A0 D0 90 D0 A6
+	   D0 98 D0 99 20
+	   3D 3D 3D 0D 0A
+	   00
+ 000000DA 62 69 74 77 69	    str_bitwise_ops db 'bitwise_ops(0x12, 0x00) = ', 0
+	   73 65 5F 6F 70
+	   73 28 30 78 31
+	   32 2C 20 30 78
+	   30 30 29 20 3D
+	   20 00
+ 000000F5 62 69 74 77 69	    str_bitwise_ops1 db 'bitwise_ops(0x12, 0x01) = ', 0
+	   73 65 5F 6F 70
+	   73 28 30 78 31
+	   32 2C 20 30 78
+	   30 31 29 20 3D
+	   20 00
+ 00000110 62 69 74 77 69	    str_bitwise_ops2 db 'bitwise_ops(0x12, 0x02) = ', 0
+	   73 65 5F 6F 70
+	   73 28 30 78 31
+	   32 2C 20 30 78
+	   30 32 29 20 3D
+	   20 00
+ 0000012B 62 69 74 77 69	    str_bitwise_ops3 db 'bitwise_ops(0x12, 0x03) = ', 0
+	   73 65 5F 6F 70
+	   73 28 30 78 31
+	   32 2C 20 30 78
+	   30 33 29 20 3D
+	   20 00
+ 00000146 74 65 73 74 5F	    str_test_uint db 'test_uint = ', 0
+	   75 69 6E 74 20
+	   3D 20 00
+ 00000153 74 65 73 74 5F	    str_test_string db 'test_string = ', 0
+	   73 74 72 69 6E
+	   67 20 3D 20 00
+ 00000162 74 65 73 74 5F	    str_test_char db 'test_char = ', 0
+	   63 68 61 72 20
+	   3D 20 00
+ 0000016F D0 94 D0 9E 0D	    str_before_init db 'ДО', 13, 10, 0
+	   0A 00
+ 00000176 D0 9F D0 9E D0	    str_after_init db 'ПОСЛЕ', 13, 10, 0
+	   A1 D0 9B D0 95
+	   0D 0A 00
+ 00000183 0D 0A 00		    str_newline db 13, 10, 0
+ 00000186 20 00			    str_space db ' ', 0
+				    
+ 00000188 D0 A2 D0 95 D0	    test_string_literal db 'ТЕСТОВАЯ СТРОКА', 0
+	   A1 D0 A2 D0 9E
+	   D0 92 D0 90 D0
+	   AF 20 D0 A1 D0
+	   A2 D0 A0 D0 9E
+	   D0 9A D0 90 00
+ 000001A6 40 00			    test_char_literal db '@', 0
+				    
+				    ; Статические переменные
+ 000001A8 00000000		    random_seed dd 0
+				    
+				    ; Глобальные переменные из исходного кода
+ 000001AC 00000000		    test_uint dd 0
+ 000001B0 00000000		    test_string dd 0      ; указатель на строку
+ 000001B4 00			    test_char db 0
+				    
+				    ; Временные переменные
+ 000001B5 00000000		    console_handle dd 0
+ 000001B9 00000000		    bytes_written dd 0
+				    
+				    ; Буфер для преобразования чисел
+ 000001BD  00000020 [		    num_buffer db 32 dup(0)
+	    00
+	   ]
+
+ 00000000			.code
+
+				; =============== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===============
+
+				; Функция print_string: вывод строки в консоль
+				; [esp+4] = указатель на строку (ASCIIZ)
+ 00000000			print_string proc
+ 00000000  55			    push ebp
+ 00000001  8B EC		    mov ebp, esp
+ 00000003  53			    push ebx
+ 00000004  56			    push esi
+ 00000005  57			    push edi
+				    
+				    ; Получаем указатель на строку
+ 00000006  8B 75 08		    mov esi, [ebp+8]
+				    
+				    ; Вычисляем длину строки
+ 00000009  33 C9		    xor ecx, ecx
+ 0000000B			    strlen_loop:
+ 0000000B  80 3C 0E 00		        cmp byte ptr [esi+ecx], 0
+ 0000000F  74 03		        je strlen_done
+ 00000011  41			        inc ecx
+ 00000012  EB F7		        jmp strlen_loop
+ 00000014			    strlen_done:
+				    
+				    ; Выводим строку
+				    invoke WriteConsoleA, console_handle, esi, ecx, offset bytes_written, 0
+				    
+ 00000028  5F			    pop edi
+ 00000029  5E			    pop esi
+ 0000002A  5B			    pop ebx
+ 0000002B  8B E5		    mov esp, ebp
+ 0000002D  5D			    pop ebp
+ 0000002E  C2 0004		    ret 4
+ 00000031			print_string endp
+
+				; Функция print_uint: вывод беззнакового числа
+				; [esp+4] = число для вывода
+ 00000031			print_uint proc
+ 00000031  55			    push ebp
+ 00000032  8B EC		    mov ebp, esp
+ 00000034  53			    push ebx
+ 00000035  56			    push esi
+ 00000036  57			    push edi
+				    
+				    ; Преобразуем число в строку
+ 00000037  8B 45 08		    mov eax, [ebp+8]
+ 0000003A  8D 3D 000001DC R	    lea edi, [num_buffer+31]
+ 00000040  C6 07 00		    mov byte ptr [edi], 0
+ 00000043  4F			    dec edi
+ 00000044  BB 0000000A		    mov ebx, 10
+				    
+ 00000049			    convert_loop:
+ 00000049  33 D2		        xor edx, edx
+ 0000004B  F7 F3		        div ebx
+ 0000004D  80 C2 30		        add dl, '0'
+ 00000050  88 17		        mov [edi], dl
+ 00000052  4F			        dec edi
+ 00000053  85 C0		        test eax, eax
+ 00000055  75 F2		        jnz convert_loop
+				    
+				    ; Выводим строку
+ 00000057  8D 47 01		    lea eax, [edi+1]
+ 0000005A  50			    push eax
+ 0000005B  E8 FFFFFFA0		    call print_string
+				    
+				    ; Выводим перевод строки
+ 00000060  68 00000183 R	    push offset str_newline
+ 00000065  E8 FFFFFF96		    call print_string
+				    
+ 0000006A  5F			    pop edi
+ 0000006B  5E			    pop esi
+ 0000006C  5B			    pop ebx
+ 0000006D  8B E5		    mov esp, ebp
+ 0000006F  5D			    pop ebp
+ 00000070  C2 0004		    ret 4
+ 00000073			print_uint endp
+
+				; Функция print_char: вывод символа
+				; [esp+4] = символ для вывода
+ 00000073			print_char proc
+ 00000073  55			    push ebp
+ 00000074  8B EC		    mov ebp, esp
+				    
+				    ; Сохраняем символ в буфер
+ 00000076  8A 45 08		    mov al, byte ptr [ebp+8]
+ 00000079  A2 000001BD R	    mov byte ptr [num_buffer], al
+ 0000007E  C6 05 000001BE R	    mov byte ptr [num_buffer+1], 0
+	   00
+				    
+				    ; Выводим
+ 00000085  68 000001BD R	    push offset num_buffer
+ 0000008A  E8 FFFFFF71		    call print_string
+				    
+				    ; Выводим перевод строки
+ 0000008F  68 00000183 R	    push offset str_newline
+ 00000094  E8 FFFFFF67		    call print_string
+				    
+ 00000099  8B E5		    mov esp, ebp
+ 0000009B  5D			    pop ebp
+ 0000009C  C2 0004		    ret 4
+ 0000009F			print_char endp
+
+				; Функция pow: возведение в степень
+				; [esp+4] = основание, [esp+8] = степень
+				; Возвращает: EAX = результат
+ 0000009F			pow proc
+ 0000009F  55			    push ebp
+ 000000A0  8B EC		    mov ebp, esp
+ 000000A2  53			    push ebx
+				    
+ 000000A3  B8 00000001		    mov eax, 1          ; результат
+ 000000A8  8B 4D 08		    mov ecx, [ebp+8]    ; основание
+ 000000AB  8B 55 0C		    mov edx, [ebp+12]   ; степень
+ 000000AE  85 D2		    test edx, edx
+ 000000B0  74 06		    jz pow_done
+				    
+ 000000B2			    pow_loop:
+ 000000B2  0F AF C1		        imul eax, ecx
+ 000000B5  4A			        dec edx
+ 000000B6  75 FA		        jnz pow_loop
+				    
+ 000000B8			    pow_done:
+ 000000B8  5B			    pop ebx
+ 000000B9  8B E5		    mov esp, ebp
+ 000000BB  5D			    pop ebp
+ 000000BC  C2 0008		    ret 8
+ 000000BF			pow endp
+
+				; Функция random: генератор случайных чисел
+				; [esp+4] = минимум, [esp+8] = максимум
+				; Возвращает: EAX = случайное число
+ 000000BF			random proc
+ 000000BF  55			    push ebp
+ 000000C0  8B EC		    mov ebp, esp
+ 000000C2  53			    push ebx
+				    
+				    ; Инициализируем seed если нужно
+ 000000C3  83 3D 000001A8 R	    cmp random_seed, 0
+	   00
+ 000000CA  75 0A		    jne seed_ok
+ 000000CC  E8 00000000 E	    call GetTickCount
+ 000000D1  A3 000001A8 R	    mov random_seed, eax
+				    
+ 000000D6			    seed_ok:
+				    ; Линейный конгруэнтный генератор
+ 000000D6  A1 000001A8 R	    mov eax, random_seed
+ 000000DB  B9 41C64E6D		    mov ecx, 1103515245
+ 000000E0  F7 E1		    mul ecx
+ 000000E2  05 00003039		    add eax, 12345
+ 000000E7  A3 000001A8 R	    mov random_seed, eax
+				    
+				    ; Получаем число в диапазоне
+ 000000EC  C1 E8 10		    shr eax, 16         ; берем средние биты
+ 000000EF  25 00007FFF		    and eax, 7FFFh
+				    
+ 000000F4  8B 4D 08		    mov ecx, [ebp+8]    ; максимум
+ 000000F7  8B 5D 04		    mov ebx, [ebp+4]    ; минимум
+ 000000FA  2B CB		    sub ecx, ebx
+ 000000FC  41			    inc ecx
+ 000000FD  33 D2		    xor edx, edx
+ 000000FF  F7 F1		    div ecx
+ 00000101  8B C3		    mov eax, ebx
+ 00000103  03 C2		    add eax, edx
+				    
+ 00000105  5B			    pop ebx
+ 00000106  8B E5		    mov esp, ebp
+ 00000108  5D			    pop ebp
+ 00000109  C2 0008		    ret 8
+ 0000010C			random endp
+
+				; =============== ФУНКЦИИ ИЗ ИСХОДНОГО КОДА ===============
+
+				; Функция demonstrate_underflow
+ 0000010C			demonstrate_underflow proc
+ 0000010C  55			    push ebp
+ 0000010D  8B EC		    mov ebp, esp
+ 0000010F  83 EC 0C		    sub esp, 12         ; место для локальных переменных a, b, c
+				    
+				    ; Выводим сообщение
+ 00000112  68 00000000 R	    push offset str_demo_underflow
+ 00000117  E8 FFFFFEE4		    call print_string
+				    
+				    ; a = 5
+ 0000011C  C7 45 FC		    mov dword ptr [ebp-4], 5
+	   00000005
+ 00000123  68 00000034 R	    push offset str_a
+ 00000128  E8 FFFFFED3		    call print_string
+ 0000012D  FF 75 FC		    push [ebp-4]
+ 00000130  E8 FFFFFEFC		    call print_uint
+				    
+				    ; b = 10
+ 00000135  C7 45 F8		    mov dword ptr [ebp-8], 10
+	   0000000A
+ 0000013C  68 00000039 R	    push offset str_b
+ 00000141  E8 FFFFFEBA		    call print_string
+ 00000146  FF 75 F8		    push [ebp-8]
+ 00000149  E8 FFFFFEE3		    call print_uint
+				    
+				    ; c = a - b (underflow)
+ 0000014E  8B 45 FC		    mov eax, [ebp-4]
+ 00000151  2B 45 F8		    sub eax, [ebp-8]
+ 00000154  89 45 F4		    mov [ebp-12], eax
+ 00000157  68 0000003E R	    push offset str_c
+ 0000015C  E8 FFFFFE9F		    call print_string
+ 00000161  FF 75 F4		    push [ebp-12]
+ 00000164  E8 FFFFFEC8		    call print_uint
+				    
+ 00000169  8B E5		    mov esp, ebp
+ 0000016B  5D			    pop ebp
+ 0000016C  C3			    ret
+ 0000016D			demonstrate_underflow endp
+
+				; Функция use_standard_library
+ 0000016D			use_standard_library proc
+ 0000016D  55			    push ebp
+ 0000016E  8B EC		    mov ebp, esp
+				    
+				    ; Выводим сообщение
+ 00000170  68 00000043 R	    push offset str_call_lib
+ 00000175  E8 FFFFFE86		    call print_string
+				    
+				    ; pow(2, 2)
+ 0000017A  68 00000078 R	    push offset str_pow
+ 0000017F  E8 FFFFFE7C		    call print_string
+ 00000184  6A 02		    push 2      ; степень
+ 00000186  6A 02		    push 2      ; основание
+ 00000188  E8 FFFFFF12		    call pow
+ 0000018D  50			    push eax
+ 0000018E  E8 FFFFFE9E		    call print_uint
+				    
+				    ; pow(3, 3)
+ 00000193  6A 03		    push 3      ; степень
+ 00000195  6A 03		    push 3      ; основание
+ 00000197  E8 FFFFFF03		    call pow
+ 0000019C  50			    push eax
+ 0000019D  E8 FFFFFE8F		    call print_uint
+				    
+				    ; random(0, 100)
+ 000001A2  68 0000008A R	    push offset str_random
+ 000001A7  E8 FFFFFE54		    call print_string
+ 000001AC  6A 64		    push 100    ; максимум
+ 000001AE  6A 00		    push 0      ; минимум
+ 000001B0  E8 FFFFFF0A		    call random
+ 000001B5  50			    push eax
+ 000001B6  E8 FFFFFE76		    call print_uint
+				    
+				    ; random(1, 9)
+ 000001BB  6A 09		    push 9      ; максимум
+ 000001BD  6A 01		    push 1      ; минимум
+ 000001BF  E8 FFFFFEFB		    call random
+ 000001C4  50			    push eax
+ 000001C5  E8 FFFFFE67		    call print_uint
+				    
+ 000001CA  8B E5		    mov esp, ebp
+ 000001CC  5D			    pop ebp
+ 000001CD  C3			    ret
+ 000001CE			use_standard_library endp
+
+				; Функция bitwise_ops
+				; [esp+4] = result, [esp+8] = op_type
+				; Возвращает: EAX = результат
+ 000001CE			bitwise_ops proc
+ 000001CE  55			    push ebp
+ 000001CF  8B EC		    mov ebp, esp
+ 000001D1  53			    push ebx
+				    
+ 000001D2  8B 45 08		    mov eax, [ebp+8]    ; op_type
+ 000001D5  8B 5D 04		    mov ebx, [ebp+4]    ; result
+				    
+				    ; Switch по op_type
+ 000001D8  83 F8 00		    cmp eax, 0
+ 000001DB  74 0C		    je case_0
+ 000001DD  83 F8 01		    cmp eax, 1
+ 000001E0  74 0C		    je case_1
+ 000001E2  83 F8 02		    cmp eax, 2
+ 000001E5  74 0F		    je case_2
+ 000001E7  EB 11		    jmp default_case
+				    
+ 000001E9			    case_0:    ; AND с 0x0F
+ 000001E9  83 E3 0F		        and ebx, 0Fh
+ 000001EC  EB 0E		        jmp end_switch
+				    
+ 000001EE			    case_1:    ; OR с 0xF0
+ 000001EE  81 CB 000000F0	        or ebx, 0F0h
+ 000001F4  EB 06		        jmp end_switch
+				    
+ 000001F6			    case_2:    ; NOT
+ 000001F6  F7 D3		        not ebx
+ 000001F8  EB 02		        jmp end_switch
+				    
+ 000001FA			    default_case:   ; умножить на 2
+ 000001FA  D1 E3		        shl ebx, 1
+				    
+ 000001FC			    end_switch:
+ 000001FC  8B C3		    mov eax, ebx
+				    
+ 000001FE  5B			    pop ebx
+ 000001FF  8B E5		    mov esp, ebp
+ 00000201  5D			    pop ebp
+ 00000202  C2 0008		    ret 8
+ 00000205			bitwise_ops endp
+
+				; =============== ГЛАВНАЯ ФУНКЦИЯ ===============
+ 00000205			main proc
+				    ; Инициализация
+				    invoke GetStdHandle, STD_OUTPUT_HANDLE
+ 0000020C  A3 000001B5 R	    mov console_handle, eax
+				    
+				    ; Проверка значений ДО инициализации
+ 00000211  68 0000016F R	    push offset str_before_init
+ 00000216  E8 FFFFFDE5		    call print_string
+				    
+				    ; test_uint (неинициализирован)
+ 0000021B  68 00000146 R	    push offset str_test_uint
+ 00000220  E8 FFFFFDDB		    call print_string
+ 00000225  FF 35 000001AC R	    push test_uint
+ 0000022B  E8 FFFFFE01		    call print_uint
+				    
+				    ; test_string (неинициализирован)
+ 00000230  68 00000153 R	    push offset str_test_string
+ 00000235  E8 FFFFFDC6		    call print_string
+ 0000023A  83 3D 000001B0 R	    cmp test_string, 0
+	   00
+ 00000241  74 0D		    je empty_string
+ 00000243  FF 35 000001B0 R	    push test_string
+ 00000249  E8 FFFFFDB2		    call print_string
+ 0000024E  EB 0A		    jmp after_string
+ 00000250			empty_string:
+ 00000250  68 00000183 R	    push offset str_newline
+ 00000255  E8 FFFFFDA6		    call print_string
+ 0000025A			after_string:
+				    
+				    ; test_char (неинициализирован)
+ 0000025A  68 00000162 R	    push offset str_test_char
+ 0000025F  E8 FFFFFD9C		    call print_string
+ 00000264  0F B6 05		    movzx eax, test_char
+	   000001B4 R
+ 0000026B  50			    push eax
+ 0000026C  E8 FFFFFE02		    call print_char
+				    
+				    ; Инициализация
+ 00000271  C7 05 000001AC R	    mov test_uint, 5
+	   00000005
+ 0000027B  C7 05 000001B0 R	    mov test_string, offset test_string_literal
+	   00000188 R
+ 00000285  C6 05 000001B4 R	    mov test_char, '@'
+	   40
+				    
+				    ; Проверка значений ПОСЛЕ инициализации
+ 0000028C  68 00000176 R	    push offset str_after_init
+ 00000291  E8 FFFFFD6A		    call print_string
+				    
+				    ; test_uint
+ 00000296  68 00000146 R	    push offset str_test_uint
+ 0000029B  E8 FFFFFD60		    call print_string
+ 000002A0  FF 35 000001AC R	    push test_uint
+ 000002A6  E8 FFFFFD86		    call print_uint
+				    
+				    ; test_string
+ 000002AB  68 00000153 R	    push offset str_test_string
+ 000002B0  E8 FFFFFD4B		    call print_string
+ 000002B5  FF 35 000001B0 R	    push test_string
+ 000002BB  E8 FFFFFD40		    call print_string
+				    
+				    ; test_char
+ 000002C0  68 00000162 R	    push offset str_test_char
+ 000002C5  E8 FFFFFD36		    call print_string
+ 000002CA  0F B6 05		    movzx eax, test_char
+	   000001B4 R
+ 000002D1  50			    push eax
+ 000002D2  E8 FFFFFD9C		    call print_char
+				    
+				    ; Демонстрация underflow
+ 000002D7  E8 FFFFFE30		    call demonstrate_underflow
+				    
+				    ; Вызовы стандартной библиотеки
+ 000002DC  E8 FFFFFE8C		    call use_standard_library
+				    
+				    ; Тест битовых операций
+ 000002E1  68 000000A7 R	    push offset str_bit_test
+ 000002E6  E8 FFFFFD15		    call print_string
+				    
+				    ; bitwise_ops(0x12, 0x00)
+ 000002EB  68 000000DA R	    push offset str_bitwise_ops
+ 000002F0  E8 FFFFFD0B		    call print_string
+ 000002F5  6A 00		    push 0      ; op_type
+ 000002F7  6A 12		    push 12h    ; result
+ 000002F9  E8 FFFFFED0		    call bitwise_ops
+ 000002FE  50			    push eax
+ 000002FF  E8 FFFFFD2D		    call print_uint
+				    
+				    ; bitwise_ops(0x12, 0x01)
+ 00000304  68 000000F5 R	    push offset str_bitwise_ops1
+ 00000309  E8 FFFFFCF2		    call print_string
+ 0000030E  6A 01		    push 1      ; op_type
+ 00000310  6A 12		    push 12h    ; result
+ 00000312  E8 FFFFFEB7		    call bitwise_ops
+ 00000317  50			    push eax
+ 00000318  E8 FFFFFD14		    call print_uint
+				    
+				    ; bitwise_ops(0x12, 0x02)
+ 0000031D  68 00000110 R	    push offset str_bitwise_ops2
+ 00000322  E8 FFFFFCD9		    call print_string
+ 00000327  6A 02		    push 2      ; op_type
+ 00000329  6A 12		    push 12h    ; result
+ 0000032B  E8 FFFFFE9E		    call bitwise_ops
+ 00000330  50			    push eax
+ 00000331  E8 FFFFFCFB		    call print_uint
+				    
+				    ; bitwise_ops(0x12, 0x03)
+ 00000336  68 0000012B R	    push offset str_bitwise_ops3
+ 0000033B  E8 FFFFFCC0		    call print_string
+ 00000340  6A 03		    push 3      ; op_type
+ 00000342  6A 12		    push 12h    ; result
+ 00000344  E8 FFFFFE85		    call bitwise_ops
+ 00000349  50			    push eax
+ 0000034A  E8 FFFFFCE2		    call print_uint
+				    
+				    ; Завершение программы
+				    invoke ExitProcess, 0
+ 00000356			main endp
+
+				end main
+Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/26/25 00:48:54
+asm.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 000001DD Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000356 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetProcessHeap . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetStdHandle . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetTickCount . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+HeapAlloc  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+WriteConsoleA  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+bitwise_ops  . . . . . . . . . .	P Near	 000001CE _TEXT	Length= 00000037 Public STDCALL
+  case_0 . . . . . . . . . . . .	L Near	 000001E9 _TEXT	
+  case_1 . . . . . . . . . . . .	L Near	 000001EE _TEXT	
+  case_2 . . . . . . . . . . . .	L Near	 000001F6 _TEXT	
+  default_case . . . . . . . . .	L Near	 000001FA _TEXT	
+  end_switch . . . . . . . . . .	L Near	 000001FC _TEXT	
+demonstrate_underflow  . . . . .	P Near	 0000010C _TEXT	Length= 00000061 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000205 _TEXT	Length= 00000151 Public STDCALL
+  empty_string . . . . . . . . .	L Near	 00000250 _TEXT	
+  after_string . . . . . . . . .	L Near	 0000025A _TEXT	
+pow  . . . . . . . . . . . . . .	P Near	 0000009F _TEXT	Length= 00000020 Public STDCALL
+  pow_loop . . . . . . . . . . .	L Near	 000000B2 _TEXT	
+  pow_done . . . . . . . . . . .	L Near	 000000B8 _TEXT	
+print_char . . . . . . . . . . .	P Near	 00000073 _TEXT	Length= 0000002C Public STDCALL
+print_string . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000031 Public STDCALL
+  strlen_loop  . . . . . . . . .	L Near	 0000000B _TEXT	
+  strlen_done  . . . . . . . . .	L Near	 00000014 _TEXT	
+print_uint . . . . . . . . . . .	P Near	 00000031 _TEXT	Length= 00000042 Public STDCALL
+  convert_loop . . . . . . . . .	L Near	 00000049 _TEXT	
+random . . . . . . . . . . . . .	P Near	 000000BF _TEXT	Length= 0000004D Public STDCALL
+  seed_ok  . . . . . . . . . . .	L Near	 000000D6 _TEXT	
+use_standard_library . . . . . .	P Near	 0000016D _TEXT	Length= 00000061 Public STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
+bytes_written  . . . . . . . . .	DWord	 000001B9 _DATA	
+console_handle . . . . . . . . .	DWord	 000001B5 _DATA	
+num_buffer . . . . . . . . . . .	Byte	 000001BD _DATA	
+random_seed  . . . . . . . . . .	DWord	 000001A8 _DATA	
+str_after_init . . . . . . . . .	Byte	 00000176 _DATA	
+str_a  . . . . . . . . . . . . .	Byte	 00000034 _DATA	
+str_before_init  . . . . . . . .	Byte	 0000016F _DATA	
+str_bit_test . . . . . . . . . .	Byte	 000000A7 _DATA	
+str_bitwise_ops1 . . . . . . . .	Byte	 000000F5 _DATA	
+str_bitwise_ops2 . . . . . . . .	Byte	 00000110 _DATA	
+str_bitwise_ops3 . . . . . . . .	Byte	 0000012B _DATA	
+str_bitwise_ops  . . . . . . . .	Byte	 000000DA _DATA	
+str_b  . . . . . . . . . . . . .	Byte	 00000039 _DATA	
+str_call_lib . . . . . . . . . .	Byte	 00000043 _DATA	
+str_c  . . . . . . . . . . . . .	Byte	 0000003E _DATA	
+str_demo_underflow . . . . . . .	Byte	 00000000 _DATA	
+str_newline  . . . . . . . . . .	Byte	 00000183 _DATA	
+str_pow  . . . . . . . . . . . .	Byte	 00000078 _DATA	
+str_random . . . . . . . . . . .	Byte	 0000008A _DATA	
+str_space  . . . . . . . . . . .	Byte	 00000186 _DATA	
+str_test_char  . . . . . . . . .	Byte	 00000162 _DATA	
+str_test_string  . . . . . . . .	Byte	 00000153 _DATA	
+str_test_uint  . . . . . . . . .	Byte	 00000146 _DATA	
+test_char_literal  . . . . . . .	Byte	 000001A6 _DATA	
+test_char  . . . . . . . . . . .	Byte	 000001B4 _DATA	
+test_string_literal  . . . . . .	Byte	 00000188 _DATA	
+test_string  . . . . . . . . . .	DWord	 000001B0 _DATA	
+test_uint  . . . . . . . . . . .	DWord	 000001AC _DATA	
+
+	   0 Warnings
+	   0 Errors

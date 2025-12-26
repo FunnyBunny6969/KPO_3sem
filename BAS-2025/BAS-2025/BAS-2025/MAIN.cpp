@@ -65,6 +65,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		//==================================
 		JS_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
 		//==================================
+		Out::Close(out);
+		out = Out::getout((wchar_t*)L"asm.asm");
+		//==================================
+		ASM_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
+		//==================================
+
 
         cout << "\n=== GENERATION SUCCESSFUL ===" << endl;
         *log.stream << "\n=== GENERATION SUCCESSFUL ===" << endl;
