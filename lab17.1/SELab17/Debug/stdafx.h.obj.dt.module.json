@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\stdafx.obj",
+            "outputs": [
+                "Debug\\stdafx.h.obj.dt.module.json",
+                "Debug\\stdafx.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

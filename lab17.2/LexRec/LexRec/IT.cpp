@@ -44,8 +44,9 @@ namespace IT {
             return;
         }
 
-        // Копируем идентификатор (усекаем до ID_MAXSIZE)
+        // Копируем идентификатор
         strncpy_s(idtable.table[idtable.size].id, ID_MAXSIZE, entry.id, _TRUNCATE);
+        std::cout << idtable.table[idtable.size].id << std::endl;
 
         // Копируем остальные поля
         idtable.table[idtable.size].idxfirstLE = entry.idxfirstLE;

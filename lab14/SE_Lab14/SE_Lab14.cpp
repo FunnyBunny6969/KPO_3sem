@@ -14,6 +14,9 @@
 using namespace std;
 
 
+void GoodOne(int, _TCHAR* []);
+
+
 void geterrorTEST();
 void getparmTEST(int, _TCHAR*[]);
 void getinTEST(int, _TCHAR*[]);
@@ -24,9 +27,49 @@ void outTEST(int, _TCHAR*[]);
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_CTYPE, "Russian");
-	getlogTEST(argc, argv);
-	outTEST(argc, argv);
+	GoodOne(argc, argv);
+
+	//getparmTEST(argc, argv);
+	//geterrorTEST();
+	//getinTEST(argc, argv);
+	//getlogTEST(argc, argv);
+	//outTEST(argc, argv);
 	return 0;
+}
+
+
+void GoodOne(int argc, _TCHAR* argv[])
+{
+	Log::LOG log = Log::INITLOG;
+	try {
+		Parm::PARM parm = Parm::getparm(argc, argv);
+		log = Log::getlog(parm.log);
+		Log::WriteLog(log);
+		Log::WriteParm(log, parm);
+		In::IN in = In::getin(parm.in);
+		Log::WriteIn(log, in);
+		Log::Close(log);
+	}
+	catch (const Error::ERROR& e) {
+		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
+		Log::WriteError(log, e);
+	}
+
+
+	Out::OUT out = Out::INITOUT;
+	try {
+		Parm::PARM parm = Parm::getparm(argc, argv);
+		out = Out::getout(parm.out);
+		In::IN in = In::getin(parm.in);
+		Out::WriteInOut(out, in);
+		Out::Close(out);
+	}
+	catch (Error::ERROR e)
+	{
+		std::cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
+		Out::WriteErrorOut(out, e);
+	};
+
 }
 
 

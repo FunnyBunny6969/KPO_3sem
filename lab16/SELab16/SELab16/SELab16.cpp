@@ -65,7 +65,8 @@ int _tmain(int argc, _TCHAR* argv[])
     strncpy_s(test, "Open     write; close", sizeof(test) - 1);
     testChain(test);
 
-
+    strncpy_s(test, "open     write; rrrrrr close", sizeof(test) - 1);
+    testChain(test);
 
 	system("pause");
 	return 0;

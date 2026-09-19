@@ -8,15 +8,20 @@ using namespace std;
 
 void run(int argc, _TCHAR* argv[]) {
 	Log::LOG log = Log::INITLOG;
+	Out::OUT out = Out::INITOUT;
 	In::IN in;
 	try {
 		Parm::PARM parm = Parm::getparm(argc, argv);
+		in = In::getin(parm.in);
 		log = Log::getlog(parm.log);
+		out = Out::getout(parm.out);
+
 		Log::WriteLog(log);
 		Log::WriteParm(log, parm);
-		in = In::getin(parm.in);
+
+		Out::WriteInOut(out, in);
 		Log::WriteIn(log, in);
-		Log::Close(log);
+
 
 
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
@@ -42,25 +47,16 @@ void run(int argc, _TCHAR* argv[]) {
 		std::cout << "Ошибка " << e.id << " : " << e.message 
 			<< " LINE " << e.inext.line 
 			<< " COL "  << e.inext.col << std::endl << std::endl;
-		TestLexer::TestSplitter(in);
+		if (e.id >= 200) {
+			TestLexer::TestSplitter(in);
+		}
+
 		Log::WriteError(log, e);
-	}
-
-
-
-	Out::OUT out = Out::INITOUT;
-	try {
-		Parm::PARM parm = Parm::getparm(argc, argv);
-		out = Out::getout(parm.out);
-		In::IN in = In::getin(parm.in);
-		Out::WriteInOut(out, in);
-		Out::Close(out);
-	}
-	catch (Error::ERROR e)
-	{
-		cout << "Ошибка " << e.id << " : " << e.message << std::endl << std::endl;
 		Out::WriteErrorOut(out, e);
-	};
+	}
+
+	Out::Close(out);
+	Log::Close(log);
 
 }
 

@@ -1,4 +1,8 @@
-﻿  Tests.cpp
-D:\UNIK\02\kpo\kpo_3sem\lab17.2\LexRec\LexRec\Tests.cpp(477,21): warning C4018: <: несоответствие типов со знаком и без знака
-D:\UNIK\02\kpo\kpo_3sem\lab17.2\LexRec\LexRec\Tests.cpp(480,22): warning C4018: <: несоответствие типов со знаком и без знака
-  LexRec.vcxproj -> D:\UNIK\02\kpo\kpo_3sem\lab17.2\LexRec\Debug\LexRec.exe
+﻿  IT.cpp
+  Lexer.cpp
+  SELab17.cpp
+  Tests.cpp
+X:\univer\courses\02\KPO_3sem\lab17.2\LexRec\LexRec\Tests.cpp(477,21): warning C4018: '<': несоответствие знака и беззнака
+X:\univer\courses\02\KPO_3sem\lab17.2\LexRec\LexRec\Tests.cpp(480,22): warning C4018: '<': несоответствие знака и беззнака
+  Создание кода...
+  LexRec.vcxproj -> X:\univer\courses\02\KPO_3sem\lab17.2\LexRec\Debug\LexRec.exe

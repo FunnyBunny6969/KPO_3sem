@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\PN.obj",
+            "outputs": [
+                "Debug\\PN.cpp.obj.dt.module.json",
+                "Debug\\PN.cpp.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

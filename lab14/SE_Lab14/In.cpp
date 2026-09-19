@@ -45,10 +45,12 @@ namespace In {
             }
 
             // Конец строки
+
             if (ch == IN_CODE_ENDL) {
-                result.text[result.size++] = '|';
+                int symbol_code = result.code[static_cast<unsigned char>(ch)];
+                result.text[result.size++] = static_cast<unsigned char>(symbol_code);
                 result.lines++;
-                pos_in_line = 1; 
+                pos_in_line = 1;
                 continue;
             }
 

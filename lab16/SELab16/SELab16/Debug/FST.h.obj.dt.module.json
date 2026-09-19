@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\FST.obj",
+            "outputs": [
+                "Debug\\FST.h.obj.dt.module.json",
+                "Debug\\FST.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

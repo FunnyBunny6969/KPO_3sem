@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "x:\\univer\\courses\\02\\kpo_3sem\\lab17.2\\lexrec\\lexrec\\error.cpp",
+        "ProvidedModule": "",
+        "Includes": [
+            "x:\\univer\\courses\\02\\kpo_3sem\\lab17.2\\lexrec\\lexrec\\stdafx.h",
+            "x:\\univer\\courses\\02\\kpo_3sem\\lab17.2\\lexrec\\lexrec\\error.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

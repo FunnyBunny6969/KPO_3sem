@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\Lexer.obj",
+            "outputs": [
+                "Debug\\Lexer.h.obj.dt.module.json",
+                "Debug\\Lexer.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

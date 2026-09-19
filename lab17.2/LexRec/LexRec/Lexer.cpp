@@ -152,10 +152,10 @@ namespace Lexer {
                         IT::Entry idEntry;
 
                         if (code == LEX_ID) {
-                            // ИДЕНТИФИКАТОР - обрезаем до 5 символов
+                            // ИДЕНТИФИКАТОР
                             int copyLen = word.length();
                             if (copyLen >= ID_MAXSIZE)
-                                copyLen = ID_MAXSIZE - 1;
+                                throw ERROR_THROW_IN(201, lineNumber, wordNumber);
 
                             for (int i = 0; i < copyLen; i++) {
                                 idEntry.id[i] = word[i];
@@ -201,8 +201,13 @@ namespace Lexer {
                                 // Убираем кавычки и копируем содержимое
                                 std::string content = word.substr(1, word.length() - 2);
                                 int strLen = content.length();
+                                /*
                                 if (strLen >= TI_STR_MAXSIZE - 1)
                                     strLen = TI_STR_MAXSIZE - 2;
+                                */
+                                if (strLen >= TI_STR_MAXSIZE - 1)
+                                    throw ERROR_THROW_IN(205, lineNumber, wordNumber);
+
 
                                 idEntry.value.vstr[0].len = strLen;
                                 for (int i = 0; i < strLen; i++) {
