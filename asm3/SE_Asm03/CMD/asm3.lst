@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 12:09:18
+Microsoft (R) Macro Assembler Version 14.51.36256.0	    10/03/26 14:54:38
 asm3.asm						     Page 1 - 1
 
 
@@ -50,7 +50,7 @@ asm3.asm						     Page 1 - 1
  00000022  E8 00000000 E	    call ExitProcess
 
 				end main
-Microsoft (R) Macro Assembler Version 14.44.35222.0	    12/25/25 12:09:18
+Microsoft (R) Macro Assembler Version 14.51.36256.0	    10/03/26 14:54:38
 asm3.asm						     Symbols 2 - 1
 
 

@@ -11,8 +11,10 @@ enum DataType : uint8_t {
     TYPE_INT = 0x01,
     TYPE_STRING = 0x02,
     TYPE_BOOL = 0x03,
-    TYPE_SHORT = 0x04
+    TYPE_SHORT = 0x04,
+    TYPE_UINT32 = 0x05
 };
+
 
 struct Data {
     DataType type;
@@ -20,6 +22,7 @@ struct Data {
         bool boolValue;
         int16_t shortValue;
         int32_t intValue;
+        uint32_t uint32Value;
         string* stringValue;
     } value;
 
@@ -37,6 +40,9 @@ struct Data {
             break;
         case TYPE_INT:
             value.intValue = other.value.intValue;
+            break;
+        case TYPE_UINT32:
+            value.uint32Value = other.value.uint32Value;
             break;
         case TYPE_STRING:
             if (other.value.stringValue) {
@@ -107,6 +113,20 @@ vector<Data> deserialize(const string& filename) {
             break;
         }
 
+        case TYPE_UINT32: {
+            uint32_t val = 0;
+            for (int i = 0; i < 4; i++) {
+                uint8_t byte;
+                if (!file.read(reinterpret_cast<char*>(&byte), 1)) {
+                    cerr << "Ошибка чтения int" << endl;
+                    return result;
+                }
+                val |= (byte << (i * 8));
+            }
+            item.value.uint32Value = val;
+            break;
+        }
+
         case TYPE_STRING: {
             uint32_t len = 0;
             for (int i = 0; i < 4; i++) {
@@ -159,6 +179,10 @@ void printData(const vector<Data>& data) {
             cout << "SHORT: " << item.value.shortValue;
             break;
 
+        case TYPE_UINT32:
+            cout << "UINT: " << item.value.uint32Value;
+            break;
+
         case TYPE_INT:
             cout << "INT: " << item.value.intValue;
             break;
@@ -192,8 +216,8 @@ void generateAssembler(const string& filename, const vector<Data>& data) {
     asmFile << ".model flat, stdcall\n";
     asmFile << "ExitProcess PROTO :DWORD\n";
     asmFile << "includelib kernel32.lib\n\n";
-    //asmFile << "option casemap:none\n\n";
     asmFile << ".data\n\n";
+
     for (size_t i = 0; i < data.size(); i++) {
         const Data& item = data[i];
 
@@ -202,38 +226,55 @@ void generateAssembler(const string& filename, const vector<Data>& data) {
         switch (item.type) {
         case TYPE_BOOL:
             asmFile << "data" << i << "_type db 03h      ; TYPE_BOOL\n";
-            asmFile << "data" << i << "_value db " << (item.value.boolValue ? "1" : "0") << "\n";
+            asmFile << "data" << i << "_value db "
+                << (item.value.boolValue ? "1" : "0") << "\n";
             break;
 
         case TYPE_SHORT:
             asmFile << "data" << i << "_type db 04h      ; TYPE_SHORT\n";
-            asmFile << "data" << i << "_value dw " << item.value.shortValue << "\n";
+            asmFile << "data" << i << "_value dw "
+                << item.value.shortValue << "\n";
+            break;
+
+        case TYPE_UINT32:
+            asmFile << "data" << i << "_type db 05h      ; TYPE_UINT32\n";
+            asmFile << "data" << i << "_value dd "
+                << item.value.uint32Value << "\n";
             break;
 
         case TYPE_INT:
             asmFile << "data" << i << "_type db 01h      ; TYPE_INT\n";
-            asmFile << "data" << i << "_value dd " << item.value.intValue << "\n";
+            asmFile << "data" << i << "_value dd "
+                << item.value.intValue << "\n";
             break;
 
-        case TYPE_STRING:
-			asmFile << "data" << i << "_type db 02h      ; TYPE_STRING\n";
-            if (item.value.stringValue) {
-                asmFile << "data" << i << "_length dd " << item.value.stringValue->length() << "\n";
-                asmFile << "data" << i << "_value db '" << *item.value.stringValue << "'\n";
-            }
-            else {
+        case TYPE_STRING: {
+            asmFile << "data" << i << "_type db 02h      ; TYPE_STRING\n";
+            if (item.value.stringValue == nullptr) {
                 asmFile << "data" << i << "_length dd 0\n";
                 asmFile << "data" << i << "_value db 0\n";
             }
+            else {
+                const std::string& s = *item.value.stringValue;
+                asmFile << "data" << i << "_length dd " << s.length() << "\n";
+
+                if (s.empty())
+                    asmFile << "data" << i << "_value db 0\n";
+                else
+                    asmFile << "data" << i << "_value db '" << s << "'\n";
+            }
             break;
         }
+        } 
+
         asmFile << "\n";
-    }
+    } 
 
     asmFile << ".code\n";
     asmFile << "start:\n";
     asmFile << "call ExitProcess\n";
-    asmFile << "end start\n";   
+    asmFile << "end start\n";
+
     asmFile.close();
 }
 

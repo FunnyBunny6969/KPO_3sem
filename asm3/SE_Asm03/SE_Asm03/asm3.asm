@@ -18,9 +18,9 @@ message    BYTE    "Окно с кнопкой OK", 0
 
 .code
 main:
-    mov ESI, OFFSET myWords
-    mov AX, [ESI + 4]
-    mov BX, [ESI + 2]
+    mov ESI, 0
+    mov EAX, myDoubles[ESI]
+    mov EDX, [myDoubles + ESI]
 
 	push 0                  ; uType = MB_OK
     push OFFSET caption     ; заголовок
