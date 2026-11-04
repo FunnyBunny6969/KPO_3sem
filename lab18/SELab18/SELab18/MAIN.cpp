@@ -33,7 +33,7 @@ void run(int argc, _TCHAR* argv[]) {
 
 
 		MFST_TRACE_START                              // отладка
-			MFST::Mfst mfst(tables, GRB::getGreibach());  // автомат
+		MFST::Mfst mfst(tables, GRB::getGreibach());  // автомат
 
 		mfst.start();                                 // старт синтаксического анализа
 

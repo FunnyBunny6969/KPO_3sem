@@ -1,6 +1,6 @@
 integer function fi(integer x, integer y) 
-{ 
-declare  integer z; 
+{
+declare integer z; 
 z= x*(x+y); 
 return z;  
 };   

@@ -1,0 +1,147 @@
+Microsoft (R) Macro Assembler Version 14.41.34123.0	    12/13/24 10:24:55
+SE_asm01.asm						     Page 1 - 1
+
+
+				.586P
+				.MODEL FLAT, STDCALL
+				includelib kernel32.lib
+
+				ExitProcess PROTO : DWORD
+				MessageBoxA PROTO : DWORD, : DWORD, : DWORD, : DWORD
+
+				.STACK 4096
+
+ 00000000			.CONST 
+
+ 00000000 00000006		Arr sdword 6,4,6,8,2,5,6,8,9,10
+	   00000004
+	   00000006
+	   00000008
+	   00000002
+	   00000005
+	   00000006
+	   00000008
+	   00000009
+	   0000000A
+
+ 00000000			.DATA
+
+ 00000000 4C 61 62 5F 31	str1 DB "Lab_19", 0
+	   39 00
+ 00000007 EC E8 ED 20 3D	str2 DB "мин =  ", 0
+	   20 20 00
+
+ = 00000000			MB_OK EQU 0  
+ 0000000F 00000000		HW DWORD ?
+
+ 00000013 00000000		min sdword ?
+ 00000017 00000000		max sdword ?
+
+ 00000000			.CODE
+
+ 00000000			main PROC
+ 00000000			START:
+
+ 00000000  6A 0A		push lengthof Arr
+ 00000002  68 00000000 R	push offset Arr
+
+ 00000007  E8 00000039		call getMin
+
+ 0000000C  8B D8		  mov EBX, EAX                               
+ 0000000E  B9 0000000A		  mov ECX, 10                                
+ 00000013  8D 3D 0000000D R	  lea EDI, [str2 + 6] 
+ 00000019			  ConvertToString:
+ 00000019  33 D2		  xor EDX, EDX                               
+ 0000001B  F7 F1		  div ECX                                    
+ 0000001D  80 C2 30		  add DL, '0'                                
+ 00000020  88 17		  mov [EDI], DL                              
+ 00000022  4F			  dec EDI                                    
+ 00000023  85 C0		  test EAX, EAX                              
+ 00000025  75 F2		  jnz ConvertToString
+				  
+
+				  INVOKE MessageBoxA, HW, offset str2,offset str1, 0
+
+ 0000003E  6A 00		push 0
+ 00000040  E8 00000000 E	call ExitProcess
+ 00000045			main ENDP
+
+ 00000045			getMin PROC uses ecx esi ebx, parm01: dword, parm02: dword
+
+ 0000004B  8B 4D 0C		      mov   ecx, parm02
+ 0000004E  8B 75 08		      mov   esi, parm01
+ 00000051  8B 06		      mov   eax, [esi]
+
+ 00000053			CYCLE: 
+
+ 00000053  8B 1E		      mov   ebx, [esi]
+ 00000055  83 C6 04		      add   esi, 4
+ 00000058  3B C3		      cmp   eax, ebx
+ 0000005A  7C 01		      jl    NOTMIN
+ 0000005C  93			      xchg  eax, ebx
+
+ 0000005D			NOTMIN: 
+
+ 0000005D  E2 F4		      loop  CYCLE
+
+				ret
+
+ 00000066			getMin ENDP
+
+				END main
+Microsoft (R) Macro Assembler Version 14.41.34123.0	    12/13/24 10:24:55
+SE_asm01.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CONST  . . . . . . . . . . . . .	32 Bit	 00000028 Para	  Public  'CONST'	 ReadOnly
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000001B Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000066 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+getMin . . . . . . . . . . . . .	P Near	 00000045 _TEXT	Length= 00000021 Public STDCALL
+  parm01 . . . . . . . . . . . .	DWord	 bp + 00000008
+  parm02 . . . . . . . . . . . .	DWord	 bp + 0000000C
+  CYCLE  . . . . . . . . . . . .	L Near	 00000053 _TEXT	
+  NOTMIN . . . . . . . . . . . .	L Near	 0000005D _TEXT	
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000045 Public STDCALL
+  START  . . . . . . . . . . . .	L Near	 00000000 _TEXT	
+  ConvertToString  . . . . . . .	L Near	 00000019 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+Arr  . . . . . . . . . . . . . .	DWord	 00000000 CONST	
+HW . . . . . . . . . . . . . . .	DWord	 0000000F _DATA	
+MB_OK  . . . . . . . . . . . . .	Number	 00000000h   
+max  . . . . . . . . . . . . . .	DWord	 00000017 _DATA	
+min  . . . . . . . . . . . . . .	DWord	 00000013 _DATA	
+str1 . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+str2 . . . . . . . . . . . . . .	Byte	 00000007 _DATA	
+
+	   0 Warnings
+	   0 Errors

@@ -1,0 +1,23 @@
+﻿Сборка начата 13.12.2024 10:55:13.
+Уровень детализации журнала: Normal.     1>Проект "C:\лабы\Наркевич\КПО\KPO-3sem\KPO\lab_19\SE_asm01c\SE_asm01c.vcxproj" в узле 2 (целевые объекты Build).
+     1>PrepareForBuild:
+         Структурированный вывод включен. Форматирование диагностики компилятора будет отражать иерархию ошибок. Подробнее см. https://aka.ms/cpp/structured-output.
+       InitializeBuildStatus:
+         Создание "Debug\SE_asm01c.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+         Обращение к "Debug\SE_asm01c.tlog\unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\bin\HostX86\x86\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /permissive- /Fo"Debug\\" /Fd"Debug\vc143.pdb" /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt SE_asm01c.cpp
+         SE_asm01c.cpp
+       Link:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"C:\лабы\Наркевич\КПО\KPO-3sem\KPO\lab_19\Debug\SE_asm01c.exe" /INCREMENTAL /ILK:"Debug\SE_asm01c.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\лабы\Наркевич\КПО\KPO-3sem\KPO\lab_19\Debug\SE_asm01c.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\лабы\Наркевич\КПО\KPO-3sem\KPO\lab_19\Debug\SE_asm01c.lib" /MACHINE:X86 Debug\SE_asm01c.obj
+         SE_asm01c.vcxproj -> C:\лабы\Наркевич\КПО\KPO-3sem\KPO\lab_19\Debug\SE_asm01c.exe
+       FinalizeBuildStatus:
+         Файл "Debug\SE_asm01c.tlog\unsuccessfulbuild" удаляется.
+         Обращение к "Debug\SE_asm01c.tlog\SE_asm01c.lastbuildstate".
+     1>Сборка проекта "C:\лабы\Наркевич\КПО\KPO-3sem\KPO\lab_19\SE_asm01c\SE_asm01c.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+    Предупреждений: 0
+    Ошибок: 0
+
+Прошло времени 00:00:01.70

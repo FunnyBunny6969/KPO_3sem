@@ -46,7 +46,6 @@ class MFSTSTSTACK :public std::stack<short> { //стек автомата
 public:
 	using std::stack<short>::c;
 };
-//typedef std::stack<short> MFSTSTSTACK;    // стек автомата
 
 
 
