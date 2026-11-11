@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\GRB.obj",
+            "outputs": [
+                "Debug\\GRB.h.obj.dt.module.json",
+                "Debug\\GRB.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

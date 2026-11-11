@@ -29,7 +29,4 @@ namespace LEX {
         LT::LexTable& lexTable,
         IT::IdTable& idTable
     );
-
-
-    void CollectFunctionMetadata(LT::LexTable& lexTable, IT::IdTable& idTable);
 }

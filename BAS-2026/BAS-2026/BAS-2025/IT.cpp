@@ -20,11 +20,11 @@ namespace IT {
         for (int i = 0; i < size; i++) {
             idtable.table[i].idxfirstLE = -1;
             idtable.table[i].id[0] = '\0';
-            idtable.table[i].iddatatype = UINT;
+            idtable.table[i].iddatatype = SHORT;
             idtable.table[i].idtype = V;
 
             // »нициализируем значени€ по умолчанию
-            idtable.table[i].value.vint = TI_INT_DEFAULT;
+            idtable.table[i].value.vshort = TI_INT_DEFAULT;
         }
 
         return idtable;
@@ -55,8 +55,8 @@ namespace IT {
         idtable.table[idtable.size].idtype = entry.idtype;
 
         //  опируем значение в зависимости от типа данных
-        if (entry.iddatatype == UINT) {
-            idtable.table[idtable.size].value.vint = entry.value.vint;
+        if (entry.iddatatype == SHORT) {
+            idtable.table[idtable.size].value.vshort = entry.value.vshort;
         }
         else if (entry.iddatatype == CHAR) {
             idtable.table[idtable.size].value.vchar = entry.value.vchar;
@@ -84,9 +84,9 @@ namespace IT {
             Entry emptyEntry;
             emptyEntry.idxfirstLE = -1;
             emptyEntry.id[0] = '\0';
-            emptyEntry.iddatatype = UINT;
+            emptyEntry.iddatatype = SHORT;
             emptyEntry.idtype = V;
-            emptyEntry.value.vint = TI_INT_DEFAULT;
+            emptyEntry.value.vshort = TI_INT_DEFAULT;
             return emptyEntry;
         }
 
@@ -138,24 +138,24 @@ namespace IT {
         strncpy_s(powEntry.id, ID_REALSIZE, "pow", _TRUNCATE);
         powEntry.id[ID_REALSIZE - 1] = '\0';
         powEntry.idtype = IT::F;  
-        powEntry.iddatatype = IT::UINT;   
+        powEntry.iddatatype = IT::SHORT;   
         powEntry.idxfirstLE = -1;     
         powEntry.scope = GLOBAL_SCOPE;
         powEntry.func_meta.n_params = 2;
-        powEntry.func_meta.params_types[0] = IT::UINT;
-        powEntry.func_meta.params_types[1] = IT::UINT;
+        powEntry.func_meta.params_types[0] = IT::SHORT;
+        powEntry.func_meta.params_types[1] = IT::SHORT;
         IT::Add(idTable, powEntry);
 
         IT::Entry randEntry;
         strncpy_s(randEntry.id, ID_REALSIZE, "random", _TRUNCATE);
         randEntry.id[ID_REALSIZE - 1] = '\0';
         randEntry.idtype = IT::F; 
-        randEntry.iddatatype = IT::UINT; 
+        randEntry.iddatatype = IT::SHORT; 
         randEntry.idxfirstLE = -1;     
         randEntry.scope = GLOBAL_SCOPE;
         randEntry.func_meta.n_params = 2;
-        randEntry.func_meta.params_types[0] = IT::UINT;
-        randEntry.func_meta.params_types[1] = IT::UINT;
+        randEntry.func_meta.params_types[0] = IT::SHORT;
+        randEntry.func_meta.params_types[1] = IT::SHORT;
         IT::Add(idTable, randEntry);
     }
 }

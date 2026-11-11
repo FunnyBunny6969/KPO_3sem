@@ -104,8 +104,8 @@ namespace SemanticAnalyzer
 				lexema == LEX_BIT_OR))
 				throw ERROR_THROW_LINE(713, lextable.table[i].sn);
 
-			if(lexema == LEX_LITERAL && info.iddatatype == IT::UINT)
-				if (info.value.vint == 0)
+			if(lexema == LEX_LITERAL && info.iddatatype == IT::SHORT)
+				if (info.value.vshort == 0)
 					if(lextable.table[i-1].lexema[0] == LEX_DIRSLASH)
 						throw ERROR_THROW_LINE(714, lextable.table[i].sn);
 
@@ -192,7 +192,7 @@ namespace SemanticAnalyzer
 			if (lexema == LEX_ID) {
 				info = idtable.table[entry.idxTI];
 				if (lextable.table[i - 1].lexema[0] == LEX_STRING ||
-					lextable.table[i - 1].lexema[0] == LEX_UINT ||
+					lextable.table[i - 1].lexema[0] == LEX_SHORT ||
 					lextable.table[i - 1].lexema[0] == LEX_CHAR)
 				{
 					bool exists = 

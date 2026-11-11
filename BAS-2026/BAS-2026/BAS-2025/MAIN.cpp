@@ -2,9 +2,7 @@
 #include "Tests.h"
 #include "LEX.h"
 #include "MFST.h"
-#include "PN.h"
 #include "Sem.h"
-#include "Gen.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -54,7 +52,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 		//==================================
-		PN::FindExpressions(tables.lexTable, tables.idTable, log);
+		//PN::FindExpressions(tables.lexTable, tables.idTable, log);
 		//==================================
 
 
@@ -63,12 +61,12 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 		//==================================
-		JS_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
+		//JS_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
 		//==================================
 		Out::Close(out);
 		out = Out::getout((wchar_t*)L"asm.asm");
 		//==================================
-		ASM_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
+		//ASM_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
 		//==================================
 
 

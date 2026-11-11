@@ -126,7 +126,7 @@ namespace TestLT {
         entry.idxfirstLE = lexemeIndex;
         entry.iddatatype = dataType;
         entry.idtype = type;
-        entry.value.vint = TI_INT_DEFAULT;
+        entry.value.vshort = TI_INT_DEFAULT;
         return entry;
     }
 
@@ -224,8 +224,8 @@ namespace TestLT {
 
 			else if (entry.lexema[0] == LEX_LITERAL) {
 				IT::Entry e = idtable.table[entry.idxTI];
-				if (e.iddatatype == IT::UINT)
-					*log.stream << e.value.vint << " ";
+				if (e.iddatatype == IT::SHORT)
+					*log.stream << e.value.vshort << " ";
 				else if (e.iddatatype == IT::CHAR)
 					*log.stream << "'" << e.value.vchar << "' ";
 				else if (e.iddatatype == IT::STR)
@@ -254,7 +254,7 @@ namespace TestIT {
         entry.idxfirstLE = lexemeIndex;
         entry.iddatatype = dataType;
         entry.idtype = type;
-        entry.value.vint = TI_INT_DEFAULT;
+        entry.value.vshort = TI_INT_DEFAULT;
         return entry;
     }
 
@@ -276,7 +276,7 @@ namespace TestIT {
 
             const char* dataTypeStr = "";
             switch (entry.iddatatype) {
-            case IT::UINT:   dataTypeStr = "UINT"; break;
+            case IT::SHORT:   dataTypeStr = "SHORT"; break;
             case IT::STR:    dataTypeStr = "STR"; break;
             case IT::CHAR:   dataTypeStr = "CHAR";break;
             case IT::UNDEF:  dataTypeStr = "UNDEF";break;
@@ -293,8 +293,8 @@ namespace TestIT {
             // Формируем значение для вывода
             string valueStr = "";
             if (entry.idtype == IT::L) {
-                if (entry.iddatatype == IT::UINT) {
-                    valueStr = to_string(entry.value.vint);
+                if (entry.iddatatype == IT::SHORT) {
+                    valueStr = to_string(entry.value.vshort);
                 }
                 else if (entry.iddatatype == IT::CHAR) {
                     valueStr = "'";
@@ -340,18 +340,18 @@ namespace TestIT {
 
         IT::IdTable it = IT::Create(10);
 
-        IT::Add(it, CreateEntry("main", 0, IT::UINT, IT::F));    // функция
-        IT::Add(it, CreateEntry("x", 2, IT::UINT, IT::P));       // параметр
-        IT::Add(it, CreateEntry("y", 3, IT::UINT, IT::P));       // параметр
-        IT::Add(it, CreateEntry("z", 4, IT::UINT, IT::V));       // переменная
+        IT::Add(it, CreateEntry("main", 0, IT::SHORT, IT::F));    // функция
+        IT::Add(it, CreateEntry("x", 2, IT::SHORT, IT::P));       // параметр
+        IT::Add(it, CreateEntry("y", 3, IT::SHORT, IT::P));       // параметр
+        IT::Add(it, CreateEntry("z", 4, IT::SHORT, IT::V));       // переменная
 
         // Добавим тестовые литералы
         IT::Entry litEntry;
         strcpy_s(litEntry.id, ID_MAXSIZE, "L1");
         litEntry.idxfirstLE = 5;
-        litEntry.iddatatype = IT::UINT;
+        litEntry.iddatatype = IT::SHORT;
         litEntry.idtype = IT::L;
-        litEntry.value.vint = 123;
+        litEntry.value.vshort = 123;
         IT::Add(it, litEntry);
 
         IT::Entry strLitEntry;
@@ -399,10 +399,10 @@ namespace TestAutomata {
         cout << "\n=== ТЕСТИРОВАНИЕ АВТОМАТОВ КЛЮЧЕВЫХ СЛОВ ===" << endl;
 
         // INTEGER
-        TestSingleAutomata(Automata::U_INTEGER, "unsigned_integer", true, "INTEGER");
-        TestSingleAutomata(Automata::U_INTEGER, "intege", false, "INTEGER");
-        TestSingleAutomata(Automata::U_INTEGER, "int", false, "INTEGER");
-        TestSingleAutomata(Automata::U_INTEGER, "INTEGER", false, "INTEGER");
+        TestSingleAutomata(Automata::SHORT, "unsigned_integer", true, "INTEGER");
+        TestSingleAutomata(Automata::SHORT, "intege", false, "INTEGER");
+        TestSingleAutomata(Automata::SHORT, "int", false, "INTEGER");
+        TestSingleAutomata(Automata::SHORT, "INTEGER", false, "INTEGER");
 
         // STRING
         TestSingleAutomata(Automata::STRING, "string", true, "STRING");
@@ -505,7 +505,7 @@ namespace TestAutomata {
         };
 
         TestCase testCases[] = {
-            {"integer", LEX_UINT, "ключевое слово integer"},
+            {"integer", LEX_SHORT, "ключевое слово integer"},
             {"string", LEX_STRING, "ключевое слово string"},
             {"function", LEX_FUNCTION, "ключевое слово function"},
             {"declare", LEX_DECLARE, "ключевое слово declare"},
@@ -609,7 +609,7 @@ namespace TestLexer {
                     const char* typeStr = "UNKNOWN";
 
                     // Конвертируем тип в строку (вам нужно будет адаптировать эти константы)
-                    if (type == IT::UINT) {       typeStr = "INT"; }
+                    if (type == IT::SHORT) {       typeStr = "INT"; }
                     else if (type == IT::STR) {  typeStr = "STRING"; }
                     else if (type == IT::CHAR) { typeStr = "CHAR"; } 
 
