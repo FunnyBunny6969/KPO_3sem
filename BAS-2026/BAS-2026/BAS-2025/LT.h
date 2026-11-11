@@ -4,7 +4,7 @@
 #define LT_MAXSIZE 4096            // максимальное количество строк в таблице лексем
 #define LT_TI_NULLIDX 0xffffffff   // нет элемента таблицы идентификаторов
 
-#define LEX_UINT        't'   // лексема для unsigned_integer
+#define LEX_SHORT       't'   // лексема для short
 #define LEX_STRING      't'   // лексема для string
 #define LEX_CHAR        't'   // лексема для char
 #define LEX_ID          'i'   // лексема для идентификатора

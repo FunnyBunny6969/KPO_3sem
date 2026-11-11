@@ -2,12 +2,14 @@
 
 namespace Automata {
 	// ========== КЛЮЧЕВЫЕ СЛОВА ==========
-	const FST::FST U_INTEGER = FST::FST(
-		"", 5,
-		FST::NODE(1, FST::RELATION('u', 1)),
-		FST::NODE(1, FST::RELATION('i', 2)),
-		FST::NODE(1, FST::RELATION('n', 3)),
+	const FST::FST SHORT = FST::FST(
+		"", 6,
+		FST::NODE(1, FST::RELATION('s', 1)),
+		FST::NODE(1, FST::RELATION('h', 2)),
+		FST::NODE(1, FST::RELATION('o', 3)),
+		FST::NODE(1, FST::RELATION('r', 4)),
 		FST::NODE(1, FST::RELATION('t', 4)),
+
 		FST::NODE()
 	);
 
@@ -208,18 +210,28 @@ namespace Automata {
 	);
 
 	const FST::FST NUMBER_LITERAL = FST::FST(
-		"", 2,
-		FST::NODE(10,  // начальное состояние: только цифры
-			FST::RELATION('0', 1), FST::RELATION('1', 1), FST::RELATION('2', 1),
-			FST::RELATION('3', 1), FST::RELATION('4', 1), FST::RELATION('5', 1),
-			FST::RELATION('6', 1), FST::RELATION('7', 1), FST::RELATION('8', 1),
-			FST::RELATION('9', 1)
+		"", 3,
+		// Состояние 0 (Начальное): '-' ведет в 1, любая цифра '0'..'9' сразу в конечное 2
+		FST::NODE(11,
+			FST::RELATION('-', 1),
+			FST::RELATION('0', 2), FST::RELATION('1', 2), FST::RELATION('2', 2),
+			FST::RELATION('3', 2), FST::RELATION('4', 2), FST::RELATION('5', 2),
+			FST::RELATION('6', 2), FST::RELATION('7', 2), FST::RELATION('8', 2),
+			FST::RELATION('9', 2)
 		),
-		FST::NODE(10,  // последующие состояния: только цифры
-			FST::RELATION('0', 1), FST::RELATION('1', 1), FST::RELATION('2', 1),
-			FST::RELATION('3', 1), FST::RELATION('4', 1), FST::RELATION('5', 1),
-			FST::RELATION('6', 1), FST::RELATION('7', 1), FST::RELATION('8', 1),
-			FST::RELATION('9', 1)
+		// Состояние 1 (После знака '-'): любая цифра '0'..'9' ведет в конечное 2
+		FST::NODE(10,
+			FST::RELATION('0', 2), FST::RELATION('1', 2), FST::RELATION('2', 2),
+			FST::RELATION('3', 2), FST::RELATION('4', 2), FST::RELATION('5', 2),
+			FST::RELATION('6', 2), FST::RELATION('7', 2), FST::RELATION('8', 2),
+			FST::RELATION('9', 2)
+		),
+		// Состояние 2 (Конечное с петлей): крутит любые последующие цифры '0'..'9'
+		FST::NODE(10,
+			FST::RELATION('0', 2), FST::RELATION('1', 2), FST::RELATION('2', 2),
+			FST::RELATION('3', 2), FST::RELATION('4', 2), FST::RELATION('5', 2),
+			FST::RELATION('6', 2), FST::RELATION('7', 2), FST::RELATION('8', 2),
+			FST::RELATION('9', 2)
 		)
 	);
 
@@ -706,7 +718,7 @@ namespace Automata {
 
 	char getLexemeCode(const char* text) {
 		if (executeAutomata(BREAK, text)) return LEX_BREAK;
-		if (executeAutomata(U_INTEGER, text)) return LEX_UINT;
+		if (executeAutomata(SHORT, text)) return LEX_SHORT;
 		if (executeAutomata(CHAR, text)) return LEX_CHAR;
 		if (executeAutomata(STRING, text)) return LEX_STRING;
 		if (executeAutomata(FUNCTION, text)) return LEX_FUNCTION;

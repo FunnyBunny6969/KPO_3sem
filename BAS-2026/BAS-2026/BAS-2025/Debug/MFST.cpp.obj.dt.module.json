@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\MFST.obj",
+            "outputs": [
+                "Debug\\MFST.cpp.obj.dt.module.json",
+                "Debug\\MFST.cpp.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

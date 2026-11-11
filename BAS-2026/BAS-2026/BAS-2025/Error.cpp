@@ -40,7 +40,7 @@ namespace Error
         ERROR_ENTRY(204, "Неизвестный оператор"),
         ERROR_ENTRY(205, "Невозможно преобразовать hex (невалидный формат)"),
         ERROR_ENTRY(206, "Превышен размер строкового литерала"),
-        ERROR_ENTRY(207, "Превышен максимальное допустимое значение UINT при присвоении"),
+        ERROR_ENTRY(207, "Недопустимое значение SHORT"),
         ERROR_ENTRY(208, "Необъявленный идентификатор"),
         ERROR_ENTRY_NODEF(209),
         ERROR_ENTRY_NODEF10(210), ERROR_ENTRY_NODEF10(220), ERROR_ENTRY_NODEF10(230), ERROR_ENTRY_NODEF10(240),

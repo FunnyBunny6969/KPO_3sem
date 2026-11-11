@@ -5,7 +5,7 @@
 
 namespace Automata {
 	// константные автоматы
-	extern const FST::FST U_INTEGER;    // для "integer"
+	extern const FST::FST SHORT;        // для "short"
 	extern const FST::FST CHAR;         // для "char"
 	extern const FST::FST STRING;       // для "string"  
 	extern const FST::FST FUNCTION;     // для "function"

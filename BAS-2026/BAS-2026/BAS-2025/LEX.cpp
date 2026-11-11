@@ -132,13 +132,99 @@ namespace LEX {
     }
 
 
+    bool checkShortLit(const std::string& word) {
+        size_t pos = 0;
+        bool isNegative = false;
+
+        if (word[0] == '-') {
+            isNegative = true;
+            pos = 1;
+        }
+
+        while (
+            pos < word.size() && 
+            word[pos] == '0') {
+            pos++;
+        }
+
+        if (pos == word.size()) { return true; }
+
+        size_t len = word.size() - pos;
+        if (len < 5) { return true; }
+        if (len > 5) { return false; }
+
+        const char* limit = isNegative ? "32768" : "32767";
+
+        for (size_t i = 0; i < 5; ++i) {
+            if (word[pos + i] < limit[i]) {
+                return true;
+            }
+            if (word[pos + i] > limit[i]) {
+                return false;
+            }
+        }
+
+        return true; 
+    }
+
+
+
+    bool checkHexShortRange(const std::string& word) {
+        size_t pos = 0;
+        bool isNegative = false;
+
+        if (word[0] == '-') {
+            isNegative = true;
+            pos = 1;
+        }
+
+        if (
+            pos + 1 < word.size() && 
+            word[pos] == '0' && 
+            (word[pos + 1] == 'x' || word[pos + 1] == 'X')) {
+            pos += 2;
+        }
+
+        while (pos < word.size() && word[pos] == '0') {
+            pos++;
+        }
+
+        if (pos == word.size()) {
+            return true;
+        }
+
+        size_t len = word.size() - pos;
+
+        if (len < 4) {
+            return true;
+        }
+        if (len > 4) {
+            return false;
+        }
+        
+        char first = word[pos];
+
+        if (first >= '0' && first <= '7') {
+            return true;
+        }
+
+        if (isNegative && first == '8') {
+            return word[pos + 1] == '0' && word[pos + 2] == '0' && word[pos + 3] == '0';
+        }
+
+        return false;
+    }
+
+
+
+
 
     void Analyze(const char* sourceCode, LT::LexTable& lexTable, IT::IdTable& idTable) {
 
         std::vector<std::vector<std::string>> lines;
         SplitIntoWords(sourceCode, lines);
 
-        const char* MAX_POSSIBLE_UINT = "2147483647";
+
         int lineNumber = 1;
         int wordNumber = 1;
         int literalCount = 1;
@@ -162,15 +248,11 @@ namespace LEX {
 
                 if (code == LEX_UNKNOWN) { throw ERROR_THROW_IN(200, lineNumber, wordNumber); }
 
-                else if (code == LEX_MAIN) {
-                    scope.push_back(MAIN_SCOPE);
-                }
-
+                else if (code == LEX_MAIN) { scope.push_back(MAIN_SCOPE); }
 
                 else if (code == LEX_FUNCTION) {
                     currentIdType = IT::F;
                 }
-
 
                 else if (code == LEX_LEFTHESIS && currentIdType == IT::F) {
                     currentIdType = IT::P;
@@ -191,9 +273,9 @@ namespace LEX {
                 }
 
 
-                else if (code == LEX_UINT) // int/char/string
+                else if (code == LEX_SHORT) // short/char/string
                 {
-                    if (Automata::executeAutomata(Automata::U_INTEGER, word.c_str())) currentDataType = IT::UINT;
+                    if (Automata::executeAutomata(Automata::SHORT, word.c_str())) currentDataType = IT::SHORT;
                     else if (Automata::executeAutomata(Automata::CHAR, word.c_str())) currentDataType = IT::CHAR;
                     else currentDataType = IT::STR;
                     isDeclaration = true;
@@ -217,7 +299,7 @@ namespace LEX {
 
                         idEntry.idtype = currentIdType;
                         idEntry.iddatatype = currentDataType;
-                        idEntry.value.vint = TI_INT_DEFAULT;
+                        idEntry.value.vshort = TI_INT_DEFAULT;
                         idEntry.idxfirstLE = lexTable.size;
                         idEntry.scope = scope.back();
 
@@ -280,22 +362,17 @@ namespace LEX {
 
                     // Числовой литерал
                     if (Automata::executeAutomata(Automata::NUMBER_LITERAL, word.c_str())) {
-                        idEntry.iddatatype = IT::UINT;
-
-                        if (word.length() > 10)
+                        if (!checkShortLit(word))
                             throw ERROR_THROW_LINE(207, lexEntry.sn);
-                        if (word.length() == 10)
-                            for (int w = 0; w < 10; w++)
-                                if (word[w] > MAX_POSSIBLE_UINT[w])
-                                    throw ERROR_THROW_LINE(207, lexEntry.sn);
-
-                        idEntry.value.vint = std::stoi(word);
+                        idEntry.iddatatype = IT::SHORT;
+                        idEntry.value.vshort = std::stoi(word);
                     }
                     // Числовой литерал HEX
                     else if (Automata::executeAutomata(Automata::HEX_NUMBER_LITERAL, word.c_str())) {
-                        idEntry.iddatatype = IT::UINT;
-                        try { idEntry.value.vint = HexToDemical(word); }
-                        catch (const Error::ERROR& e) { throw e; }
+                        if (!checkHexShortRange(word))
+                            throw ERROR_THROW_LINE(207, lexEntry.sn);
+                        idEntry.iddatatype = IT::SHORT;
+                        idEntry.value.vshort = HexToDemical(word);
                     }
                     // Символьный литерал
                     else if (Automata::executeAutomata(Automata::CHAR_LITERAL, word.c_str())) {

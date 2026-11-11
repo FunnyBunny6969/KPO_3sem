@@ -1,14 +1,14 @@
 // Функция демонстрации переполнения
-uint function demonstrate_underflow()
+short function demonstrate_underflow()
 {
     print 'демонстрации переполнения';
 
-    uint a; uint b; uint c;
+    short a; short b; short c;
     
     a = 0x05;   print 'a = '; print a;
     b = 0xa;    print 'b = '; print b;
     
-    // Выражение, результат которого "меньше нуля" для uint
+    // Выражение, результат которого "меньше нуля" для short
     c = a - b; // Будет 4294967291
     print 'c = '; print a - b;
     
@@ -17,15 +17,15 @@ uint function demonstrate_underflow()
 
 
 // Функция с вызовом стандартной библиотеки
-uint function use_standard_library()
+short function use_standard_library()
 {    
     print 'Вызов библиотечных функций';
     
-    print 'pow(uint, uint)';
+    print 'pow(short, short)';
     print pow(2, 2);
     print pow(3, 3);
 
-    print 'random(uint min, uint max)';
+    print 'random(short min, short max)';
     print random(0, 100);
     print random(1, 9);
 
@@ -34,7 +34,7 @@ uint function use_standard_library()
 
 
 // Функция с побитовыми операциями и switch
-uint function bitwise_ops(uint result, uint op_type)
+short function bitwise_ops(short result, short op_type)
 {        
     // Switch для выбора битовой операции
     switch (op_type)
@@ -68,22 +68,22 @@ uint function bitwise_ops(uint result, uint op_type)
 // Главная функция
 main
 {
-    uint test_uint; string test_string; char test_char;
+    short test_short; string test_string; char test_char;
 
     // Проверка значений до инициализации
     print 'ДО';
-    print 'test_uint = '; print test_uint;
+    print 'test_short = '; print test_short;
     print 'test_string = '; print test_string;
     print 'test_char = '; print test_char;
     
     // Инициализация
-    test_uint = 5;
+    test_short = 5;
     test_string = 'ТЕСТОВАЯ СТРОКА';
     test_char = '@';
 
     // Проверка значений ПОСЛЕ инициализации
     print 'ПОСЛЕ';
-    print 'test_uint = '; print test_uint;
+    print 'test_short = '; print test_short;
     print 'test_string = '; print test_string;
     print 'test_char = '; print test_char;
 
