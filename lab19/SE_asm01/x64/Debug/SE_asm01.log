@@ -1,0 +1,9 @@
+﻿  Assembling SE_asm01.asm...
+SE_asm01.asm(1): error A2008: syntax error : .
+SE_asm01.asm(2): error A2008: syntax error : .
+SE_asm01.asm(8): error A2008: syntax error : .
+SE_asm01.asm(31): error A2070: invalid instruction operands
+SE_asm01.asm(48): error A2008: syntax error : MessageBoxA
+SE_asm01.asm(54): error A2008: syntax error : ecx
+SE_asm01.asm(74): fatal error A1010: unmatched block nesting : getMin
+C:\Program Files\Microsoft Visual Studio\18\Insiders\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: выход из команды "ml64.exe /c /nologo /Zi /Fo"x64\Debug\SE_asm01.obj" /Fl"x64\Debug\\" /W3 /errorReport:prompt  /TaSE_asm01.asm" с кодом "1".

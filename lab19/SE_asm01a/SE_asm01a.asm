@@ -15,7 +15,6 @@ num  sdword ?
 .CODE                                
 
 getmin PROC parm1 : DWORD, parm2 : DWORD 
-START:
   mov ecx, parm2
   mov esi, parm1
   mov eax, [esi]
@@ -33,7 +32,6 @@ ret
 getmin ENDP
 
 getmax PROC parm1 : DWORD, parm2 : DWORD 
-START:
   mov ecx, parm2
   mov esi, parm1
   mov eax, [esi]

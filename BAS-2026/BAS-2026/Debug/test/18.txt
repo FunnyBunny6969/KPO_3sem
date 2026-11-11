@@ -1,0 +1,8 @@
+uint function func(){
+	char c;
+	return c;
+};
+
+main {
+	return 2;
+};

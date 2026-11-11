@@ -1,0 +1,296 @@
+﻿  Automata.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(281,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(282,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(283,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(284,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(285,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(286,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(287,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(288,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(289,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(290,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(291,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(292,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(293,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(294,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(295,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(296,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(297,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(298,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(299,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(300,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(301,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(302,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(303,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(304,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(305,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(306,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(307,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(308,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(309,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(310,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(311,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(312,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(313,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(314,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(315,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(316,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(317,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(318,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(319,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(320,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(321,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(322,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(323,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(324,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(325,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(326,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(327,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(328,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(329,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(330,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(331,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(332,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(333,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(334,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(335,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(336,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(337,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(338,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(339,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(340,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(341,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(342,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(343,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(344,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(345,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(346,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(347,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(348,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(349,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(350,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(351,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(352,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(353,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(354,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(355,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(356,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(357,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(358,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(359,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(360,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(361,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(362,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(363,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(364,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(365,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(366,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(367,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(368,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(369,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(370,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(371,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(372,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(373,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(374,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(375,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(376,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(377,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(378,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(379,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(380,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(381,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(382,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(383,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(384,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(385,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(386,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(387,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(388,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(389,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(390,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(391,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(392,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(393,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(394,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(395,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(396,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(397,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(398,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(399,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(400,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(401,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(402,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(403,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(404,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(405,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(406,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(407,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(408,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(469,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(470,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(471,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(472,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(473,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(474,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(475,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(476,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(477,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(478,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(479,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(480,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(481,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(482,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(483,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(484,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(485,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(486,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(487,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(488,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(489,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(490,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(491,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(492,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(493,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(494,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(495,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(496,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(497,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(498,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(499,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(500,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(501,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(502,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(503,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(504,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(505,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(506,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(507,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(508,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(509,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(510,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(511,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(512,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(513,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(514,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(515,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(516,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(517,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(518,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(519,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(520,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(521,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(522,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(523,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(524,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(525,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(526,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(527,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(528,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(529,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(530,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(531,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(532,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(533,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(534,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(535,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(536,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(537,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(538,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(539,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(540,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(541,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(542,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(543,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(544,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(545,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(546,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(547,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(548,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(549,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(550,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(551,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(552,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(553,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(554,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(555,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(556,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(557,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(558,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(559,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(560,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(561,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(562,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(563,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(564,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(565,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(566,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(567,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(568,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(569,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(570,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(571,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(572,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(573,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(574,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(575,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(576,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(577,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(578,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(579,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(580,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(581,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(582,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(583,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(584,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(585,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(586,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(587,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(588,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(589,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(590,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(591,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(592,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(593,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(594,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(595,18): warning C4309: аргумент: усечение константного значения
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Automata.cpp(596,18): warning C4309: аргумент: усечение константного значения
+  BAS-2025.cpp
+  Error.cpp
+  FST.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\FST.cpp(64,24): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
+  GRB.cpp
+  In.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\In.cpp(188,37): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  IT.cpp
+  LEX.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(17,35): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(18,34): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.cpp(117,30): warning C4244: return: преобразование "__int64" в "int", возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.cpp(119,32): warning C4101: e: неиспользованная локальная переменная
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.cpp(199,37): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.cpp(234,37): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.cpp(262,33): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.cpp(303,36): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Log.cpp
+  LT.cpp
+  MAIN.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(17,35): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(18,34): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\MAIN.cpp(83,31): warning C4101: e: неиспользованная локальная переменная
+  MFST.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(17,35): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(18,34): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\MFST.cpp(141,5): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\MFST.cpp(148,4): warning C4002: слишком много аргументов для вызова макроса, подобного функции, "MFST_TRACE4"
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\MFST.cpp(307,66): warning C4267: =: преобразование из "size_t" в "short"; возможна потеря данных
+  Out.cpp
+  Parm.cpp
+  PN.cpp
+  Semantic.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\Semantic.cpp(212,15): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  Tests.cpp
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(17,35): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\BAS-2025\LEX.h(18,34): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  Создание кода...
+  BAS-2025.vcxproj -> K:\$MAIN$\БГТУ\02\KPO_3sem\BAS-2025\BAS-2025\x64\Debug\BAS-2025.exe

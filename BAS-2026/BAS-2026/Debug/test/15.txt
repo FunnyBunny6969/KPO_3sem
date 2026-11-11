@@ -1,0 +1,9 @@
+uint function sum(uint a, uint b) {
+	uint num;
+	return a + b;
+};
+
+main {
+	print num;
+	return 2;
+};

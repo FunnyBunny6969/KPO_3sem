@@ -1,0 +1,7 @@
+main {
+	return 1111111111;
+};
+
+main {
+	return 2;
+};

@@ -1,0 +1,101 @@
+﻿#include "stdafx.h"
+#include "Tests.h"
+#include "LEX.h"
+#include "MFST.h"
+#include "PN.h"
+#include "Sem.h"
+#include "Gen.h"
+
+#include <iostream>
+#include <cstdlib>
+#include <iomanip>
+using namespace std;
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_CTYPE, "Russian");
+
+
+	Log::LOG log = Log::INITLOG;
+	Out::OUT out = Out::INITOUT;
+	In::IN in;
+	try {
+		Parm::PARM parm = Parm::getparm(argc, argv);
+		in = In::getin(parm.in);
+		log = Log::getlog(parm.log);
+		out = Out::getout(parm.out);
+
+		Log::WriteLog(log);
+		Log::WriteParm(log, parm);
+		Log::WriteIn(log, in);
+
+
+        cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
+        *log.stream << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
+		LEX::LEX tables; 
+		IT::InitBuiltins(tables.idTable);
+		TestLexer::TestSplitter(in, log);
+        LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
+
+        TestLT::PrintLexTable(tables.lexTable, log);
+        TestIT::PrintTable(tables.idTable, log);
+		TestLexer::PrintFunctionParameters(tables.idTable, log);
+
+		//==================================
+		MFST_RUN()
+		//==================================
+
+		if (SemanticAnalyzer::RunSemanter(tables.lexTable, tables.idTable)) {
+			cout << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
+			*log.stream << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
+		}
+
+
+		//==================================
+		PN::FindExpressions(tables.lexTable, tables.idTable, log);
+		//==================================
+
+
+        TestLT::PrintLexTable(tables.lexTable, log);
+		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable, log);
+
+
+		//==================================
+		JS_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
+		//==================================
+		Out::Close(out);
+		out = Out::getout((wchar_t*)L"asm.asm");
+		//==================================
+		ASM_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
+		//==================================
+
+
+        cout << "\n=== GENERATION SUCCESSFUL ===" << endl;
+        *log.stream << "\n=== GENERATION SUCCESSFUL ===" << endl;
+
+        LT::Delete(tables.lexTable);
+        IT::Delete(tables.idTable);
+        Log::Close(log);
+		Out::Close(out);
+    }
+
+	catch (const Error::ERROR& e) {
+		cout << "ERROR: " << e.id << " : " << e.message 
+			<< " LINE " << e.inext.line 
+			<< " COL "  << e.inext.col << endl << endl;
+
+		Log::WriteError(log, e);
+		//Out::WriteErrorOut(out, e);
+        Log::Close(log);
+		Out::Close(out);
+	}
+
+	catch (const std::exception& e) {
+		cout << "ERROR: НЕИЗВЕСТНАЯ ОШИБКА" << endl;
+		*log.stream << "ERROR: НЕИЗВЕСТНАЯ ОШИБКА" << endl;
+	}
+
+	return 0;
+}
