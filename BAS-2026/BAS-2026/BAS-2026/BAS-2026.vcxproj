@@ -139,7 +139,9 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ASTBuilder.cpp" />
     <ClCompile Include="Automata.cpp" />
+    <ClCompile Include="CodeGen.cpp" />
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="FST.cpp" />
     <ClCompile Include="GRB.cpp" />
@@ -156,7 +158,10 @@
     <ClCompile Include="Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AST.h" />
+    <ClInclude Include="ASTBuilder.h" />
     <ClInclude Include="Automata.h" />
+    <ClInclude Include="CodeGen.h" />
     <ClInclude Include="Error.h" />
     <ClInclude Include="FST.h" />
     <ClInclude Include="GRB.h" />

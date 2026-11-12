@@ -3,6 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="BAS-2026/BAS-2026.vcxproj" />
-  <Project Path="StaticLib/StaticLib.vcxproj" />
+  <Project Path="BAS-2026/BAS-2026.vcxproj" Id="1c571964-27b8-4b1a-9bfa-107aaceeaac8" />
+  <Project Path="StaticLib/StaticLib.vcxproj" Id="db0f991b-37c5-4568-aa0d-e7669c92d558" />
 </Solution>

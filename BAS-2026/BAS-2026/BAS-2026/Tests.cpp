@@ -413,10 +413,6 @@ namespace TestAutomata {
         TestSingleAutomata(Automata::FUNCTION, "function", true, "FUNCTION");
         TestSingleAutomata(Automata::FUNCTION, "func", false, "FUNCTION");
 
-        // DECLARE
-        TestSingleAutomata(Automata::DECLARE, "declare", true, "DECLARE");
-        TestSingleAutomata(Automata::DECLARE, "decl", false, "DECLARE");
-
         // RETURN
         TestSingleAutomata(Automata::RETURN, "return", true, "RETURN");
         TestSingleAutomata(Automata::RETURN, "ret", false, "RETURN");
@@ -508,7 +504,6 @@ namespace TestAutomata {
             {"integer", LEX_SHORT, "ключевое слово integer"},
             {"string", LEX_STRING, "ключевое слово string"},
             {"function", LEX_FUNCTION, "ключевое слово function"},
-            {"declare", LEX_DECLARE, "ключевое слово declare"},
             {"return", LEX_RETURN, "ключевое слово return"},
             {"print", LEX_PRINT, "ключевое слово print"},
             {"main", 'm', "ключевое слово main"},

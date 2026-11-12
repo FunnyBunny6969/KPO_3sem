@@ -2,105 +2,148 @@
 #include "Tests.h"
 #include "LEX.h"
 #include "MFST.h"
+#include "ASTBuilder.h"
 #include "Sem.h"
+#include "CodeGen.h"
 
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include <memory>
+
 using namespace std;
-
-
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	setlocale(LC_CTYPE, "Russian");
+    setlocale(LC_CTYPE, "Russian");
 
+    Log::LOG log = Log::INITLOG;
+    Out::OUT out = Out::INITOUT;
+    In::IN in{};
+    in.text = nullptr;
 
-	Log::LOG log = Log::INITLOG;
-	Out::OUT out = Out::INITOUT;
-	In::IN in;
-	try {
-		Parm::PARM parm = Parm::getparm(argc, argv);
-		in = In::getin(parm.in);
-		log = Log::getlog(parm.log);
-		out = Out::getout(parm.out);
+    LEX::LEX tables{};
+    bool tablesInitialized = false;
 
-		Log::WriteLog(log);
-		Log::WriteParm(log, parm);
-		Log::WriteIn(log, in);
+    auto cleanup = [&]() {
+        if (tablesInitialized) {
+            LT::Delete(tables.lexTable);
+            IT::Delete(tables.idTable);
+            tablesInitialized = false;
+        }
+        if (in.text != nullptr) {
+            delete[] in.text;
+            in.text = nullptr;
+        }
+        if (log.stream != nullptr) {
+            Log::Close(log);
+            log.stream = nullptr;
+        }
+        if (out.streamOut != nullptr) {
+            Out::Close(out);
+            out.streamOut = nullptr;
+        }
+        };
 
+    try {
+        // 1. Разбор параметров командной строки (-in, -out, -log)
+        Parm::PARM parm = Parm::getparm(argc, argv);
 
+        // 2. Открываем файлы протокола и вывода до чтения исходника
+        log = Log::getlog(parm.log);
+        out = Out::getout(parm.out);
+
+        Log::WriteLog(log);
+        Log::WriteParm(log, parm);
+
+        // 3. Чтение и предварительная очистка исходного файла
+        in = In::getin(parm.in);
+        Log::WriteIn(log, in);
+
+        // 4. Лексический анализ и построение таблиц LT и IT
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
         *log.stream << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
-		LEX::LEX tables; 
-		IT::InitBuiltins(tables.idTable);
-		//TestLexer::TestSplitter(in, log);
+
+        tables.lexTable = LT::Create(LT_MAXSIZE);
+        tables.idTable = IT::Create(TI_MAXSIZE);
+        tablesInitialized = true;
+
+        IT::InitBuiltins(tables.idTable);
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
-		cout << "LEXER IS TOO DAMN GOOD" << endl;
 
         TestLT::PrintLexTable(tables.lexTable, log);
-		cout << "LEXER IS TOO DAMN GOOD1" << endl;
-
         TestIT::PrintTable(tables.idTable, log);
-		cout << "LEXER IS TOO DAMN GOOD2" << endl;
+        TestLexer::PrintFunctionParameters(tables.idTable, log);
 
-		TestLexer::PrintFunctionParameters(tables.idTable, log);
-		cout << "LEXER IS TOO DAMN GOOD3" << endl;
+        // 5. Синтаксический анализ (магазинный автомат MFST)
+        cout << "\n=== СИНТАКСИЧЕСКИЙ АНАЛИЗ (MFST) ===" << endl;
+        *log.stream << "\n=== СИНТАКСИЧЕСКИЙ АНАЛИЗ (MFST) ===" << endl;
 
+        MFST::Mfst mfst(tables, GRB::getGreibach(), &log);
+        if (!mfst.start()) {
+            throw ERROR_THROW(600);
+        }
+        mfst.savededucation();
+        mfst.printrules();
 
-		//==================================
-		MFST_RUN()
-		//==================================
+        cout << "Синтаксический анализ выполнен без ошибок." << endl;
 
-		if (SemanticAnalyzer::RunSemanter(tables.lexTable, tables.idTable)) {
-			cout << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
-			*log.stream << "СЕМАНТИЧЕСКИЙ АНАЛИЗ ВЫПОЛНЕН БЕЗ ОШИБОК" << endl;
-		}
+        // 6. Построение абстрактного синтаксического дерева (AST)
+        cout << "\n=== ПОСТРОЕНИЕ AST ===" << endl;
+        *log.stream << "\n=== ПОСТРОЕНИЕ AST ===" << endl;
 
+        AST::Builder astBuilder(tables.lexTable, tables.idTable);
+        std::unique_ptr<AST::ProgramNode> ast = astBuilder.Build();
 
-		//==================================
-		//PN::FindExpressions(tables.lexTable, tables.idTable, log);
-		//==================================
+        AST::PrintAST(ast.get(), tables.idTable, std::cout);
+        AST::PrintAST(ast.get(), tables.idTable, *log.stream);
 
+        // 7. Семантический анализ по AST
+        cout << "\n=== СЕМАНТИЧЕСКИЙ АНАЛИЗ ===" << endl;
+        *log.stream << "\n=== СЕМАНТИЧЕСКИЙ АНАЛИЗ ===" << endl;
 
-        TestLT::PrintLexTable(tables.lexTable, log);
-		TestLT::PrintLexTableWithSubstit(tables.lexTable, tables.idTable, log);
+        if (Semantic::Run(ast.get(), tables.idTable)) {
+            cout << "Семантический анализ выполнен без ошибок." << endl;
+            *log.stream << "Семантический анализ выполнен без ошибок." << endl;
+        }
 
+        // 8. Генерация ассемблерного кода MASM
+        cout << "\n=== ГЕНЕРАЦИЯ КОДА (MASM) ===" << endl;
+        *log.stream << "\n=== ГЕНЕРАЦИЯ КОДА (MASM) ===" << endl;
 
-		//==================================
-		//JS_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
-		//==================================
-		Out::Close(out);
-		out = Out::getout((wchar_t*)L"asm.asm");
-		//==================================
-		//ASM_CodeGeneration::Generate(tables.lexTable, tables.idTable, out);
-		//==================================
+        CodeGen::Run(ast.get(), tables.idTable, out);
 
+        cout << "Ассемблерный код успешно сгенерирован." << endl;
+        *log.stream << "Ассемблерный код успешно сгенерирован." << endl;
 
-        cout << "\n=== GENERATION SUCCESSFUL ===" << endl;
-        *log.stream << "\n=== GENERATION SUCCESSFUL ===" << endl;
+        cout << "\n=== КОМПИЛЯЦИЯ ЗАВЕРШЕНА УСПЕШНО ===" << endl;
+        *log.stream << "\n=== КОМПИЛЯЦИЯ ЗАВЕРШЕНА УСПЕШНО ===" << endl;
 
-        LT::Delete(tables.lexTable);
-        IT::Delete(tables.idTable);
-        Log::Close(log);
-		Out::Close(out);
+        cleanup();
+    }
+    catch (const Error::ERROR& e) {
+        cout << "\nERROR " << e.id << " : " << e.message;
+        if (e.inext.line != -1) {
+            cout << " (строка " << e.inext.line;
+            if (e.inext.col != -1) cout << ", позиция " << e.inext.col;
+            cout << ")";
+        }
+        cout << endl << endl;
+
+        Log::WriteError(log, e);
+        Out::WriteErrorOut(out, e);
+
+        cleanup();
+        return e.id;
+    }
+    catch (const std::exception& e) {
+        cout << "\nERROR: Системное исключение: " << e.what() << endl;
+        if (log.stream != nullptr && log.stream->is_open()) {
+            *log.stream << "\nERROR: Системное исключение: " << e.what() << endl;
+        }
+        cleanup();
+        return -1;
     }
 
-	catch (const Error::ERROR& e) {
-		cout << "ERROR: " << e.id << " : " << e.message 
-			<< " LINE " << e.inext.line 
-			<< " COL "  << e.inext.col << endl << endl;
-
-		Log::WriteError(log, e);
-		//Out::WriteErrorOut(out, e);
-        Log::Close(log);
-		Out::Close(out);
-	}
-
-	catch (const std::exception& e) {
-		cout << "ERROR: НЕИЗВЕСТНАЯ ОШИБКА" << endl;
-		*log.stream << "ERROR: НЕИЗВЕСТНАЯ ОШИБКА" << endl;
-	}
-
-	return 0;
+    return 0;
 }

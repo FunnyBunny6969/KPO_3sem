@@ -1,4 +1,5 @@
-﻿#include "Automata.h"
+﻿#include "stdafx.h"
+#include "Automata.h"
 
 namespace Automata {
 	// ========== КЛЮЧЕВЫЕ СЛОВА ==========
@@ -9,7 +10,6 @@ namespace Automata {
 		FST::NODE(1, FST::RELATION('o', 3)),
 		FST::NODE(1, FST::RELATION('r', 4)),
 		FST::NODE(1, FST::RELATION('t', 5)),
-
 		FST::NODE()
 	);
 
@@ -56,19 +56,7 @@ namespace Automata {
 		FST::NODE()
 	);
 
-	const FST::FST DECLARE = FST::FST(
-		"", 8,
-		FST::NODE(1, FST::RELATION('d', 1)),
-		FST::NODE(1, FST::RELATION('e', 2)),
-		FST::NODE(1, FST::RELATION('c', 3)),
-		FST::NODE(1, FST::RELATION('l', 4)),
-		FST::NODE(1, FST::RELATION('a', 5)),
-		FST::NODE(1, FST::RELATION('r', 6)),
-		FST::NODE(1, FST::RELATION('e', 7)),
-		FST::NODE()
-	);
-
-	const FST::FST RETURN = FST::FST (
+	const FST::FST RETURN = FST::FST(
 		"", 7,
 		FST::NODE(1, FST::RELATION('r', 1)),
 		FST::NODE(1, FST::RELATION('e', 2)),
@@ -89,6 +77,14 @@ namespace Automata {
 		FST::NODE()
 	);
 
+	const FST::FST GET = FST::FST(
+		"", 4,
+		FST::NODE(1, FST::RELATION('g', 1)),
+		FST::NODE(1, FST::RELATION('e', 2)),
+		FST::NODE(1, FST::RELATION('t', 3)),
+		FST::NODE()
+	);
+
 	const FST::FST MAIN = FST::FST(
 		"", 5,
 		FST::NODE(1, FST::RELATION('m', 1)),
@@ -98,40 +94,17 @@ namespace Automata {
 		FST::NODE()
 	);
 
-	const FST::FST SWITCH = FST::FST(
-		"", 7,
-		FST::NODE(1, FST::RELATION('s', 1)),
-		FST::NODE(1, FST::RELATION('w', 2)),
+	const FST::FST WHILE = FST::FST(
+		"", 6,
+		FST::NODE(1, FST::RELATION('w', 1)),
+		FST::NODE(1, FST::RELATION('h', 2)),
 		FST::NODE(1, FST::RELATION('i', 3)),
-		FST::NODE(1, FST::RELATION('t', 4)),
-		FST::NODE(1, FST::RELATION('c', 5)),
-		FST::NODE(1, FST::RELATION('h', 6)),
-		FST::NODE()
-	);
-
-	const FST::FST CASE = FST::FST(
-		"", 5,
-		FST::NODE(1, FST::RELATION('c', 1)),
-		FST::NODE(1, FST::RELATION('a', 2)),
-		FST::NODE(1, FST::RELATION('s', 3)),
-		FST::NODE(1, FST::RELATION('e', 4)),
-		FST::NODE()
-	);
-
-	const FST::FST DEFAULT = FST::FST(
-		"", 8,
-		FST::NODE(1, FST::RELATION('d', 1)),
-		FST::NODE(1, FST::RELATION('e', 2)),
-		FST::NODE(1, FST::RELATION('f', 3)),
-		FST::NODE(1, FST::RELATION('a', 4)),
-		FST::NODE(1, FST::RELATION('u', 5)),
-		FST::NODE(1, FST::RELATION('l', 6)),
-		FST::NODE(1, FST::RELATION('t', 7)),
+		FST::NODE(1, FST::RELATION('l', 4)),
+		FST::NODE(1, FST::RELATION('e', 5)),
 		FST::NODE()
 	);
 
 	// ========== ИДЕНТИФИКАТОРЫ И ЛИТЕРАЛЫ ==========
-
 	const FST::FST IDENTIFIER = FST::FST(
 		"", 2,
 		FST::NODE(52,  // начальное состояние: только буквы
@@ -182,7 +155,6 @@ namespace Automata {
 	);
 
 
-
 	const FST::FST HEX_NUMBER_LITERAL = FST::FST(
 		"", 4,
 		FST::NODE(1, FST::RELATION('0', 1)),
@@ -191,20 +163,20 @@ namespace Automata {
 			FST::RELATION('0', 3), FST::RELATION('1', 3), FST::RELATION('2', 3),
 			FST::RELATION('3', 3), FST::RELATION('4', 3), FST::RELATION('5', 3),
 			FST::RELATION('6', 3), FST::RELATION('7', 3), FST::RELATION('8', 3),
-			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3), 
-			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3), 
+			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3),
+			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3),
 			FST::RELATION('F', 3), FST::RELATION('a', 3), FST::RELATION('b', 3),
-			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3), 
+			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3),
 			FST::RELATION('f', 3)
 		),
 		FST::NODE(22,
 			FST::RELATION('0', 3), FST::RELATION('1', 3), FST::RELATION('2', 3),
 			FST::RELATION('3', 3), FST::RELATION('4', 3), FST::RELATION('5', 3),
 			FST::RELATION('6', 3), FST::RELATION('7', 3), FST::RELATION('8', 3),
-			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3), 
-			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3), 
+			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3),
+			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3),
 			FST::RELATION('F', 3), FST::RELATION('a', 3), FST::RELATION('b', 3),
-			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3), 
+			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3),
 			FST::RELATION('f', 3)
 		)
 	);
@@ -235,10 +207,11 @@ namespace Automata {
 		)
 	);
 
+
 	const FST::FST CHAR_LITERAL = FST::FST(
 		"", 4,
-		FST::NODE(1, FST::RELATION('\'', 1)),     
-		FST::NODE(255,                           
+		FST::NODE(1, FST::RELATION('\'', 1)),
+		FST::NODE(255,
 			// Символы 0x01-0x1F (управляющие)
 			FST::RELATION(0x01, 2), FST::RELATION(0x02, 2), FST::RELATION(0x03, 2),
 			FST::RELATION(0x04, 2), FST::RELATION(0x05, 2), FST::RELATION(0x06, 2),
@@ -419,14 +392,15 @@ namespace Automata {
 			FST::RELATION(0xFE, 2), // ю
 			FST::RELATION(0xFF, 2)  // я
 		),
-		FST::NODE(1, FST::RELATION('\'', 3)),     
-		FST::NODE()                              
+		FST::NODE(1, FST::RELATION('\'', 3)),
+		FST::NODE()
 	);
+
 
 	const FST::FST STRING_LITERAL = FST::FST(
 		"", 3,
-		FST::NODE(1, FST::RELATION('\'', 1)),     
-		FST::NODE(256,                           
+		FST::NODE(1, FST::RELATION('\'', 1)),
+		FST::NODE(256,
 			// Символы 0x01-0x1F (управляющие)
 			FST::RELATION(0x01, 1), FST::RELATION(0x02, 1), FST::RELATION(0x03, 1),
 			FST::RELATION(0x04, 1), FST::RELATION(0x05, 1), FST::RELATION(0x06, 1),
@@ -607,9 +581,9 @@ namespace Automata {
 			FST::RELATION(0xFE, 1), // ю
 			FST::RELATION(0xFF, 1), // я
 
-			FST::RELATION('\'', 2)                
+			FST::RELATION('\'', 2)
 		),
-		FST::NODE()                              
+		FST::NODE()
 	);
 
 	// ========== ОПЕРАТОРЫ И РАЗДЕЛИТЕЛИ ==========
@@ -686,15 +660,29 @@ namespace Automata {
 		FST::NODE()
 	);
 
+	// Операторы сравнения: ==, !=, <=, >=, <, > -> код 'c'
+	const FST::FST COMP_OPERATOR = FST::FST(
+		"", 3,
+		FST::NODE(6,
+			FST::RELATION('=', 1),
+			FST::RELATION('!', 1),
+			FST::RELATION('<', 1), FST::RELATION('<', 2),
+			FST::RELATION('>', 1), FST::RELATION('>', 2)
+		),
+		FST::NODE(1, FST::RELATION('=', 2)),
+		FST::NODE()
+	);
+
+	// Побитовые операции: &&, ||, ~
 	const FST::FST BIT_AND = FST::FST(
 		"", 2,
-		FST::NODE(1, FST::RELATION('&', 1)),
+		FST::NODE(1, FST::RELATION('&', 2)),
 		FST::NODE()
 	);
 
 	const FST::FST BIT_OR = FST::FST(
 		"", 2,
-		FST::NODE(1, FST::RELATION('|', 1)),
+		FST::NODE(1, FST::RELATION('|', 2)),
 		FST::NODE()
 	);
 
@@ -705,63 +693,48 @@ namespace Automata {
 	);
 
 
-	bool executeAutomata(const FST::FST& automata, const char* text) {
-		FST::FST tempAutomata(text, automata.nstates, automata.nodes[0]);
 
+	bool executeAutomata(const FST::FST & automata, const char* text) {
+		FST::FST tempAutomata(text, automata.nstates, automata.nodes[0]);
 		for (short i = 1; i < automata.nstates; i++) {
 			tempAutomata.nodes[i] = automata.nodes[i];
 		}
-
 		return FST::execute(tempAutomata);
 	}
 
 
 	char getLexemeCode(const char* text) {
-		if (executeAutomata(BREAK, text)) return LEX_BREAK;
-		if (executeAutomata(SHORT, text)) return LEX_SHORT;
-		if (executeAutomata(CHAR, text)) return LEX_CHAR;
-		if (executeAutomata(STRING, text)) return LEX_STRING;
+		if (executeAutomata(BREAK, text))    return LEX_BREAK;
+		if (executeAutomata(SHORT, text))    return LEX_SHORT;
+		if (executeAutomata(CHAR, text))     return LEX_CHAR;
+		if (executeAutomata(STRING, text))   return LEX_STRING;
 		if (executeAutomata(FUNCTION, text)) return LEX_FUNCTION;
-		//if (executeAutomata(DECLARE, text)) return LEX_DECLARE;
-		if (executeAutomata(RETURN, text)) return LEX_RETURN;
-		if (executeAutomata(PRINT, text)) return LEX_PRINT;
-		if (executeAutomata(MAIN, text)) return LEX_MAIN;  
-		if (executeAutomata(SWITCH, text)) return LEX_SWITCH;  
-		if (executeAutomata(CASE, text)) return LEX_CASE;  
-		if (executeAutomata(DEFAULT, text)) return LEX_DEFAULT;  
-
-
+		if (executeAutomata(RETURN, text))   return LEX_RETURN;
+		if (executeAutomata(PRINT, text))    return LEX_PRINT;
+		if (executeAutomata(GET, text))      return LEX_GET;
+		if (executeAutomata(MAIN, text))     return LEX_MAIN;
+		if (executeAutomata(WHILE, text))    return LEX_WHILE;
 		if (executeAutomata(IDENTIFIER, text)) return LEX_ID;
-
-		if (executeAutomata(NUMBER_LITERAL, text)) return LEX_LITERAL;
-		if (executeAutomata(CHAR_LITERAL, text)) return LEX_LITERAL;
-		if (executeAutomata(STRING_LITERAL, text)) return LEX_LITERAL;
 		if (executeAutomata(HEX_NUMBER_LITERAL, text)) return LEX_LITERAL;
-
-		if (executeAutomata(SEMICOLON, text)) return LEX_SEMICOLON;
-		if (executeAutomata(COLON, text)) return LEX_COLON;
-		if (executeAutomata(COMMA, text)) return LEX_COMMA;
-		if (executeAutomata(LEFTPAREN, text)) return LEX_LEFTHESIS;
+		if (executeAutomata(NUMBER_LITERAL, text))     return LEX_LITERAL;
+		if (executeAutomata(CHAR_LITERAL, text))       return LEX_LITERAL;
+		if (executeAutomata(STRING_LITERAL, text))     return LEX_LITERAL;
+		if (executeAutomata(COMP_OPERATOR, text)) return LEX_COMP;
+		if (executeAutomata(SEMICOLON, text))  return LEX_SEMICOLON;
+		if (executeAutomata(COLON, text))      return LEX_COLON;
+		if (executeAutomata(COMMA, text))      return LEX_COMMA;
+		if (executeAutomata(LEFTPAREN, text))  return LEX_LEFTHESIS;
 		if (executeAutomata(RIGHTPAREN, text)) return LEX_RIGHTHESIS;
-		if (executeAutomata(LEFTBRACE, text)) return LEX_LEFTBRACE;
+		if (executeAutomata(LEFTBRACE, text))  return LEX_LEFTBRACE;
 		if (executeAutomata(RIGHTBRACE, text)) return LEX_RIGHTBRACE;
-		if (executeAutomata(ASSIGN, text)) return LEX_EQUALS;
-		if (executeAutomata(PLUS, text)) return LEX_PLUS;
-		if (executeAutomata(MINUS, text)) return LEX_MINUS;
-		if (executeAutomata(STAR, text)) return LEX_STAR;
-		if (executeAutomata(SLASH, text)) return LEX_DIRSLASH;
-		if (executeAutomata(BIT_AND, text)) return LEX_BIT_AND;
-		if (executeAutomata(BIT_OR, text)) return LEX_BIT_OR;
-		if (executeAutomata(BIT_NOT, text)) return LEX_BIT_NOT;
-
-		return LEX_UNKNOWN; 
+		if (executeAutomata(ASSIGN, text))     return LEX_EQUALS;
+		if (executeAutomata(PLUS, text))       return LEX_PLUS;
+		if (executeAutomata(MINUS, text))      return LEX_MINUS;
+		if (executeAutomata(STAR, text))       return LEX_STAR;
+		if (executeAutomata(SLASH, text))      return LEX_DIRSLASH;
+		if (executeAutomata(BIT_AND, text))    return LEX_BIT_AND;
+		if (executeAutomata(BIT_OR, text))     return LEX_BIT_OR;
+		if (executeAutomata(BIT_NOT, text))    return LEX_BIT_NOT;
+		return LEX_UNKNOWN;
 	}
 }
-
-
-
-
-
-
-
-
