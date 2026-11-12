@@ -1,6 +1,0 @@
-main {
-	char bukva;
-	bukva = 'A';
-	print bukva + 2;
-	return 2;
-};

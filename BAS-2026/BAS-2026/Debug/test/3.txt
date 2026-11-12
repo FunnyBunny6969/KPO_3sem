@@ -1,5 +1,0 @@
-main {
-	uint a;
-	a = 'c';
-	return 2;
-};

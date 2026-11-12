@@ -1,19 +1,51 @@
-# Создайте .gitignore с типичным содержимым для C++/VS проекта:
-echo "# Visual Studio
+## Игнорируем локальный кэш и пользовательские настройки Visual Studio
 .vs/
 .vscode/
-*.vcxproj.user
-*.sln.user
 *.suo
 *.user
 *.userosscache
+*.sln.docstates
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
 
-*.pdb
+## Игнорируем папки сборки (там лежат тяжёлые временные файлы и exe)
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Игнорируем скомпилированные бинарники и промежуточные файлы C++
 *.obj
-*.ilk
+*.tlog
+*.lastbuildstate
 *.idb
+*.pdb
 *.pch
+*.res
+*.ilk
+*.exe
+*.dll
+*.lib
+*.exp
+*.ipch
+*.iobj
+*.ipdb
 
-# System files
+## Системные файлы ОС
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 .DS_Store
