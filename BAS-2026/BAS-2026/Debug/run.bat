@@ -11,6 +11,6 @@ REM type program.txt.log
 type program.txt.log
 
 echo == OUT ==
-type program.txt.out
+type program.asm
 
 
