@@ -116,7 +116,7 @@ namespace IT {
             }
 
             //LITERAL
-            if (idtable.table[i].id == id && 
+            if (strcmp(idtable.table[i].id, id) == 0 &&
                 idtable.table[i].idtype == IT::L)
                 return i;
         }

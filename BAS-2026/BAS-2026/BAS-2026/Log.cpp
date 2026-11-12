@@ -81,14 +81,15 @@ namespace Log {
 		*log.stream << "Количество строк:    " << in.lines << std::endl;
 	}
 
+
 	void WriteError(LOG log, Error::ERROR error) {
 
 		*log.stream << "Ошибка " << error.id << ": " << error.message << ", ";
 
 		if (error.inext.line != -1)
 		{
-			*log.stream << "cтрока " << error.inext.line 
-				<< ", позиция " << error.inext.col 
+			*log.stream << "строка " << error.inext.line
+				<< ", позиция " << error.inext.col
 				<< std::endl << std::endl;
 		}
 	}

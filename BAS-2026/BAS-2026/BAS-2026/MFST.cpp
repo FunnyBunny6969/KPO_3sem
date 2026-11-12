@@ -91,6 +91,14 @@ namespace MFST
 		nrulechain = -1;
 	}
 
+	Mfst::~Mfst()
+	{
+		if (lenta != nullptr) {
+			delete[] lenta;
+			lenta = nullptr;
+		}
+	}
+
 	// люцюгхммши юбрнлюр
 	Mfst::RC_STEP Mfst::step()
 	{

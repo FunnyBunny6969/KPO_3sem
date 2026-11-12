@@ -46,21 +46,21 @@ int _tmain(int argc, _TCHAR* argv[])
         };
 
     try {
-        // 1. Разбор параметров командной строки (-in, -out, -log)
+        // Разбор параметров командной строки (-in, -out, -log)
         Parm::PARM parm = Parm::getparm(argc, argv);
 
-        // 2. Открываем файлы протокола и вывода до чтения исходника
+        // Открываем файлы протокола и вывода до чтения исходника
         log = Log::getlog(parm.log);
         out = Out::getout(parm.out);
 
         Log::WriteLog(log);
         Log::WriteParm(log, parm);
 
-        // 3. Чтение и предварительная очистка исходного файла
+        // Чтение и предварительная очистка исходного файла
         in = In::getin(parm.in);
         Log::WriteIn(log, in);
 
-        // 4. Лексический анализ и построение таблиц LT и IT
+        // Лексический анализ и построение таблиц LT и IT
         cout << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
         *log.stream << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
 
@@ -76,7 +76,7 @@ int _tmain(int argc, _TCHAR* argv[])
         TestIT::PrintTable(tables.idTable, log);
         TestLexer::PrintFunctionParameters(tables.idTable, log);
 
-        // 5. Синтаксический анализ (магазинный автомат MFST)
+        // Синтаксический анализ (магазинный автомат MFST)
         cout << "\n=== СИНТАКСИЧЕСКИЙ АНАЛИЗ (MFST) ===" << endl;
         *log.stream << "\n=== СИНТАКСИЧЕСКИЙ АНАЛИЗ (MFST) ===" << endl;
 
@@ -89,7 +89,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
         cout << "Синтаксический анализ выполнен без ошибок." << endl;
 
-        // 6. Построение абстрактного синтаксического дерева (AST)
+        // Построение абстрактного синтаксического дерева (AST)
         cout << "\n=== ПОСТРОЕНИЕ AST ===" << endl;
         *log.stream << "\n=== ПОСТРОЕНИЕ AST ===" << endl;
 
@@ -99,7 +99,7 @@ int _tmain(int argc, _TCHAR* argv[])
         AST::PrintAST(ast.get(), tables.idTable, std::cout);
         AST::PrintAST(ast.get(), tables.idTable, *log.stream);
 
-        // 7. Семантический анализ по AST
+        // Семантический анализ по AST
         cout << "\n=== СЕМАНТИЧЕСКИЙ АНАЛИЗ ===" << endl;
         *log.stream << "\n=== СЕМАНТИЧЕСКИЙ АНАЛИЗ ===" << endl;
 
@@ -108,7 +108,7 @@ int _tmain(int argc, _TCHAR* argv[])
             *log.stream << "Семантический анализ выполнен без ошибок." << endl;
         }
 
-        // 8. Генерация ассемблерного кода MASM
+        // Генерация ассемблерного кода MASM
         cout << "\n=== ГЕНЕРАЦИЯ КОДА (MASM) ===" << endl;
         *log.stream << "\n=== ГЕНЕРАЦИЯ КОДА (MASM) ===" << endl;
 

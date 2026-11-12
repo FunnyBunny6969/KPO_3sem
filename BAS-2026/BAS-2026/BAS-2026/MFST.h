@@ -167,8 +167,14 @@ namespace MFST
 			short size;              // количество шагов в выводе
 			short* nrules;           // номера правил грамматики
 			short* nrulechains;      // номера цепочек правил грамматики (nrules)
-			Deducation() { size = 0; nrules = 0; nrulechains = 0; };
+			Deducation() { size = 0; nrules = nullptr; nrulechains = nullptr; };
+			~Deducation() {
+				delete[] nrules;
+				delete[] nrulechains;
+			}
 		} deducation;
+
+		~Mfst(); // ќбъ€вление деструктора Mfst
 		bool savededucation();                // сохранить дерево вывода
 	};
 };
