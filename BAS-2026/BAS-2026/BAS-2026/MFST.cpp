@@ -312,7 +312,7 @@ namespace MFST
 		for (unsigned short i = 0; i < storestate.size(); i++)
 		{
 			MfstState state = storestate._Get_container()[i];
-			GRB::Rule rule = grebach.getRule(state.nrule);
+			GRB::Rule& rule = grebach.rules[state.nrule];
 			MFST_TRACE7();
 		}
 		*log->stream << setfill('=') << setw(90) << '=' << endl;
@@ -320,11 +320,15 @@ namespace MFST
 
 	bool Mfst::savededucation()
 	{
-		deducation.size = static_cast<short>(storestate.size());
-		deducation.nrules = new short[deducation.size];
-		deducation.nrulechains = new short[deducation.size];
+		size_t count = storestate.size();
+		if (count > 32767) {
+			count = 32767;
+		}
+		deducation.size = static_cast<short>(count);
+		deducation.nrules = new short[count];
+		deducation.nrulechains = new short[count];
 
-		for (unsigned short k = 0; k < storestate.size(); k++)
+		for (size_t k = 0; k < count; k++)
 		{
 			MfstState state = storestate._Get_container()[k];
 			deducation.nrules[k] = state.nrule;
@@ -332,4 +336,5 @@ namespace MFST
 		}
 		return true;
 	}
+
 }

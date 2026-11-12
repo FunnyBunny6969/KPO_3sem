@@ -65,10 +65,6 @@ namespace Out {
 			throw ERROR_THROW(110);
 		}
 
-		// Пишем BOM для UTF-8
-		const unsigned char bom[] = { 0xEF, 0xBB, 0xBF };
-		out.streamOut->write((const char*)bom, 3);
-
 		wcscpy_s(out.outfile, outfile);
 		return out;
 	}

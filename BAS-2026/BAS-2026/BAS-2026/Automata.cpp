@@ -682,16 +682,19 @@ namespace Automata {
 
 	// Побитовые операции: &&, ||, ~
 	const FST::FST BIT_AND = FST::FST(
-		"", 2,
+		"", 3,
+		FST::NODE(1, FST::RELATION('&', 1)),
 		FST::NODE(1, FST::RELATION('&', 2)),
 		FST::NODE()
 	);
 
 	const FST::FST BIT_OR = FST::FST(
-		"", 2,
+		"", 3,
+		FST::NODE(1, FST::RELATION('|', 1)),
 		FST::NODE(1, FST::RELATION('|', 2)),
 		FST::NODE()
 	);
+
 
 	const FST::FST BIT_NOT = FST::FST(
 		"", 2,

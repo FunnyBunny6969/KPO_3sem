@@ -134,28 +134,39 @@ namespace IT {
     }
 
     void InitBuiltins(IdTable& idTable) {
-        IT::Entry powEntry;
+        // 1. pow(short, short) -> short
+        IT::Entry powEntry{};
         strncpy_s(powEntry.id, ID_REALSIZE, "pow", _TRUNCATE);
-        powEntry.id[ID_REALSIZE - 1] = '\0';
-        powEntry.idtype = IT::F;  
-        powEntry.iddatatype = IT::SHORT;   
-        powEntry.idxfirstLE = -1;     
+        powEntry.idtype = IT::F;
+        powEntry.iddatatype = IT::SHORT;
+        powEntry.idxfirstLE = -1;
         powEntry.scope = GLOBAL_SCOPE;
         powEntry.func_meta.n_params = 2;
         powEntry.func_meta.params_types[0] = IT::SHORT;
         powEntry.func_meta.params_types[1] = IT::SHORT;
-        IT::Add(idTable, powEntry);
+        IT::Add(idTable, powEntry, false);
 
-        IT::Entry randEntry;
-        strncpy_s(randEntry.id, ID_REALSIZE, "random", _TRUNCATE);
-        randEntry.id[ID_REALSIZE - 1] = '\0';
-        randEntry.idtype = IT::F; 
-        randEntry.iddatatype = IT::SHORT; 
-        randEntry.idxfirstLE = -1;     
-        randEntry.scope = GLOBAL_SCOPE;
-        randEntry.func_meta.n_params = 2;
-        randEntry.func_meta.params_types[0] = IT::SHORT;
-        randEntry.func_meta.params_types[1] = IT::SHORT;
-        IT::Add(idTable, randEntry);
+        // 2. itos(short) -> string
+        IT::Entry itosEntry{};
+        strncpy_s(itosEntry.id, ID_REALSIZE, "itos", _TRUNCATE);
+        itosEntry.idtype = IT::F;
+        itosEntry.iddatatype = IT::STR;
+        itosEntry.idxfirstLE = -1;
+        itosEntry.scope = GLOBAL_SCOPE;
+        itosEntry.func_meta.n_params = 1;
+        itosEntry.func_meta.params_types[0] = IT::SHORT;
+        IT::Add(idTable, itosEntry, false);
+
+        // 3. topolish(string) -> string
+        IT::Entry rpnEntry{};
+        strncpy_s(rpnEntry.id, ID_REALSIZE, "topolish", _TRUNCATE);
+        rpnEntry.idtype = IT::F;
+        rpnEntry.iddatatype = IT::STR;
+        rpnEntry.idxfirstLE = -1;
+        rpnEntry.scope = GLOBAL_SCOPE;
+        rpnEntry.func_meta.n_params = 1;
+        rpnEntry.func_meta.params_types[0] = IT::STR;
+        IT::Add(idTable, rpnEntry, false);
     }
+
 }

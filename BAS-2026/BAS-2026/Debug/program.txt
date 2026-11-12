@@ -9,7 +9,7 @@ short function test_numbers()
     short hex_val;
 
     // Границы 16-битного signed short (-32768 .. 32767) с ведущими нулями
-    min_val = -00032767;
+    min_val = -00032768;
     max_val = 0032767;
     zero_val = -000;
     hex_val = -0x007F;

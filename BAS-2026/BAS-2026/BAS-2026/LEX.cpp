@@ -534,6 +534,10 @@ namespace LEX {
 				lexEntry.sn = lineNumber;
 				lexEntry.idxTI = LT_TI_NULLIDX;
 
+				if (code == LEX_COMP) {
+					strcpy_s(lexEntry.op, sizeof(lexEntry.op), word.c_str());
+				}
+
 				if (code == LEX_LITERAL) {
 					lexEntry.idxTI = ProcessLiteral(word, lineNumber, lexTable.size, literalCount, idTable);
 				}
