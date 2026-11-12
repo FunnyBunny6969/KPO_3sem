@@ -1,116 +1,114 @@
-// Функция демонстрации переполнения
-short function demonstrate_underflow()
+// Контрольный тест BAS-2026: граничные значения, вложенные while, битовые операции и унарный минус
+
+// 1. Функция без параметров: тест граничных значений short, ведущих нулей и hex
+short function test_numbers()
 {
-    print 'демонстрации переполнения';
+    short min_val;
+    short max_val;
+    short zero_val;
+    short hex_val;
 
-    short a; short b; short c;
-    
-    a = -0x05;   print 'a = '; print a;
-    b = 0xa;    print 'b = '; print b;
-    
-    // Выражение, результат которого "меньше нуля" для short
-    c = a - b; // Будет 4294967291
-    print 'c = '; print a - b;
-    
-    return 0+5;
+    // Границы 16-битного signed short (-32768 .. 32767) с ведущими нулями
+    min_val = -00032768;
+    max_val = 0032767;
+    zero_val = -000;
+    hex_val = -0x007F;
+
+    print '--- Тест чисел и границ ---';
+    print min_val;
+    print max_val;
+    print zero_val;
+    print hex_val;
+
+    // Слитные выражения без пробелов: проверка умного SplitIntoWords
+    short calc;
+    calc=-05+10-(2*-3);
+    print calc;
+
+    return max_val - 32767;
 };
 
+// 2. Функция с параметрами: побитовые операции (&&, ||, ~) по заданию
+short function test_bitwise(short a, short b)
+{
+    short res_and;
+    short res_or;
+    short res_not;
 
-// Функция с вызовом стандартной библиотеки
-short function use_standard_library()
-{    
-    print 'Вызов библиотечных функций';
-    
-    print 'pow(short, short)';
-    print pow(2, 2);
-    print pow(3, 3);
+    res_and = a && 0x0F;
+    res_or  = b || 0xF0;
+    res_not = ~a;
 
-    print 'random(short min, short max)';
-    print random(0, 100);
-    print random(1, 9);
+    print '--- Побитовые операции ---';
+    print res_and;
+    print res_or;
+    print res_not;
 
-    return 0;
+    return (res_and || res_or) && ~0x00;
 };
 
+// 3. Вложенные циклы while (while внутри while) и унарный минус в условиях
+short function test_nested_while(short limit)
+{
+    short i;
+    short j;
+    short total;
 
-// Функция с побитовыми операциями и switch
-short function bitwise_ops(short result, short op_type)
-{        
-    // Switch для выбора битовой операции
-    switch (op_type)
+    i = -2;
+    total = 0;
+
+    // Внешний цикл с отрицательным стартом и сравнением
+    while (i < limit)
     {
-    case 0x00: // операция И (AND) с 0x0F
-        result = result & 0x0F;
-        break;
-        
-    case 0x01: // операция ИЛИ (OR) с 0xF0
-        result = result | 0xf0;
-        break;
-        
-    case 0x02: // операция инверсия (NOT)
-        result = ~result;
-        break;
-        
-    default: // умножить на 2
-        result = result * 2;
-
-        switch(result){
-        case -200: result = 95; break;
-        default: result = 55;
+        j = 2;
+        // Внутренний цикл с унарным минусом в условии
+        while (j > -1)
+        {
+            total = total + 1;
+            j = j - 1;
         };
-
-        break;
+        i = i + 1;
     };
-    return result;
+
+    return total;
 };
 
-
-// Главная функция
+// Главная функция программы
 main
 {
-    short test_short; string test_string; char test_char;
+    short user_num;
+    char symbol;
+    string str_num;
 
-    // Проверка значений до инициализации
-    print 'ДО';
-    print 'test_short = '; print test_short;
-    print 'test_string = '; print test_string;
-    print 'test_char = '; print test_char;
-    
-    // Инициализация
-    test_short = 5;
-    test_string = 'ТЕСТОВАЯ СТРОКА';
-    test_char = '@';
+    symbol = 'Z';
+    print 'Символ: ';
+    print symbol;
 
-    // Проверка значений ПОСЛЕ инициализации
-    print 'ПОСЛЕ';
-    print 'test_short = '; print test_short;
-    print 'test_string = '; print test_string;
-    print 'test_char = '; print test_char;
+    // Ввод с клавиатуры 
+    print 'Введите число: ';
+    get user_num;
 
+    // Вызов стандартных библиотечных функций из задания (pow и перевод числа в строку)
+    short powered;
+    powered = pow(2, 5);
+    print '2 в степени 5 = ';
+    print powered;
 
-    // Демонстрация переполнения
-    demonstrate_underflow();
-    
+    str_num = itos(-0042);
+    print 'Число в строку: ';
+    print str_num;
 
-    // Демонстрация вызовов стандартной библиотеки
-    use_standard_library();
-    
+    // Запуск всех тестовых функций
+    short r1;
+    short r2;
+    short r3;
 
-    print '=== ТЕСТ БИТОВЫХ ОПЕРАЦИЙ ===';
-    
-    // 4 вызова с заготовленными значениями
-    print 'bitwise_ops(0x12, 0x00) = ';
-    print bitwise_ops(0x12, 0x00); // 0x12 & 0x0F = 0x02
-    
-    print 'bitwise_ops(0x12, 0x01) = ';
-    print bitwise_ops(0x12, 0x01); // 0x12 | 0xF0 = 0xF2 (десятичное 242)
-    
-    print 'bitwise_ops(0x12, 0x02) = ';
-    print bitwise_ops(0x12, 0x02); // ~0x12 = 0xFFFFFFED (десятичное 4294967285)
-    
-    print 'bitwise_ops(0x12, 0x03) = ';
-    print bitwise_ops(0x12, 0x03); // 0x12 * 2 = 0x24 (десятичное 36)
+    r1 = test_numbers();
+    r2 = test_bitwise(0x1A, 0x05);
+    r3 = test_nested_while(1);
 
-    
+    print 'Итог вложенных циклов (ожидается 9): ';
+    print r3;
+
     return 0;
 };
