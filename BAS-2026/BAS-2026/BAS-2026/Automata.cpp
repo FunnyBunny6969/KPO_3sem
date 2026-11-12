@@ -156,30 +156,37 @@ namespace Automata {
 
 
 	const FST::FST HEX_NUMBER_LITERAL = FST::FST(
-		"", 4,
-		FST::NODE(1, FST::RELATION('0', 1)),
-		FST::NODE(1, FST::RELATION('x', 2)),
-		FST::NODE(22,  // начальное состояние: только цифры
-			FST::RELATION('0', 3), FST::RELATION('1', 3), FST::RELATION('2', 3),
-			FST::RELATION('3', 3), FST::RELATION('4', 3), FST::RELATION('5', 3),
-			FST::RELATION('6', 3), FST::RELATION('7', 3), FST::RELATION('8', 3),
-			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3),
-			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3),
-			FST::RELATION('F', 3), FST::RELATION('a', 3), FST::RELATION('b', 3),
-			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3),
-			FST::RELATION('f', 3)
-		),
+		"", 5,
+		// Состояние 0: '-' ведёт в 1, '0' сразу ведёт в 2
+		FST::NODE(2, FST::RELATION('-', 1), FST::RELATION('0', 2)),
+		// Состояние 1: после '-' обязательно идёт '0' -> в 2
+		FST::NODE(1, FST::RELATION('0', 2)),
+		// Состояние 2: 'x' или 'X' -> в 3
+		FST::NODE(2, FST::RELATION('x', 3), FST::RELATION('X', 3)),
+		// Состояние 3: первая hex-цифра -> в конечное 4
 		FST::NODE(22,
-			FST::RELATION('0', 3), FST::RELATION('1', 3), FST::RELATION('2', 3),
-			FST::RELATION('3', 3), FST::RELATION('4', 3), FST::RELATION('5', 3),
-			FST::RELATION('6', 3), FST::RELATION('7', 3), FST::RELATION('8', 3),
-			FST::RELATION('9', 3), FST::RELATION('A', 3), FST::RELATION('B', 3),
-			FST::RELATION('C', 3), FST::RELATION('D', 3), FST::RELATION('E', 3),
-			FST::RELATION('F', 3), FST::RELATION('a', 3), FST::RELATION('b', 3),
-			FST::RELATION('c', 3), FST::RELATION('d', 3), FST::RELATION('e', 3),
-			FST::RELATION('f', 3)
+			FST::RELATION('0', 4), FST::RELATION('1', 4), FST::RELATION('2', 4),
+			FST::RELATION('3', 4), FST::RELATION('4', 4), FST::RELATION('5', 4),
+			FST::RELATION('6', 4), FST::RELATION('7', 4), FST::RELATION('8', 4),
+			FST::RELATION('9', 4), FST::RELATION('A', 4), FST::RELATION('B', 4),
+			FST::RELATION('C', 4), FST::RELATION('D', 4), FST::RELATION('E', 4),
+			FST::RELATION('F', 4), FST::RELATION('a', 4), FST::RELATION('b', 4),
+			FST::RELATION('c', 4), FST::RELATION('d', 4), FST::RELATION('e', 4),
+			FST::RELATION('f', 4)
+		),
+		// Состояние 4: остальные hex-цифры
+		FST::NODE(22,
+			FST::RELATION('0', 4), FST::RELATION('1', 4), FST::RELATION('2', 4),
+			FST::RELATION('3', 4), FST::RELATION('4', 4), FST::RELATION('5', 4),
+			FST::RELATION('6', 4), FST::RELATION('7', 4), FST::RELATION('8', 4),
+			FST::RELATION('9', 4), FST::RELATION('A', 4), FST::RELATION('B', 4),
+			FST::RELATION('C', 4), FST::RELATION('D', 4), FST::RELATION('E', 4),
+			FST::RELATION('F', 4), FST::RELATION('a', 4), FST::RELATION('b', 4),
+			FST::RELATION('c', 4), FST::RELATION('d', 4), FST::RELATION('e', 4),
+			FST::RELATION('f', 4)
 		)
 	);
+
 
 	const FST::FST NUMBER_LITERAL = FST::FST(
 		"", 3,

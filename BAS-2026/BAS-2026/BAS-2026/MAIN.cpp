@@ -69,6 +69,7 @@ int _tmain(int argc, _TCHAR* argv[])
         tablesInitialized = true;
 
         IT::InitBuiltins(tables.idTable);
+        TestLexer::TestSplitter(in, log);
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
 
         TestLT::PrintLexTable(tables.lexTable, log);

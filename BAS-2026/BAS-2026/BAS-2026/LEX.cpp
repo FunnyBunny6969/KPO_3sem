@@ -18,10 +18,21 @@ namespace LEX {
 		case '*': case '/':
 		case '%': case '&':
 		case '|': case '~':
+		case '<': case '>':
 			return true;
 		default:
 			return false;
 		}
+	}
+
+	// Двухсимвольные операторы (сравнения и побитовые &&, ||)
+	bool IsTwoCharOperator(char c1, char c2) {
+		return (c1 == '=' && c2 == '=') ||
+			(c1 == '!' && c2 == '=') ||
+			(c1 == '<' && c2 == '=') ||
+			(c1 == '>' && c2 == '=') ||
+			(c1 == '&' && c2 == '&') ||
+			(c1 == '|' && c2 == '|');
 	}
 
 	// Проверка: может ли минус перед цифрой быть частью отрицательного литерала?
@@ -43,11 +54,11 @@ namespace LEX {
 	}
 
 
-
 	void SplitIntoWords(const char* code, std::vector<std::vector<std::string>>& lines) {
 		std::vector<std::string> currentLine;
 		std::string currentWord;
-		std::string lastWordInLine; // Запоминаем последнее слово для контекста минуса
+		std::string lastWordInLine;
+		int currentLineNum = 1;
 
 		auto flushWord = [&]() {
 			if (!currentWord.empty()) {
@@ -60,12 +71,13 @@ namespace LEX {
 		for (size_t i = 0; code[i] != IN_CODE_ENDS; ++i) {
 			char c = code[i];
 
-			// 1. Разделитель строк (сепаратор | из твоего In::getin)
+			// 1. Разделитель строк '|'
 			if (c == SEP) {
 				flushWord();
 				lines.push_back(currentLine);
 				currentLine.clear();
 				lastWordInLine.clear();
+				currentLineNum++;
 				continue;
 			}
 
@@ -75,15 +87,15 @@ namespace LEX {
 				continue;
 			}
 
-			// 3. Строковые и символьные литералы (в двойных " или одинарных ' кавычках)
+			// 3. Строковые и символьные литералы
 			if (c == QM || c == '\'') {
 				flushWord();
 				char quoteType = c;
 				currentWord += c;
 				++i;
+				bool closed = false;
 
 				while (code[i] != IN_CODE_ENDS && code[i] != SEP) {
-					// Поддержка экранированных кавычек внутри строки (например, \" или \')
 					if (code[i] == '\\' && code[i + 1] != IN_CODE_ENDS && code[i + 1] != SEP) {
 						currentWord += code[i];
 						currentWord += code[i + 1];
@@ -93,38 +105,56 @@ namespace LEX {
 
 					currentWord += code[i];
 					if (code[i] == quoteType) {
-						break; // Нашли закрывающую кавычку того же типа
+						closed = true;
+						break;
 					}
 					++i;
 				}
 
-				// Если дошли до конца файла без закрывающей кавычки — откатываем i на шаг назад,
-				// чтобы внешний цикл корректно увидел IN_CODE_ENDS
-				if (code[i] == IN_CODE_ENDS) {
-					--i;
+				if (!closed) {
+					throw ERROR_THROW_LINE(203, currentLineNum); // Незакрытая строковая константа
 				}
+
 				flushWord();
 				continue;
 			}
 
-			// 4. Умная обработка минуса: склеиваем с числом, если это унарный минус (например, x=-5 или (-0x1A))
+			// 4. Умная обработка минуса (даже если In::getin вставил пробел после '-')
 			if (c == '-') {
 				flushWord();
-				char nextChar = code[i + 1];
-				if (std::isdigit(static_cast<unsigned char>(nextChar)) && CanPrecedingTokenHaveUnaryMinus(lastWordInLine)) {
+				size_t nextIdx = i + 1;
+				while (code[nextIdx] == ' ' || code[nextIdx] == '\t') {
+					nextIdx++;
+				}
+
+				char nextNonSpace = code[nextIdx];
+				if (std::isdigit(static_cast<unsigned char>(nextNonSpace)) && CanPrecedingTokenHaveUnaryMinus(lastWordInLine)) {
 					currentWord += '-';
-					// Цифры подхватятся на следующих итерациях цикла в currentWord
+					i = nextIdx - 1;
 					continue;
 				}
 				else {
-					// Обычный бинарный минус или минус перед переменной (-a)
 					currentWord = "-";
 					flushWord();
 					continue;
 				}
 			}
 
-			// 5. Одиночные разделители и операторы (; ( ) { } = + * / и т.д.)
+			// 5. Двухсимвольные операторы (==, !=, <=, >=, &&, ||), даже через пробел
+			size_t nextOpIdx = i + 1;
+			while (code[nextOpIdx] == ' ' || code[nextOpIdx] == '\t') {
+				nextOpIdx++;
+			}
+			if (IsTwoCharOperator(c, code[nextOpIdx])) {
+				flushWord();
+				currentWord += c;
+				currentWord += code[nextOpIdx];
+				flushWord();
+				i = nextOpIdx;
+				continue;
+			}
+
+			// 6. Одиночные разделители и операторы
 			if (IsSingleDelimiter(c)) {
 				flushWord();
 				currentWord += c;
@@ -132,26 +162,21 @@ namespace LEX {
 				continue;
 			}
 
-			// 6. Обычные символы (буквы, цифры, подчёркивания — собираются в слово)
+			// 7. Обычные символы
 			currentWord += c;
 		}
 
-		// Сбрасываем хвост, если файл закончился без сепаратора |
 		flushWord();
 		if (!currentLine.empty()) {
 			lines.push_back(currentLine);
 		}
 	}
 
-
-
-
-
 	int HexToDecimal(const std::string& word) {
 		try {
-			return std::stoll(word, nullptr, 0);
+			return static_cast<int>(std::stoll(word, nullptr, 0));
 		}
-		catch (const std::exception& e) {
+		catch (const std::exception&) {
 			throw ERROR_THROW(205);
 		}
 	}
@@ -288,6 +313,7 @@ namespace LEX {
 		idEntry.id[copyLen] = IN_CODE_ENDS;
 		idEntry.idtype = IT::L;
 		idEntry.idxfirstLE = lexTableSize;
+		idEntry.scope = GLOBAL_SCOPE;
 
 		// 1. Десятичный литерал (включая -00555, 05, 0)
 		if (Automata::executeAutomata(Automata::NUMBER_LITERAL, word.c_str())) {
