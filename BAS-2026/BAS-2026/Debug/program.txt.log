@@ -1,4 +1,4 @@
----- Протокол ------ 12.11.2026 05:21:05 ----------------------
+---- Протокол ------ 12.11.2026 05:28:05 ----------------------
 ---- Параметры ------
 -log: program.txt.log
 -out: program.txt.out
@@ -15938,7 +15938,7 @@ IT (Identifier Table): size=50
 Index  Identifier      Type     DataType FirstLT      Scope           Value
 --------------------------------------------------------------------
 0      pow             FUNC     SHORT    -1           GLOBAL          -
-1      itos            FUNC     SHORT    -1           GLOBAL          -
+1      itos            FUNC     STR      -1           GLOBAL          -
 2      L1              LIT      SHORT    20           GLOBAL          -32768
 3      L2              LIT      SHORT    24           GLOBAL          32767
 4      L3              LIT      SHORT    28           GLOBAL          0
@@ -16152,5 +16152,8 @@ Program [functions: 4]
     +-- Return (line 113)
         +-- Id/Lit: 0 [lit:L3]
 AST построено успешно (функций/блоков: 4).
+
+=== СЕМАНТИЧЕСКИЙ АНАЛИЗ ===
+Семантический анализ выполнен без ошибок.
 
 === КОМПИЛЯЦИЯ ЗАВЕРШЕНА УСПЕШНО ===
