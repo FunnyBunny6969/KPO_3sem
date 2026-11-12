@@ -127,7 +127,7 @@ namespace SemanticAnalyzer
 
 			if (entry.idtype == IT::L &&
 				entry.iddatatype == IT::STR)
-				if (entry.value.vstr->str[0] == IN_CODE_ENDS)
+				if (entry.value.vstr.str[0] == IN_CODE_ENDS)
 					throw ERROR_THROW(708);
 
 
@@ -191,10 +191,7 @@ namespace SemanticAnalyzer
 
 			if (lexema == LEX_ID) {
 				info = idtable.table[entry.idxTI];
-				if (lextable.table[i - 1].lexema[0] == LEX_STRING ||
-					lextable.table[i - 1].lexema[0] == LEX_SHORT ||
-					lextable.table[i - 1].lexema[0] == LEX_CHAR)
-				{
+				if (lextable.table[i - 1].lexema[0] == LEX_STRING) {
 					bool exists = 
 						std::find(
 							validIdentifiers.begin(), 

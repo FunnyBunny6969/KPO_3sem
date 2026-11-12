@@ -8,7 +8,7 @@ namespace Automata {
 		FST::NODE(1, FST::RELATION('h', 2)),
 		FST::NODE(1, FST::RELATION('o', 3)),
 		FST::NODE(1, FST::RELATION('r', 4)),
-		FST::NODE(1, FST::RELATION('t', 4)),
+		FST::NODE(1, FST::RELATION('t', 5)),
 
 		FST::NODE()
 	);

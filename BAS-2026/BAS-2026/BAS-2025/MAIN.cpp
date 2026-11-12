@@ -34,12 +34,19 @@ int _tmain(int argc, _TCHAR* argv[])
         *log.stream << "\n=== ЛЕКСИЧЕСКИЙ АНАЛИЗ ===" << endl;
 		LEX::LEX tables; 
 		IT::InitBuiltins(tables.idTable);
-		TestLexer::TestSplitter(in, log);
+		//TestLexer::TestSplitter(in, log);
         LEX::Analyze((const char*)in.text, tables.lexTable, tables.idTable);
+		cout << "LEXER IS TOO DAMN GOOD" << endl;
 
         TestLT::PrintLexTable(tables.lexTable, log);
+		cout << "LEXER IS TOO DAMN GOOD1" << endl;
+
         TestIT::PrintTable(tables.idTable, log);
+		cout << "LEXER IS TOO DAMN GOOD2" << endl;
+
 		TestLexer::PrintFunctionParameters(tables.idTable, log);
+		cout << "LEXER IS TOO DAMN GOOD3" << endl;
+
 
 		//==================================
 		MFST_RUN()

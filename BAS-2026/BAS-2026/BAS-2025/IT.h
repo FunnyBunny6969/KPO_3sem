@@ -11,70 +11,70 @@
 
 #define GLOBAL_SCOPE   -2
 #define MAIN_SCOPE     -1
-#define EMPTY_SCOPE     0
+#define EMPTY_SCOPE    -3
 
 namespace IT    // таблица идентификаторов
 {
-    enum IDDATATYPE {SHORT=1, STR=2, CHAR=3, UNDEF = 0};  
-    enum IDTYPE     {V=1, F=2, P=3, L=4};                // типы идентификаторов: переменная, функция, параметр, литерал
+	enum IDDATATYPE { SHORT = 1, STR = 2, CHAR = 3, UNDEF = 0 };
+	enum IDTYPE { V = 1, F = 2, P = 3, L = 4 };                // типы идентификаторов: переменная, функция, параметр, литерал
 
-    struct Entry    // строка таблицы идентификаторов
-    {
-        int        idxfirstLE;        // индекс первой строки в таблице лексем
-        char       id[ID_REALSIZE];    // идентификатор (автоматически усекается до ID_MAXSIZE)
-        IDDATATYPE iddatatype;        // тип данных
-        IDTYPE     idtype;            // тип идентификатора
-        int        scope = EMPTY_SCOPE;         // область видимости
+	struct Entry    // строка таблицы идентификаторов
+	{
+		int        idxfirstLE;               // индекс первой строки в таблице лексем
+		char       id[ID_REALSIZE];          // идентификатор (автоматически усекается до ID_MAXSIZE)
+		IDDATATYPE iddatatype;               // тип данных
+		IDTYPE     idtype;                   // тип идентификатора
+		int        scope = EMPTY_SCOPE;      // область видимости
 
-        union
-        {
-            short vshort;                          // значение short
-            char vchar;
-            struct
-            {
-                char len;                      // количество символов в string
-                char str[TI_STR_MAXSIZE - 1];  // символы string
-            } vstr[TI_STR_MAXSIZE];            // значение string
-        } value;                       // значение идентификатора
+		union
+		{
+			short vshort;                          // значение short
+			char vchar;
+			struct
+			{
+				char len;                      // количество символов в string
+				char str[TI_STR_MAXSIZE - 1];  // символы string
+			} vstr;                            // значение string
+		} value;                       // значение идентификатора
 
-        struct
-        {
-            int          n_params = 0;                // Число параметров 
-            IDDATATYPE   params_types[IT_MAX_PARAMS]; // Массив типов данных параметров
-        } func_meta;
-    };
+		struct
+		{
+			int          n_params = 0;                // Число параметров 
+			IDDATATYPE   params_types[IT_MAX_PARAMS]; // Массив типов данных параметров
+		} func_meta;
+	};
 
-    struct IdTable        // экземпляр таблицы идентификаторов
-    {
-        int    maxsize;   // емкость таблицы идентификаторов < TI_MAXSIZE
-        int    size;      // текущий размер таблицы идентификаторов < maxsize
-        Entry* table;     // массив строк таблицы идентификаторов
-    };
+	struct IdTable        // экземпляр таблицы идентификаторов
+	{
+		int    maxsize;   // емкость таблицы идентификаторов < TI_MAXSIZE
+		int    size;      // текущий размер таблицы идентификаторов < maxsize
+		Entry* table;     // массив строк таблицы идентификаторов
+	};
 
-    IdTable Create(       // создать таблицу идентификаторов
-				int size  // емкость таблицы идентификаторов < TI_MAXSIZE
-				);
+	IdTable Create(       // создать таблицу идентификаторов
+		int size  // емкость таблицы идентификаторов < TI_MAXSIZE
+	);
 
-    void Add(                   // добавить строку в таблицу идентификаторов
-			IdTable& idtable,   // экземпляр таблицы идентификаторов
-			Entry entry,        // строка таблицы идентификаторов
-            bool needToCheck = true
-			);
+	void Add(                   // добавить строку в таблицу идентификаторов
+		IdTable& idtable,   // экземпляр таблицы идентификаторов
+		Entry entry,        // строка таблицы идентификаторов
+		bool needToCheck = true
+	);
 
-    Entry GetEntry(                // получить строку таблицы идентификаторов
-				IdTable& idtable,  // экземпляр таблицы идентификаторов
-				int n              // номер получаемой строки
-				);
+	Entry GetEntry(                // получить строку таблицы идентификаторов
+		IdTable& idtable,  // экземпляр таблицы идентификаторов
+		int n              // номер получаемой строки
+	);
 
-    int IsId(                    // возврат: номер строки (если есть), TI_NULLIDX(если нет)
-			IdTable& idtable,    // экземпляр таблицы идентификаторов
-			char id[ID_MAXSIZE], // идентификатор
-            int 
-			);
+	int IsId(                    // возврат: номер строки (если есть), TI_NULLIDX(если нет)
+		IdTable& idtable,    // экземпляр таблицы идентификаторов
+		char id[ID_MAXSIZE], // идентификатор
+		int
+	);
 
-    void Delete(IdTable& idtable);    // удалить таблицу идентификаторов (освободить память)
+	void Delete(IdTable& idtable);    // удалить таблицу идентификаторов (освободить память)
 
-    void InitBuiltins(IdTable& idTable);
+	void InitBuiltins(IdTable& idTable);
 }
 
 

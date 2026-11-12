@@ -63,10 +63,10 @@ namespace IT {
         }
         else if (entry.iddatatype == STR) {
             // Копируем строковое значение
-            idtable.table[idtable.size].value.vstr[0].len = entry.value.vstr[0].len;
-            strncpy_s(idtable.table[idtable.size].value.vstr[0].str,
+            idtable.table[idtable.size].value.vstr.len = entry.value.vstr.len;
+            strncpy_s(idtable.table[idtable.size].value.vstr.str,
                 ID_REALSIZE - 1,
-                entry.value.vstr[0].str,
+                entry.value.vstr.str,
                 _TRUNCATE);
         }
 

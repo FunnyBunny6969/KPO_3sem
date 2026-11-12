@@ -5,7 +5,7 @@ short function demonstrate_underflow()
 
     short a; short b; short c;
     
-    a = 0x05;   print 'a = '; print a;
+    a = -0x05;   print 'a = '; print a;
     b = 0xa;    print 'b = '; print b;
     
     // Выражение, результат которого "меньше нуля" для short
@@ -55,7 +55,7 @@ short function bitwise_ops(short result, short op_type)
         result = result * 2;
 
         switch(result){
-        case 200: result = 95; break;
+        case -200: result = 95; break;
         default: result = 55;
         };
 

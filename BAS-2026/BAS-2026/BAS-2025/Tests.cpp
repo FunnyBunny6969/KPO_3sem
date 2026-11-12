@@ -229,7 +229,7 @@ namespace TestLT {
 				else if (e.iddatatype == IT::CHAR)
 					*log.stream << "'" << e.value.vchar << "' ";
 				else if (e.iddatatype == IT::STR)
-					*log.stream << "'" << e.value.vstr->str << "' ";
+					*log.stream << "'" << e.value.vstr.str << "' ";
 				else {
 					*log.stream << "LITERAL_UNKNOWN_TYPE ";
 				}
@@ -303,8 +303,8 @@ namespace TestIT {
                 }
                 else {
                     valueStr = "'";
-                    for (int j = 0; j < entry.value.vstr[0].len; j++) {
-                        valueStr += entry.value.vstr[0].str[j];
+                    for (int j = 0; j < entry.value.vstr.len; j++) {
+                        valueStr += entry.value.vstr.str[j];
                     }
                     valueStr += "'";
                 }
@@ -359,8 +359,8 @@ namespace TestIT {
         strLitEntry.idxfirstLE = 6;
         strLitEntry.iddatatype = IT::STR;
         strLitEntry.idtype = IT::L;
-        strLitEntry.value.vstr[0].len = 11;
-        strcpy_s(strLitEntry.value.vstr[0].str, TI_STR_MAXSIZE, "hello world");
+        strLitEntry.value.vstr.len = 11;
+        strcpy_s(strLitEntry.value.vstr.str, TI_STR_MAXSIZE, "hello world");
         IT::Add(it, strLitEntry);
 
         std::cout << "Размер таблицы: " << it.size << std::endl;

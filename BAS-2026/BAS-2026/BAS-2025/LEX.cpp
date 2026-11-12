@@ -264,10 +264,10 @@ namespace LEX {
 				}
 			}
 			else if (newEntry.iddatatype == IT::STR) {
-				if (existingEntry.value.vstr->len == newEntry.value.vstr->len) {
-					if (memcmp(existingEntry.value.vstr->str,
-						newEntry.value.vstr->str,
-						newEntry.value.vstr->len) == 0) {
+				if (existingEntry.value.vstr.len == newEntry.value.vstr.len) {
+					if (memcmp(existingEntry.value.vstr.str,
+						newEntry.value.vstr.str,
+						newEntry.value.vstr.len) == 0) {
 						return i;
 					}
 				}
@@ -283,6 +283,7 @@ namespace LEX {
 
 		std::string litName = "L" + std::to_string(literalCount++);
 		int copyLen = std::min<int>(litName.length(), ID_MAXSIZE - 1);
+
 		memcpy(idEntry.id, litName.c_str(), copyLen);
 		idEntry.id[copyLen] = IN_CODE_ENDS;
 		idEntry.idtype = IT::L;
@@ -326,9 +327,9 @@ namespace LEX {
 			std::string content = word.substr(1, word.length() - 2);
 			int strLen = std::min<int>(content.length(), TI_STR_MAXSIZE - 1);
 
-			idEntry.value.vstr->len = static_cast<char>(strLen);
-			memcpy(idEntry.value.vstr->str, content.c_str(), strLen);
-			idEntry.value.vstr->str[strLen] = IN_CODE_ENDS;
+			idEntry.value.vstr.len = static_cast<char>(strLen);
+			memcpy(idEntry.value.vstr.str, content.c_str(), strLen);
+			idEntry.value.vstr.str[strLen] = IN_CODE_ENDS;
 		}
 
 		int idIndex = CheckLiteralByValue(idTable, idEntry);
@@ -482,6 +483,7 @@ namespace LEX {
 		}
 	}
 
+
 	void Analyze(const char* sourceCode, LT::LexTable& lexTable, IT::IdTable& idTable) {
 		std::vector<std::vector<std::string>> lines;
 		SplitIntoWords(sourceCode, lines);
@@ -495,6 +497,7 @@ namespace LEX {
 		for (const auto& line : lines) {
 			for (const auto& word : line) {
 				char code = Automata::getLexemeCode(word.c_str());
+
 				if (code == LEX_UNKNOWN) {
 					throw ERROR_THROW_IN(200, lineNumber, wordNumber);
 				}
