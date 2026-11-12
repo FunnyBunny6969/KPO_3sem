@@ -1,4 +1,4 @@
----- Протокол ------ 12.11.2026 04:49:16 ----------------------
+---- Протокол ------ 12.11.2026 05:21:05 ----------------------
 ---- Параметры ------
 -log: program.txt.log
 -out: program.txt.out
@@ -9,152 +9,8 @@
 Количество строк:    115
 
 === ЛЕКСИЧЕСКИЙ АНАЛИЗ ===
------ ТАБЛИЦА ЛЕКСЕМ -----
 
-04 tfi()
-05 {
-06 ti;
-07 ti;
-08 ti;
-09 ti;
-12 i=l;
-13 i=l;
-14 i=l;
-15 i=l;
-17 pl;
-18 pi;
-19 pi;
-20 pi;
-21 pi;
-24 ti;
-25 i=l+l-(l*l);
-26 pi;
-28 ri-l;
-29 };
-32 tfi(ti,ti)
-33 {
-34 ti;
-35 ti;
-36 ti;
-38 i=i&l;
-39 i=i|l;
-40 i=~i;
-42 pl;
-43 pi;
-44 pi;
-45 pi;
-47 r(i|i)&~l;
-48 };
-51 tfi(ti)
-52 {
-53 ti;
-54 ti;
-55 ti;
-57 i=l;
-58 i=l;
-61 w(ici)
-62 {
-63 i=l;
-65 w(icl)
-66 {
-67 i=i+l;
-68 i=i-l;
-69 };
-70 i=i+l;
-71 };
-73 ri;
-74 };
-77 m
-78 {
-79 ti;
-80 ti;
-81 ti;
-83 i=l;
-84 pl;
-85 pi;
-88 pl;
-89 gi;
-92 ti;
-93 i=i(l,l);
-94 pl;
-95 pi;
-97 i=i(l);
-98 pl;
-99 pi;
-102 ti;
-103 ti;
-104 ti;
-106 i=i();
-107 i=i(l,l);
-108 i=i(l);
-110 pl;
-111 pi;
-113 rl;
-114 };
-IT (Identifier Table): size=50
-Index  Identifier      Type     DataType FirstLT      Scope           Value
---------------------------------------------------------------------
-0      pow             FUNC     SHORT    -1           GLOBAL          -
-1      itos            FUNC     SHORT    -1           GLOBAL          -
-2      L1              LIT      SHORT    20           GLOBAL          -32768
-3      L2              LIT      SHORT    24           GLOBAL          32767
-4      L3              LIT      SHORT    28           GLOBAL          0
-5      L4              LIT      SHORT    32           GLOBAL          -127
-6      L5              LIT      STR      35           GLOBAL          '--- Тест чисел и границ ---'
-7      L6              LIT      SHORT    54           GLOBAL          -5
-8      L7              LIT      SHORT    56           GLOBAL          10
-9      L8              LIT      SHORT    59           GLOBAL          2
-10     L9              LIT      SHORT    61           GLOBAL          -3
-11     L11             LIT      SHORT    98           GLOBAL          15
-12     L12             LIT      SHORT    104          GLOBAL          240
-13     L13             LIT      STR      112          GLOBAL          '--- Побитовые операции ---'
-14     L15             LIT      SHORT    154          GLOBAL          -2
-15     L18             LIT      SHORT    175          GLOBAL          -1
-16     L19             LIT      SHORT    182          GLOBAL          1
-17     L22             LIT      CHAR     218          GLOBAL          'Z'
-18     L23             LIT      STR      221          GLOBAL          'Символ: '
-19     L24             LIT      STR      227          GLOBAL          'Введите число: '
-20     L26             LIT      SHORT    241          GLOBAL          5
-21     L27             LIT      STR      245          GLOBAL          '2 в степени 5 = '
-22     L28             LIT      SHORT    254          GLOBAL          -42
-23     L29             LIT      STR      258          GLOBAL          'Число в строку: '
-24     L30             LIT      SHORT    282          GLOBAL          26
-25     L33             LIT      STR      295          GLOBAL          'Итог вложенных циклов (ожидается 9): '
-26     test_numbers    FUNC     SHORT    2            GLOBAL          -
-27     min_val         VAR      SHORT    7            test_numbers    -
-28     max_val         VAR      SHORT    10           test_numbers    -
-29     zero_val        VAR      SHORT    13           test_numbers    -
-30     hex_val         VAR      SHORT    16           test_numbers    -
-31     calc            VAR      SHORT    50           test_numbers    -
-32     test_bitwise    FUNC     SHORT    76           GLOBAL          -
-33     a               PARM     SHORT    79           test_bitwise    -
-34     b               PARM     SHORT    82           test_bitwise    -
-35     res_and         VAR      SHORT    86           test_bitwise    -
-36     res_or          VAR      SHORT    89           test_bitwise    -
-37     res_not         VAR      SHORT    92           test_bitwise    -
-38     test_nested_while FUNC     SHORT    137          GLOBAL          -
-39     limit           PARM     SHORT    140          test_nested_while -
-40     i               VAR      SHORT    144          test_nested_while -
-41     j               VAR      SHORT    147          test_nested_while -
-42     total           VAR      SHORT    150          test_nested_while -
-43     user_num        VAR      SHORT    208          MAIN            -
-44     symbol          VAR      CHAR     211          MAIN            -
-45     str_num         VAR      STR      214          MAIN            -
-46     powered         VAR      SHORT    233          MAIN            -
-47     r1              VAR      SHORT    264          MAIN            -
-48     r2              VAR      SHORT    267          MAIN            -
-49     r3              VAR      SHORT    270          MAIN            -
-
---- FUNCTION METADATA DUMP ---
-FUNCTION NAME                    | PARAMS COUNT | PARAM TYPES
----------------------------------+--------------+----------------------------
-pow                              |            2 | INT, INT
-itos                             |            1 | INT
-test_numbers                     |            0 | 
-test_bitwise                     |            2 | INT, INT
-test_nested_while                |            1 | INT
----------------------------------+--------------+----------------------------
-Шаг: Правило             Входная лента                 Стек               
+=== СИНТАКСИЧЕСКИЙ АНАЛИЗ (MFST) ===
 0   : S->tfi(){N};        tfi(){ti;ti;ti;ti;i=l;i=l     S$                  
 0   : SAVESTATE:          1
 0   :                     tfi(){ti;ti;ti;ti;i=l;i=l     tfi(){N};$          
@@ -16132,88 +15988,169 @@ Index  Identifier      Type     DataType FirstLT      Scope           Value
 48     r2              VAR      SHORT    267          MAIN            -
 49     r3              VAR      SHORT    270          MAIN            -
 
------ ТАБЛИЦА ЛЕКСЕМ (с именами) -----
+--- FUNCTION METADATA DUMP ---
+FUNCTION NAME                    | PARAMS COUNT | PARAM TYPES
+---------------------------------+--------------+----------------------------
+pow                              |            2 | INT, INT
+itos                             |            1 | INT
+test_numbers                     |            0 | 
+test_bitwise                     |            2 | INT, INT
+test_nested_while                |            1 | INT
+---------------------------------+--------------+----------------------------
 
-04 t f test_numbers@0 ( ) 
-05 { 
-06 t imin_val ; 
-07 t imax_val ; 
-08 t izero_val ; 
-09 t ihex_val ; 
-12 imin_val = -32768 ; 
-13 imax_val = 32767 ; 
-14 izero_val = 0 ; 
-15 ihex_val = -127 ; 
-17 p '--- Тест чисел и границ ---' ; 
-18 p imin_val ; 
-19 p imax_val ; 
-20 p izero_val ; 
-21 p ihex_val ; 
-24 t icalc ; 
-25 icalc = -5 + 10 - ( 2 * -3 ) ; 
-26 p icalc ; 
-28 r imax_val - 32767 ; 
-29 } ; 
-32 t f test_bitwise@2 ( t ia , t ib ) 
-33 { 
-34 t ires_and ; 
-35 t ires_or ; 
-36 t ires_not ; 
-38 ires_and = ia & 15 ; 
-39 ires_or = ib | 240 ; 
-40 ires_not = ~ ia ; 
-42 p '--- Побитовые операции ---' ; 
-43 p ires_and ; 
-44 p ires_or ; 
-45 p ires_not ; 
-47 r ( ires_and | ires_or ) & ~ 0 ; 
-48 } ; 
-51 t f test_nested_while@1 ( t ilimit ) 
-52 { 
-53 t ii ; 
-54 t ij ; 
-55 t itotal ; 
-57 ii = -2 ; 
-58 itotal = 0 ; 
-61 w ( ii c ilimit ) 
-62 { 
-63 ij = 2 ; 
-65 w ( ij c -1 ) 
-66 { 
-67 itotal = itotal + 1 ; 
-68 ij = ij - 1 ; 
-69 } ; 
-70 ii = ii + 1 ; 
-71 } ; 
-73 r itotal ; 
-74 } ; 
-77 m 
-78 { 
-79 t iuser_num ; 
-80 t isymbol ; 
-81 t istr_num ; 
-83 isymbol = 'Z' ; 
-84 p 'Символ: ' ; 
-85 p isymbol ; 
-88 p 'Введите число: ' ; 
-89 g iuser_num ; 
-92 t ipowered ; 
-93 ipowered = pow@2 ( 2 , 5 ) ; 
-94 p '2 в степени 5 = ' ; 
-95 p ipowered ; 
-97 istr_num = itos@1 ( -42 ) ; 
-98 p 'Число в строку: ' ; 
-99 p istr_num ; 
-102 t ir1 ; 
-103 t ir2 ; 
-104 t ir3 ; 
-106 ir1 = test_numbers@0 ( ) ; 
-107 ir2 = test_bitwise@2 ( 26 , 5 ) ; 
-108 ir3 = test_nested_while@1 ( 1 ) ; 
-110 p 'Итог вложенных циклов (ожидается 9): ' ; 
-111 p ir3 ; 
-113 r 0 ; 
-114 } ; 
-----------------------------------------
-Ошибка 710: Несовпадение типов при присваивании (RHS не соответствует LHS), cтрока 97, позиция -1
+=== ПОСТРОЕНИЕ AST ===
+Program [functions: 4]
+|-- Function: short test_numbers() (line 4)
+|   |-- VarDecl: short min_val (line 6)
+|   |-- VarDecl: short max_val (line 7)
+|   |-- VarDecl: short zero_val (line 8)
+|   |-- VarDecl: short hex_val (line 9)
+|   |-- Assign: min_val = (line 12)
+|   |   +-- Id/Lit: -32768 [lit:L1]
+|   |-- Assign: max_val = (line 13)
+|   |   +-- Id/Lit: 32767 [lit:L2]
+|   |-- Assign: zero_val = (line 14)
+|   |   +-- Id/Lit: 0 [lit:L3]
+|   |-- Assign: hex_val = (line 15)
+|   |   +-- Id/Lit: -127 [lit:L4]
+|   |-- Print (line 17)
+|   |   +-- Id/Lit: '--- Тест чисел и границ ---' [lit:L5]
+|   |-- Print (line 18)
+|   |   +-- Id/Lit: min_val
+|   |-- Print (line 19)
+|   |   +-- Id/Lit: max_val
+|   |-- Print (line 20)
+|   |   +-- Id/Lit: zero_val
+|   |-- Print (line 21)
+|   |   +-- Id/Lit: hex_val
+|   |-- VarDecl: short calc (line 24)
+|   |-- Assign: calc = (line 25)
+|   |   +-- BinaryOp (-)
+|   |       |-- BinaryOp (+)
+|   |       |   |-- Id/Lit: -5 [lit:L6]
+|   |       |   +-- Id/Lit: 10 [lit:L7]
+|   |       +-- BinaryOp (*)
+|   |           |-- Id/Lit: 2 [lit:L8]
+|   |           +-- Id/Lit: -3 [lit:L9]
+|   |-- Print (line 26)
+|   |   +-- Id/Lit: calc
+|   +-- Return (line 28)
+|       +-- BinaryOp (-)
+|           |-- Id/Lit: max_val
+|           +-- Id/Lit: 32767 [lit:L2]
+|-- Function: short test_bitwise(short a, short b) (line 32)
+|   |-- VarDecl: short res_and (line 34)
+|   |-- VarDecl: short res_or (line 35)
+|   |-- VarDecl: short res_not (line 36)
+|   |-- Assign: res_and = (line 38)
+|   |   +-- BinaryOp (&&)
+|   |       |-- Id/Lit: a
+|   |       +-- Id/Lit: 15 [lit:L11]
+|   |-- Assign: res_or = (line 39)
+|   |   +-- BinaryOp (||)
+|   |       |-- Id/Lit: b
+|   |       +-- Id/Lit: 240 [lit:L12]
+|   |-- Assign: res_not = (line 40)
+|   |   +-- UnaryOp (~)
+|   |       +-- Id/Lit: a
+|   |-- Print (line 42)
+|   |   +-- Id/Lit: '--- Побитовые операции ---' [lit:L13]
+|   |-- Print (line 43)
+|   |   +-- Id/Lit: res_and
+|   |-- Print (line 44)
+|   |   +-- Id/Lit: res_or
+|   |-- Print (line 45)
+|   |   +-- Id/Lit: res_not
+|   +-- Return (line 47)
+|       +-- BinaryOp (&&)
+|           |-- BinaryOp (||)
+|           |   |-- Id/Lit: res_and
+|           |   +-- Id/Lit: res_or
+|           +-- UnaryOp (~)
+|               +-- Id/Lit: 0 [lit:L3]
+|-- Function: short test_nested_while(short limit) (line 51)
+|   |-- VarDecl: short i (line 53)
+|   |-- VarDecl: short j (line 54)
+|   |-- VarDecl: short total (line 55)
+|   |-- Assign: i = (line 57)
+|   |   +-- Id/Lit: -2 [lit:L15]
+|   |-- Assign: total = (line 58)
+|   |   +-- Id/Lit: 0 [lit:L3]
+|   |-- While (line 61)
+|   |   |-- Condition:
+|   |   |   +-- BinaryOp ()
+|   |   |       |-- Id/Lit: i
+|   |   |       +-- Id/Lit: limit
+|   |   +-- Body [3 stmts]:
+|   |       |-- Assign: j = (line 63)
+|   |       |   +-- Id/Lit: 2 [lit:L8]
+|   |       |-- While (line 65)
+|   |       |   |-- Condition:
+|   |       |   |   +-- BinaryOp ()
+|   |       |   |       |-- Id/Lit: j
+|   |       |   |       +-- Id/Lit: -1 [lit:L18]
+|   |       |   +-- Body [2 stmts]:
+|   |       |       |-- Assign: total = (line 67)
+|   |       |       |   +-- BinaryOp (+)
+|   |       |       |       |-- Id/Lit: total
+|   |       |       |       +-- Id/Lit: 1 [lit:L19]
+|   |       |       +-- Assign: j = (line 68)
+|   |       |           +-- BinaryOp (-)
+|   |       |               |-- Id/Lit: j
+|   |       |               +-- Id/Lit: 1 [lit:L19]
+|   |       +-- Assign: i = (line 70)
+|   |           +-- BinaryOp (+)
+|   |               |-- Id/Lit: i
+|   |               +-- Id/Lit: 1 [lit:L19]
+|   +-- Return (line 73)
+|       +-- Id/Lit: total
++-- Main (line 77)
+    |-- VarDecl: short user_num (line 79)
+    |-- VarDecl: char symbol (line 80)
+    |-- VarDecl: string str_num (line 81)
+    |-- Assign: symbol = (line 83)
+    |   +-- Id/Lit: 'Z' [lit:L22]
+    |-- Print (line 84)
+    |   +-- Id/Lit: 'Символ: ' [lit:L23]
+    |-- Print (line 85)
+    |   +-- Id/Lit: symbol
+    |-- Print (line 88)
+    |   +-- Id/Lit: 'Введите число: ' [lit:L24]
+    |-- Input: get user_num (line 89)
+    |-- VarDecl: short powered (line 92)
+    |-- Assign: powered = (line 93)
+    |   +-- Call: pow() [args: 2]
+    |       |-- Id/Lit: 2 [lit:L8]
+    |       +-- Id/Lit: 5 [lit:L26]
+    |-- Print (line 94)
+    |   +-- Id/Lit: '2 в степени 5 = ' [lit:L27]
+    |-- Print (line 95)
+    |   +-- Id/Lit: powered
+    |-- Assign: str_num = (line 97)
+    |   +-- Call: itos() [args: 1]
+    |       +-- Id/Lit: -42 [lit:L28]
+    |-- Print (line 98)
+    |   +-- Id/Lit: 'Число в строку: ' [lit:L29]
+    |-- Print (line 99)
+    |   +-- Id/Lit: str_num
+    |-- VarDecl: short r1 (line 102)
+    |-- VarDecl: short r2 (line 103)
+    |-- VarDecl: short r3 (line 104)
+    |-- Assign: r1 = (line 106)
+    |   +-- Call: test_numbers() [args: 0]
+    |-- Assign: r2 = (line 107)
+    |   +-- Call: test_bitwise() [args: 2]
+    |       |-- Id/Lit: 26 [lit:L30]
+    |       +-- Id/Lit: 5 [lit:L26]
+    |-- Assign: r3 = (line 108)
+    |   +-- Call: test_nested_while() [args: 1]
+    |       +-- Id/Lit: 1 [lit:L19]
+    |-- Print (line 110)
+    |   +-- Id/Lit: 'Итог вложенных циклов (ожидается 9): ' [lit:L33]
+    |-- Print (line 111)
+    |   +-- Id/Lit: r3
+    +-- Return (line 113)
+        +-- Id/Lit: 0 [lit:L3]
+AST построено успешно (функций/блоков: 4).
 
+=== КОМПИЛЯЦИЯ ЗАВЕРШЕНА УСПЕШНО ===
